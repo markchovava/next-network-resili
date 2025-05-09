@@ -1,11 +1,7 @@
 import Link from "next/link";
 import MainSlider from "./_components/MainSlider";
-import { GiNetworkBars } from "react-icons/gi";
-import { AiOutlineAudit } from "react-icons/ai";
-import { GrHostMaintenance } from "react-icons/gr";
 import CarouselService from "./_components/CarouselService";
 import CarouselPartner from "./_components/CarouselPartner";
-import ParallaxContact from "./_components/ParallaxContact";
 
 export default function Home() {
   return (

@@ -1,5 +1,5 @@
 "use client"
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
@@ -32,6 +32,20 @@ export default function CarouselService() {
       swiperRef.current.swiper.slideTo(index);
     }
   };
+
+
+  const [windowWidth, setWindowWidth] = useState(0);
+    useEffect(() => {
+      // This code will only run on the client-side
+      setWindowWidth(window.innerWidth);
+      const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+      };
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize); // Cleanup
+      };
+    }, []); 
 
   return (
     <div className="carousel-container w-full mx-auto">
@@ -122,14 +136,14 @@ export default function CarouselService() {
       <div className="carousel-controls flex items-center gap-4">
         {/* Custom React-based pagination dots */}
         <div className="hidden custom-pagination items-center justify-center gap-3 mb-4">
-          {Array.from({ length: Math.ceil(totalSlides / (window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1)) }).map((_, index) => (
+          {Array.from({ length: Math.ceil(totalSlides / (windowWidth >= 1024 ? 3 : windowWidth >= 640 ? 2 : 1)) }).map((_, index) => (
             <button
               key={index}
-              onClick={() => handlePaginationClick(index * (window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1))}
+              onClick={() => handlePaginationClick(index * (windowWidth >= 1024 ? 3 : windowWidth >= 640 ? 2 : 1))}
               className="pagination-dot focus:outline-none"
               aria-label={`Go to slide group ${index + 1}`}
             >
-              {index === Math.floor(activeIndex / (window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1)) ? (
+              {index === Math.floor(activeIndex / (windowWidth >= 1024 ? 3 : windowWidth >= 640 ? 2 : 1)) ? (
                 <FaDotCircle className="w-5 h-5 text-blue-500" />
               ) : (
                 <FaRegCircle className="w-5 h-5 text-gray-300" />
