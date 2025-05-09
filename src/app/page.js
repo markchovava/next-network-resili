@@ -1,103 +1,86 @@
-import Image from "next/image";
+import Link from "next/link";
+import MainSlider from "./_components/MainSlider";
+import { GiNetworkBars } from "react-icons/gi";
+import { AiOutlineAudit } from "react-icons/ai";
+import { GrHostMaintenance } from "react-icons/gr";
+import CarouselService from "./_components/CarouselService";
+import CarouselPartner from "./_components/CarouselPartner";
+import ParallaxContact from "./_components/ParallaxContact";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+    <MainSlider />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <section className="w-full py-[5rem]">
+      <div className="w-[70%] mx-auto flex flex-col items-center justify-center">
+        <h2 className="text-center text-blue-900 text-[2rem] font-extrabold mb-4">WHO WE ARE?</h2>
+        <hr className="w-[10rem] border-b border-[0.4rem]" />
+        <p className="text-center text-[1.6rem] mt-4 mb-6">
+          At Network Resilience, we specialize in delivering
+          cutting-edge Information Communication
+          Technology (ICT) and networking solutions. Our
+          mission is to empower businesses and residences
+          with robust, reliable, and secure connectivity that
+          drives efficiency, productivity, and growth.
+        </p>
+        <Link href="#">
+          <button className="px-12 py-4 text-lg rounded-2xl bg-gradient-to-br from-green-500 to-blue-900 text-white ease-in-out duration-300 transition-all hover:drop-shadow-lg hover:scale-110 hover:bg-gradient-to-br hover:from-blue-500 hover:to-blue-950">
+            View More
+          </button>
+        </Link>
+      </div>
+    </section>
+
+    <section className="w-full py-[5rem] text-gray-50 bg-gradient-to-br from-blue-800 to-blue-950">
+      <div className="w-[92%] mx-auto flex flex-col items-center justify-center ">
+          <h2 className="text-center  text-[2rem] font-extrabold mb-4">WHAT WE DO?</h2>
+          <hr className="w-[10rem] border-b border-[0.4rem]" />
+      </div>
+
+      <div className="w-[92%] mx-auto mt-12">
+        <CarouselService />
+      </div>
+
+    </section>
+
+
+    <section className="w-[100%] py-[5rem]">
+      <div className="w-[92%] mx-auto flex flex-col items-center justify-center ">
+          <h2 className="text-center text-blue-900 text-[2rem] font-extrabold mb-4">OUR PARTNERS?</h2>
+          <hr className="w-[10rem] border-blue-900 border-b border-[0.4rem]" />
+      </div>
+      <div className="w-[92%] mx-auto mt-8">
+        <CarouselPartner />
+      </div>
+    </section>
+
+    <section 
+      className="w-[100%] h-[35rem] lg:h-[25rem] relative bg-fixed bg-cover bg-green-800" 
+      style={{backgroundImage: `url('/assets/img/02.png')`,}}>
+        <div className="absolute z-10 w-[100%] h-[100%] bg-black opacity-30">
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <div className="py-[5rem] absolute z-20 w-[92%] text-white mx-auto flex flex-col items-center justify-center ">
+            <h2 className="text-center text-[2rem] font-extrabold uppercase mb-4">
+              Engage Us For Free Consultation.
+            </h2>
+            <hr className="w-[10rem] border-white border-b border-[0.4rem]" />
+
+            <p className="py-6 text-center text-[1.4rem] w-[60%]">
+              Our business is to accelerate yours by equiping you with all you need to run smarter.
+            </p>
+
+            <Link href="#">
+              <button className="uppercase px-12 py-4 text-lg rounded-2xl bg-gradient-to-br from-green-500 to-blue-900 text-white ease-in-out duration-300 transition-all hover:drop-shadow-lg hover:scale-110 hover:bg-gradient-to-br hover:from-blue-500 hover:to-blue-950">
+                Count Us Now
+              </button>
+            </Link>
+        </div>
+    </section>
+
+
+
+
+    </>
   );
 }
