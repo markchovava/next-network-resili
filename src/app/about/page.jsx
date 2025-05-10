@@ -47,7 +47,7 @@ export default function page() {
       <div className="w-[100%] overflow-hidden lg:rounded-l-3xl lg:aspect-[4/3] aspect-[5/3] bg-gray-400">
           <div className="relative w-[100%] h-[100%]">
               <Image
-                src='/assets/img/05.jpg'
+                src='/assets/img/7by5/03secu.jpg'
                 alt="Full Cover Image"
                 layout="fill"
                 objectFit="cover"
@@ -63,7 +63,7 @@ export default function page() {
         <div className="relative drop-shadow-lg lg:order-1 order-2 w-[100%] overflow-hidden lg:rounded-r-2xl lg:aspect-[4/3] aspect-[5/3] bg-gray-400">
             <div className="relative w-[100%] h-[100%]">
                 <Image
-                src="/assets/img/02.jpg"
+                src="/assets/img/7by5/02net.jpg"
                 alt="Full Cover Image"
                 layout="fill"
                 objectFit="cover"
