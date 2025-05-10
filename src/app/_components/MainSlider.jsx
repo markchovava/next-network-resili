@@ -16,31 +16,31 @@ import 'swiper/css/effect-fade';
 const slideData = [
   {
     id: 1,
-    image: '/assets/img/03.png',
-    title: 'Welcome to Our Platform',
-    description: 'Discover amazing features and services we offer.',
-    ctaText: 'Get Started'
+    image: '/assets/img/06.jpg',
+    title: 'Welcome to Network Resilience',
+    description: 'Business Communications',
+    ctaText: 'View More'
   },
   {
     id: 2,
-    image: '/assets/img/01.png',
-    title: 'Exclusive Offers',
-    description: 'Take advantage of our limited-time deals.',
-    ctaText: 'View Offers'
+    image: '/assets/img/05.jpg',
+    title: 'Our Services',
+    description: 'Networking',
+    ctaText: 'View More'
   },
   {
     id: 3,
-    image: '/assets/img/02.png',
-    title: 'Join Our Community',
-    description: 'Connect with like-minded individuals.',
-    ctaText: 'Join Now'
+    image: '/assets/img/04.jpg',
+    title: 'Our Services',
+    description: 'Business Security',
+    ctaText: 'View More'
   },
   {
     id: 4,
-    image: '/assets/img/01.png',
-    title: 'Premium Support',
-    description: 'Get 24/7 assistance from our expert team.',
-    ctaText: 'Contact Us'
+    image: '/assets/img/01.jpg',
+    title: 'Our Products',
+    description: 'Back Up Power Solutions',
+    ctaText: 'View More'
   }
 ];
 
