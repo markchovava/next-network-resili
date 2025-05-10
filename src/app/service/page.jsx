@@ -1,17 +1,20 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
+import SectionContact from '../_components/SectionContact'
+
+
+
 
 export default function page() {
   return (
     <>
     {/* TITLE */}
     <section 
-      className="w-[100%] h-[15rem] relative bg-fixed bg-cover text-white bg-blue-800" 
-      style={{backgroundImage: `url('/assets/img/03.jpg')`}}>
+      className="w-[100%] h-[16rem] relative bg-fixed bg-cover text-white bg-blue-800" 
+      style={{backgroundImage: `url('/assets/img/06.jpg')`}}>
         <div className='absolute w-[100%] h-[100%] z-10 bg-black opacity-10'></div>
-        <div className='absolute z-20 mx-auto h-[100%] w-full flex flex-col items-center justify-center'>
-            <h2 className="text-center  text-[2rem] font-extrabold mb-4">OUR SERVICES</h2>
+        <div className='w-full h-[100%] absolute z-20 mx-auto flex flex-col items-center justify-center'>
+            <h2 className="text-center uppercase text-[2rem] font-extrabold mb-4">OUR SERVICES</h2>
             <hr className="w-[10rem] border-b border-[0.4rem]" />
         </div>
     </section>
@@ -33,6 +36,7 @@ export default function page() {
 
     <section className='w-full py-[5rem] bg-gradient-to-br from-gray-50 to-gray-100'>
         <div className='mx-auto w-[92%] grid md:grid-cols-2 grid-cols-1 gap-6'>
+            
             {/*  */}
             <div className='bg-white drop-shadow-lg rounded-xl py-8 px-6'>
                 <div className='w-[100%] aspect-[7/5] overflow-hidden rounded-xl mb-4'>
@@ -87,7 +91,6 @@ export default function page() {
                     visually stunning, user-friendly websites that capture your brand's essence and drive engagement.
                 </p>
             </div>
-
              {/*  */}
             <div className='bg-white drop-shadow-lg rounded-xl py-8 px-6'>
                 <div className='w-[100%] aspect-[7/5] overflow-hidden rounded-xl mb-4'>
@@ -105,7 +108,6 @@ export default function page() {
                     logistics and reduce costs.
                 </p>
             </div>
-
              {/*  */}
             <div className='bg-white drop-shadow-lg rounded-xl py-8 px-6'>
                 <div className='w-[100%] aspect-[7/5] overflow-hidden rounded-xl mb-4'>
@@ -125,9 +127,8 @@ export default function page() {
                     it needs.
                 </p>
             </div>
-
              {/*  */}
-            <div className='bg-white drop-shadow-lg py-8 px-6'>
+            <div className='bg-white drop-shadow-lg rounded-xl py-8 px-6'>
                 <div className='w-[100%] aspect-[7/5] overflow-hidden rounded-xl mb-4'>
                     <Image 
                         width={700} 
@@ -148,31 +149,7 @@ export default function page() {
         </div>
     </section>
 
-
-    <section 
-      className="w-[100%] h-[35rem] lg:h-[25rem] relative bg-fixed bg-cover bg-green-800" 
-      style={{backgroundImage: `url('/assets/img/01.png')`,}}>
-        <div className="absolute z-10 w-[100%] h-[100%] bg-black opacity-30">
-        </div>
-        <div className="py-[5rem] absolute z-20 w-[92%] text-white mx-auto flex flex-col items-center justify-center ">
-            <h2 className="text-center text-[2rem] font-extrabold uppercase mb-4">
-              Engage Us For Free Consultation.
-            </h2>
-            <hr className="w-[10rem] border-white border-b border-[0.4rem]" />
-
-            <p className="py-6 text-center text-[1.4rem] w-[60%]">
-              Our business is to accelerate yours by equiping you with all you need to run smarter.
-            </p>
-
-            <Link href="#">
-              <button className="uppercase px-12 py-4 text-lg rounded-2xl bg-gradient-to-br from-green-500 to-blue-900 text-white ease-in-out duration-300 transition-all hover:drop-shadow-lg hover:scale-110 hover:bg-gradient-to-br hover:from-blue-500 hover:to-blue-950">
-                Call Us Now
-              </button>
-            </Link>
-        </div>
-    </section>
-
-
+    <SectionContact />
 
     </>
   )
