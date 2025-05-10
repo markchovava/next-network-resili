@@ -26,11 +26,39 @@ export default function NavArea() {
     <section className='w-full relative'>
         <div className='w-[92%] mx-auto py-4 flex  items-center justify-between'>
             <ul className='flex items-center justify-start gap-5 font-medium'>
-                <li><Link href="#" className='hover:text-green-800 ease-in-out duration-200 transition-all'>Home</Link></li>
-                <li><Link href="#" className='hover:text-green-800 ease-in-out duration-200 transition-all'>Who We Are?</Link></li>
-                <li><Link href="#" className='hover:text-green-800 ease-in-out duration-200 transition-all'>What We Do?</Link></li>
-                <li><Link href="#" className='hover:text-green-800 ease-in-out duration-200 transition-all'>Partners</Link></li>
-                <li><Link href="#" className='hover:text-green-800 ease-in-out duration-200 transition-all'>News</Link></li>
+                <li>
+                    <Link 
+                    href="/" 
+                    className='hover:text-green-800 ease-in-out duration-200 transition-all'>
+                        Home</Link></li>
+                <li>
+                    <Link 
+                    href="/about" 
+                    className='hover:text-green-800 ease-in-out duration-200 transition-all'>
+                        About Us
+                    </Link>
+                </li>
+                <li>
+                    <Link 
+                    href="/service" 
+                    className='hover:text-green-800 ease-in-out duration-200 transition-all'>
+                        Our Services
+                    </Link>
+                </li>
+                 <li>
+                    <Link 
+                    href="/product" 
+                    className='hover:text-green-800 ease-in-out duration-200 transition-all'>
+                        Our Products
+                    </Link>
+                </li>
+                <li>
+                    <Link 
+                    href="/partner" 
+                    className='hover:text-green-800 ease-in-out duration-200 transition-all'>
+                        Our Partners
+                    </Link>
+                </li>
             </ul>
            
             <ul className='flex items-center justify-start gap-5 font-semibold'>

@@ -13,8 +13,8 @@ export default function Header() {
   return (
     <>
     {/* TOP AREA */}
-    <section className='w-full bg-gray-50'>
-        <div className=' w-[92%] mx-auto md:py-2 py-3 flex md:flex-row flex-col items-center justify-center md:justify-between gap-2'>
+    <section className='w-full bg-gray-50 drop-shadow md:py-3 py-4'>
+        <div className=' w-[92%] mx-auto flex md:flex-row flex-col items-center justify-center md:justify-between gap-2'>
             {/*  */}
             <div className='flex md:w-auto w-full md:flex-row flex-col items-center md:justify-start justify-center md:gap-3 gap-1 text-sm'>
                 <div className='flex items-center justify-start gap-1'>
@@ -41,8 +41,8 @@ export default function Header() {
         </div>
     </section>
     {/*MID AREA */}
-    <section className='w-full'>
-        <div className='w-[92%] mx-auto flex md:flex-row flex-col items-center justify-between gap-3 py-4'>
+    <section className='w-full py-6'>
+        <div className='w-[92%] mx-auto flex md:flex-row flex-col items-center justify-between gap-3 '>
             <div className=''>
                 <h1 className='font-bold font-serif lg:text-[1.6rem] text-[1.4rem] text-green-800'>
                     NETWORK<span className='text-blue-800'>RESILIENCE</span>
