@@ -8,7 +8,7 @@ export default function page() {
     {/* TITLE */}
     <section 
       className="w-[100%] h-[16rem] relative bg-fixed bg-cover text-white bg-blue-800" 
-      style={{backgroundImage: `url('/assets/img/01.jpg')`}}>
+      style={{backgroundImage: `url('/assets/img/05.jpg')`}}>
         <div className='absolute w-[100%] h-[100%] z-10 bg-black opacity-10'></div>
         <div className='absolute w-full z-20 mx-auto h-[100%] flex flex-col items-center justify-center'>
             <h2 className="text-center uppercase text-[2.5rem] font-extrabold mb-4">About Us</h2>
