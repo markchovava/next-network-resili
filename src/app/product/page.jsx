@@ -1,7 +1,8 @@
 import React from 'react'
-import ComingSoon from '../_components/ComingSoon'
+import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 import SectionContact from '../_components/SectionContact'
 import { IoSearchOutline } from 'react-icons/io5'
+import Link from 'next/link'
 
 export default function page() {
   return (
@@ -48,9 +49,112 @@ export default function page() {
         </div>
       </section>
 
-      <ComingSoon />
+      {/*  */}
+      <section className='w-full'>
+        <div className='mx-auto w-[92%] py-[5rem] flex lg:flex-row flex-col justify-start items-start gap-6'>
+          {/* LEFT */}
+          <div className='lg:w-[25%] w-[100%] bg-gray-50 p-6 drop-shadow-lg'>
+            {/* CATEGORY */}
+            <h2 className='text-[1.4rem] font-bold mb-2'>Categories</h2>
+            {/* LIST */}
+            <ul className='font-light ml-3'>
+              <Link href="#"> 
+              <li className='mb-1 transition-all hover:translate-x-2 ease-in-out duration-200'>
+                Routers
+              </li> </Link>
+              <Link href="#"> 
+              <li 
+                className='mb-1 transition-all hover:translate-x-2 ease-in-out duration-200'>
+                Phone
+              </li> </Link>
+              <Link href="#"> 
+              <li 
+                className='mb-1 transition-all hover:translate-x-2 ease-in-out duration-200'>
+                CCTVs 
+              </li> </Link>
+              <Link href="#"> 
+              <li 
+                className='mb-1 transition-all hover:translate-x-2 ease-in-out duration-200'>
+                Laptops 
+              </li> </Link>
+            </ul>
+
+            <hr className='border-b border-gray-300 mt-8 mb-4' />
+            {/* BRANDS */}
+            <h2 className='text-[1.4rem] font-bold mb-2'>Brands</h2>
+            {/* LIST */}
+            <ul className='font-light ml-3'>
+              <Link href="#"> 
+              <li 
+                className='mb-1 transition-all hover:translate-x-2 ease-in-out duration-200'>
+                Dell
+              </li> </Link>
+              <Link href="#"> 
+              <li 
+                className='mb-1 transition-all hover:translate-x-2 ease-in-out duration-200'>
+                HP
+              </li> </Link>
+              <Link href="#"> 
+              <li 
+                className='mb-1 transition-all hover:translate-x-2 ease-in-out duration-200'>
+                Apple
+              </li> </Link>
+              <Link href="#"> 
+              <li 
+                className='mb-1 transition-all hover:translate-x-2 ease-in-out duration-200'>
+                Cisco
+              </li> </Link>
+            </ul>
+          </div>
+          {/* RIGHT */}
+          <div className='lg:w-[75%] w-[100%]'>
+            <section className='w-[100%] grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6'>
+              {/* COL */}
+              {[...Array(9)].map(i => (
+                <div key={i} className='bg-white rounded-lg drop-shadow-md hover:drop-shadow-xl p-4'>
+                  {/* IMAGE */}
+                  <div className='w-[100%] aspect-[7/5] bg-gray-100 rounded-lg mb-3'></div>
+                  {/* TEXT */}
+                  <Link href="#" className='hover:underline hover:text-blue-800'> 
+                  <h3 className='font-light mb-1'
+                  >Product 1
+                  </h3></Link>
+                  <p className='text-xl font-bold mb-2'>$23.00</p>
+                  <div className='flex items-center justify-start'>
+                    <button 
+                    className='rounded-lg text-sm text-white cursor-pointer py-2 px-3 bg-gradient-to-br from-blue-600 to-blue-900 hover:bg-gradient-to-br hover:from-green-600 hover:to-green-900'>
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </section>
+
+
+            <section className='flex items-center justify-end gap-4 mt-[4rem]'>
+              <button 
+                className='group px-4 py-2 rounded-lg border bg-white text-blue-800 border-blue-800 hover:drop-shadow-lg flex items-center justify-center gap-1'>
+                <FaArrowLeftLong className='group-hover:-translate-x-1 transition-all ease-in-out duration-200' />
+                Previous
+              </button>
+              <button
+                className='group px-4 py-2 rounded-lg border text-blue-800 bg-white border-blue-800 hover:drop-shadow-lg flex items-center justify-center gap-1'>
+                Next
+                <FaArrowRightLong className='group-hover:translate-x-1 transition-all ease-in-out duration-200' />
+              </button>
+            </section>
+
+
+          </div>
+
+        </div>
+      </section>
+
       
       <SectionContact />
+
+
+
     </>
   )
 }
