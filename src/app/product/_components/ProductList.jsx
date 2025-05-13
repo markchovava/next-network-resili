@@ -3,6 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 import { IoSearchOutline } from 'react-icons/io5';
+import Image from 'next/image';
 
 const productData = [
   {id: 1, name: "Communication Product", img: '/assets/img/7by5/01coms.jpg', price: 0},
@@ -127,7 +128,7 @@ export default function ProductList() {
               {productData.map(i => (
                 <div key={i.id} className='group bg-white rounded-lg drop-shadow-md hover:drop-shadow-xl p-4'>
                   {/* IMAGE */}
-                  <div className='w-[100%] aspect-[7/5] bg-gray-100 rounded-lg mb-3'>
+                  <div className='w-[100%] aspect-[7/5] bg-gray-100 overflow-hidden rounded-lg mb-3'>
                   <Image 
                     src={i.img} 
                     width={350} 
