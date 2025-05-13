@@ -14,7 +14,17 @@ export default function page() {
         </div>
     </section>
 
-    <section className=''></section>
+    <section className='w-full py-[5rem]'>
+      <div className='w-[92%] mx-auto'>
+        <h3 className='text-[1.8rem] font-light mb-3'>Your Cart</h3>
+
+        <div className='w-[100%] border border-gray-300 flex items-center justify-start'>
+          <div className='w-[40%] py-2 px-3 border-r border-gray-300'>Details</div>
+          <div className='w-[30%] py-2 px-3 border-r border-gray-300'>Quantity</div>
+          <div className='w-[30%] py-2 px-3'>Total</div>
+        </div>
+      </div>
+    </section>
     </>
   )
 }
