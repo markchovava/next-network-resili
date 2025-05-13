@@ -123,6 +123,13 @@ export default function NavArea() {
                                 </div> 
                                 <div className='font-medium text-green-800 italic'>$12.30</div>
                             </li>
+                            <li className='py-2'>
+                                <Link href='/cart'>
+                                <button className='w-[100%] rounded-full text-white py-2 ease-in-out transition-all duration-200 bg-gradient-to-br from-green-500 to-blue-900 hover:bg-gradient-to-br hover:from-blue-500 hover:to-green-900'>
+                                    Go to Cart
+                                </button>
+                                </Link>
+                            </li>
                         </motion.ul>
                         }
                     </AnimatePresence>
