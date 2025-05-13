@@ -1,8 +1,17 @@
 "use client"
+import Image from 'next/image'
 import React, { useState } from 'react'
 
 
+const imagesData = [
+  {id: 1, img: '/assets/img/7by5/01coms.jpg'},
+  {id: 2, img: '/assets/img/7by5/02net.jpg'},
+  {id: 3, img: '/assets/img/7by5/03secu.jpg',},
+  {id: 4, img: '/assets/img/7by5/04solar.jpg'},
+]
+
 export default function ProductView() {
+  const [isActive, setIsActive] = useState(imagesData[0].img)
   const [isTab, setIsTab] = useState({
     one: true, 
     two: false
@@ -14,12 +23,29 @@ export default function ProductView() {
       <div className='mx-auto w-[92%] flex items-start justify-start gap-8'>
         {/*  */}
         <div className='w-[60%]'>
-          <div className='mb-6 cursor-pointer w-[100%] aspect-[5/3] overflow-hidden rounded-xl bg-gray-100 drop-shadow-md'></div>
+          <div className='group mb-6 cursor-pointer w-[100%] aspect-[5/3] overflow-hidden rounded-xl bg-gray-100 drop-shadow-md'>
+            <Image 
+              src={isActive} 
+              width={1050} 
+              height={750} 
+              className="group-hover:scale-110 transition-all ease-in-out duration-200 object-cover"
+              alt='Image' />
+          </div>
           <div className='w-[100%] grid grid-cols-5 gap-6'>
-            <div className='aspect-[7/5] cursor-pointer bg-gray-100 drop-shadow'></div>
-            <div className='aspect-[7/5] cursor-pointer bg-gray-100 drop-shadow'></div>
-            <div className='aspect-[7/5] cursor-pointer bg-gray-100 drop-shadow'></div>
-            <div className='aspect-[7/5] cursor-pointer bg-gray-100 drop-shadow'></div>
+            {imagesData.map(i => 
+              <div 
+                onClick={() => setIsActive(i.img)} 
+                className='group aspect-[7/5] rounded-lg cursor-pointer bg-gray-100 drop-shadow overflow-hidden'>
+                <Image 
+                  src={i.img} 
+                  width={350} 
+                  height={250} 
+                  className="group-hover:scale-110 transition-all ease-in-out duration-200 object-cover"
+                  alt='Image' />
+              </div>
+
+            )}
+           
           </div>
         </div>
         {/* Information */}

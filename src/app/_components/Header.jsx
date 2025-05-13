@@ -5,7 +5,8 @@ import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import Link from 'next/link';
 import NavArea from './NavArea';
 import NavAreaResponsive from './NavAreaResponsive';
-
+import Image from 'next/image';
+import { IoCall } from "react-icons/io5";
 
 
 
@@ -44,13 +45,24 @@ export default function Header() {
     <section className='w-full py-6'>
         <div className='w-[92%] mx-auto flex md:flex-row flex-col items-center justify-between gap-3 '>
             <div className=''>
-                <h1 className='font-bold font-serif lg:text-[1.6rem] text-[1.4rem] text-green-800'>
+                {/* <h1 className='font-bold font-serif lg:text-[1.6rem] text-[1.4rem] text-green-800'>
                     NETWORK<span className='text-blue-800'>RESILIENCE</span>
-                </h1>
+                </h1> */}
+                <Image 
+                    src="/assets/img/logo.png" 
+                    className='object-fit' 
+                    width={90} 
+                    height={90} 
+                    alt="Logo" />
             </div>
             <div className='flex justify-end items-center lg:gap-5 gap-3'>
-                <h2 className='lg:text-[1.6rem] text-[1.3rem] leading-none'>
-                    CALL:<span className='text-green-700 font-bold'>+263 868 800 8486</span>
+                <h2 className='lg:text-[1.6rem] flex items-center justify-end gap-2 text-[1.3rem] leading-none'>
+                    <span className='text-[1.2rem] text-gray-600 p-1 border border-gray-600 rounded-full'>
+                    <IoCall /> 
+                    </span>
+                    <span className=' text-green-700 font-bold'>
+                        +263 868 800 8486
+                    </span>
                 </h2>
                 <Link href="#" className='py-4 lg:px-5 px-4 text-gray-50 duration-300 ease-in-out transition-all hover:bg-gradient-to-br hover:from-green-500 hover:to-green-900 hover:drop-shadow-lg bg-gradient-to-br from-blue-600 to-blue-900 rounded-lg'>
                     REQUEST A QUOTE
