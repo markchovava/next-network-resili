@@ -4,6 +4,7 @@ import { IoSearchOutline } from "react-icons/io5";
 import { FaCartArrowDown } from "react-icons/fa";
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link'
+import NavAreaResponsive from './NavAreaResponsive';
 
 
 const variants = {
@@ -23,7 +24,7 @@ export default function NavArea() {
   return (
     <>
     {/* LOW AREA */}
-    <section className='w-full relative'>
+    <section className='w-full hidden lg:block relative z-[100]'>
         <div className='w-[92%] mx-auto py-4 flex  items-center justify-between'>
             <ul className='flex items-center justify-start gap-5 font-medium'>
                 <li>
@@ -71,7 +72,7 @@ export default function NavArea() {
                     {/* SEARCH */}
                     <AnimatePresence>
                         { isActive?.one && 
-                        <div className='text-sm top-[110%] right-[-20%] font-normal absolute w-[500%] p-2 z-[50] bg-white drop-shadow-lg rounded-lg'>
+                        <div className='text-sm top-[110%] right-[-20%] font-normal absolute w-[500%] p-2 z-[200] bg-white drop-shadow-lg rounded-lg'>
                             <div className='w-[100%] flex items-center justify-start border border-gray-400 rounded-lg overflow-hidden'>
                                 <input 
                                     type='text' 
@@ -100,7 +101,7 @@ export default function NavArea() {
                             initial='hidden'
                             animate='visible'
                             exit="hidden" 
-                            className='flex-col gap-1 text-sm top-[110%] right-[-20%] font-normal absolute w-[350%] p-2 z-[50] bg-white drop-shadow-lg rounded-lg'>
+                            className='flex-col gap-1 text-sm top-[110%] right-[-20%] font-normal absolute w-[350%] p-2 z-[200] bg-white drop-shadow-lg rounded-lg'>
                             <li className='flex items-center justify-between gap-2 cursor-pointer border-b border-gray-300 pb-1'>
                                 <div className=''>
                                     <p>Product 1 </p>
@@ -129,6 +130,8 @@ export default function NavArea() {
             </ul>
         </div>
     </section>
+
+    <NavAreaResponsive />
     </>
   )
 }

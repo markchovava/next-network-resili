@@ -78,7 +78,7 @@ export default function MainSlider() {
   
   if (!isClient) {
     // Return a placeholder during server-side rendering
-    return <div className="w-full h-[600px] bg-gray-200 animate-pulse" />;
+    return <div className="w-full h-[600px] bg-gray-200 animate-pulse relative" />;
   }
 
   return (

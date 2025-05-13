@@ -1,13 +1,13 @@
 import React from 'react'
 import Image from 'next/image'
-
+import Link from 'next/link';
 
 
 export default function Register() {
   return (
      <>
-    <section className='w-full py-[5rem]'>
-      <div className='mx-auto w-[50%] bg-white rounded-xl drop-shadow-lg p-8'>
+    <section className='w-full py-[5rem] border-t border-gray-300'>
+      <div className='mx-auto lg:w-[50%] w-[80%] bg-white rounded-xl drop-shadow-lg p-8'>
         <div className='flex items-center justify-center mb-4'>
           <Image
             src="/assets/img/logo.png" 
@@ -22,10 +22,15 @@ export default function Register() {
           <p className='mb-1 font-light'>Email:</p>
           <input type='text' placeholder='Enter Email' className='px-3 py-3 w-[100%] outline-none border border-gray-300' />
         </div>
-        {/*  */}
+        {/* PASSWORD */}
         <div className='mb-4'>
           <p className='mb-1 font-light'>Password:</p>
           <input type='password' placeholder='Enter Password' className='px-3 py-3 w-[100%] outline-none border border-gray-300' />
+        </div>
+        {/* CONFIRM PASSWORD */}
+        <div className='mb-4'>
+          <p className='mb-1 font-light'>Confirm Password:</p>
+          <input type='password' placeholder='Enter Confirm Password' className='px-3 py-3 w-[100%] outline-none border border-gray-300' />
         </div>
         {/*  */}
         <div className='flex items-center justify-center mb-6'>
@@ -36,7 +41,7 @@ export default function Register() {
 
         <p className='text-center flex items-center justify-center mb-6'>Already have an account? 
           <Link 
-          href='/register' 
+          href='/login' 
           className='px-1 underline text-blue-800 hover:no-underline'>
             Login
           </Link>

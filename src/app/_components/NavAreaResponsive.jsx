@@ -28,7 +28,7 @@ export default function NavAreaResponsive() {
   return (
     <>
     {/* LOW AREA */}
-    <section className='w-full relative'>
+    <section className='w-full lg:hidden block relative z-100'>
         <div className='w-[92%] mx-auto py-4 flex items-center justify-end'>
             <button 
                 onClick={() => setIsToggle(!isToggle)} >
@@ -39,7 +39,7 @@ export default function NavAreaResponsive() {
                 }
             </button>
         </div>
-        {isToggle &&
+        { isToggle &&
         <>
             <div className='w-[92%] mx-auto py-4 flex flex-col items-center justify-between gap-4'>
                 <ul className='w-[100%] flex flex-col items-center justify-center gap-5 font-medium'>

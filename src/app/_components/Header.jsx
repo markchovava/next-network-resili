@@ -38,6 +38,12 @@ export default function Header() {
                 <Link href="#" className='bg-pink-500 p-1 rounded-full hover:scale-110 transition-all ease-in-out duration-200'>
                     <FaInstagram className='text-white text-sm' />
                 </Link>
+                <span>|</span>
+                <Link 
+                    href='/login' 
+                    className='text-sm text-blue-900 underline hover:no-underline'>
+                    Login / Register
+                </Link>
             </div>
         </div>
     </section>
@@ -71,12 +77,12 @@ export default function Header() {
         </div>
     </section>
 
-    <div className='hidden lg:block'>
-        <NavArea />
-    </div>
-    <div className='lg:hidden'>
-        <NavAreaResponsive />
-    </div>
+   
+    <NavArea />
+ 
+   
+        
+    
     
 
     </>

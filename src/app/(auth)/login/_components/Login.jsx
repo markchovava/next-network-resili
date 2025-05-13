@@ -7,8 +7,8 @@ import React from 'react';
 export default function Login() {
   return (
     <>
-    <section className='w-full py-[5rem]'>
-      <div className='mx-auto w-[50%] bg-white rounded-xl drop-shadow-lg p-8'>
+    <section className='w-full py-[5rem] border-t border-gray-300'>
+      <div className='mx-auto lg:w-[50%] w-[80%] bg-white rounded-xl drop-shadow-lg p-8'>
         <div className='flex items-center justify-center mb-4'>
           <Image 
             src="/assets/img/logo.png" 
@@ -36,7 +36,7 @@ export default function Login() {
         </div>
 
         <p className='text-center flex items-center justify-center mb-6'>Don't have an account? 
-          <Link 
+          <Link
           href='/register' 
           className='px-1 underline text-blue-800 hover:no-underline'>
             Register
