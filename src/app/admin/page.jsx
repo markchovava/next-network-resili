@@ -6,13 +6,27 @@ import { IoBriefcaseOutline } from "react-icons/io5";
 import { CgTrack } from "react-icons/cg";
 import { TbPlugConnected } from "react-icons/tb";
 import { IoMdSettings } from "react-icons/io";
-
-
+import { MdOutlineEmail } from "react-icons/md";
+import { FaAngleRight } from "react-icons/fa";
+import Link from 'next/link';
 
 export default function page() {
   return (
     <>
-    <section className='py-[5rem] border-t border-gray-300'>
+    {/* BREADCRUMBS */}
+    <section className='w-full border-y border-gray-200 py-1'>
+      <ul className='mx-auto w-[92%] flex items-center justify-start gap-2 text-sm'>
+        <Link href='/'>
+        <li>Home</li>
+        </Link>
+        <li><FaAngleRight /></li>
+        <Link href='/admin'>
+        <li>Admin</li>
+        </Link>
+      </ul>
+    </section>
+
+    <section className='py-[5rem]'>
       <div className='mx-auto w-[92%]'>
         <h3 className='text-[1.8rem] font-light mb-3'>Admin Dashboard</h3>
         <hr className='border-b border-gray-200' />
@@ -64,7 +78,14 @@ export default function page() {
             <div className='overflow-hidden bg-gradient-to-br p-5 from-gray-400 to-gray-900 flex items-center justify-center rounded-full'>
               <IoMdSettings className='text-[2rem] text-white group-hover:scale-110 duration-300 ease-in-out transition-all' />
             </div>
-          <h2 className='text-[1.8rem]'>Partners</h2>
+          <h2 className='text-[1.8rem]'>Settings</h2>
+          </div>
+          {/*  */}
+          <div className='group cursor-pointer bg-white rounded-2xl drop-shadow-md py-8 px-6 flex items-center justify-start gap-8 hover:drop-shadow-xl'>
+            <div className='overflow-hidden bg-gradient-to-br p-5 from-indigo-400 to-indigo-900 flex items-center justify-center rounded-full'>
+              <MdOutlineEmail className='text-[2rem] text-white group-hover:scale-110 duration-300 ease-in-out transition-all' />
+            </div>
+            <h2 className='text-[1.8rem]'>Messages</h2>
           </div>
         </div>
       </div>
