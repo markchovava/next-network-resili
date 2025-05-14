@@ -1,7 +1,6 @@
 "use client"
 import React, { useState } from 'react'
 import ProfileEditModal from './ProfileEditModal';
-import Link from 'next/link';
 
 
 export default function ProfileView({ id }) {
@@ -12,15 +11,7 @@ export default function ProfileView({ id }) {
     <>
    <section className='w-[100%] mt-4 pb-[5rem]'>
         <div className='mx-auto w-[92%]'>
-            <div className='flex items-center justify-end gap-3 mb-4'>
-                <Link href='/admin/profile/password'
-                    className='drop-shadow bg-white duration-100 ease-linear transition-all border border-gray-300 hover:bg-green-800 hover:text-white hover:drop-shadow-md px-4 py-3'>
-                    Password
-                </Link>
-                <Link href='/admin/profile/email' 
-                    className='drop-shadow bg-white duration-100 ease-linear transition-all border border-gray-300 hover:bg-blue-800 hover:text-white hover:drop-shadow-md px-4 py-3'>
-                    Email
-                </Link>
+            <div className='flex items-center justify-end mb-4'>
                 <button 
                     onClick={() => setIsModal(!isModal)}
                     className='drop-shadow bg-white duration-100 ease-linear transition-all border border-gray-300 hover:bg-gray-800 hover:text-white hover:drop-shadow-md px-4 py-3'>
@@ -28,12 +19,7 @@ export default function ProfileView({ id }) {
                 </button>
             </div>
 
-            <div className=''>
-                <h3 className='text-[2.5rem] font-light mb-1'>View Profile</h3>
-                <hr className='border-b border-gray-200' />
-            </div>
-
-            <section className='p-6 bg-white drop-shadow-lg mt-4'>
+            <section className='p-6 bg-white drop-shadow-lg'>
                 {/* NAME */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Name:</p>
@@ -73,7 +59,7 @@ export default function ProfileView({ id }) {
                     </p>
                 </div>
                 {/* */}
-                <div className='mb-4'>
+                <div className=''>
                     <p className='text-sm font-light'>Updated At:</p>
                     <p className='text-lg'>
                         13 May 2025

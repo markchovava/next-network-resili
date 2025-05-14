@@ -1,5 +1,4 @@
 "use client"
-import Link from 'next/link'
 import React, { useState } from 'react'
 
 
@@ -21,13 +20,6 @@ export default function EmailEdit() {
       
 
       <form className='mx-auto w-[70%]' onSubmit={() => setIsSubmit(true)}>
-
-        <div className='flex items-center justify-end gap-3 mb-4'>
-          <Link href='/admin/profile' 
-              className='drop-shadow bg-white duration-100 ease-linear transition-all border border-gray-300 hover:bg-blue-800 hover:text-white hover:drop-shadow-md px-4 py-3'>
-              View Profile
-          </Link>
-        </div>
   
           <h3 className='text-[2.5rem] font-light mb-1'>Email</h3>
           <hr className='border-b border-gray-200' />

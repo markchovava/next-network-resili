@@ -85,7 +85,7 @@ export default function ProductList() {
             </section>
         </section>
         {/* PAGINATION */}
-        <section className='w-[90%] mx-auto pb-[4rem] flex items-center justify-end gap-3'>
+        <section className='w-[92%] mx-auto pb-[4rem] flex items-center justify-end gap-3'>
           {/* PREVIOUS */}
           <button
               className='group px-4 py-2 flex items-center justify-center gap-2 border border-gray-700 text-gray-700'>
