@@ -1,9 +1,9 @@
 "use client"
 import React, { useState } from 'react'
-import UserEditModal from './UserEditModal';
+import AppInfoEditModal from './AppInfoEditModal';
 
 
-export default function UserView({ id }) {
+export default function AppInfoView({ id }) {
     const [isModal, setIsModal] = useState(false);
     const [data, setData] = useState();
 
@@ -19,55 +19,85 @@ export default function UserView({ id }) {
                 </button>
             </div>
 
-            <div className=''>
-                <h3 className='text-[2.5rem] font-light mb-1'>View User</h3>
-                <hr className='border-b border-gray-200' />
-            </div>
-
-            <section className='p-6 bg-white drop-shadow-lg mt-4'>
+            <section className='p-6 bg-white drop-shadow-lg'>
                 {/* NAME */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Name:</p>
-                    <p className='text-lg'>data?.name</p>
+                    <p className='text-lg'>N/A</p>
                 </div>
                 {/* LEVEL */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Email:</p>
-                    <p className='text-lg'>data?.leve</p>
+                    <p className='text-lg'>N/A</p>
                 </div>
                 {/* */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Phone:</p>
                     <p className='text-lg'>
-                        000987
+                        N/A
                     </p>
                 </div>
                 {/* */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Address:</p>
                     <p className='text-lg'>
-                        000987
+                        N/A
                     </p>
                 </div>
                 {/* */}
                 <div className='mb-6'>
-                    <p className='text-sm font-light'>Assign Admin:</p>
+                    <p className='text-sm font-light'>Facebook:</p>
                     <p className='text-lg'>
-                        No
+                       N/A
+                    </p>
+                </div>
+                {/* */}
+                <div className='mb-6'>
+                    <p className='text-sm font-light'>WhatsApp:</p>
+                    <p className='text-lg'>
+                       N/A
+                    </p>
+                </div>
+                {/* */}
+                <div className='mb-6'>
+                    <p className='text-sm font-light'>LinkedIn:</p>
+                    <p className='text-lg'>
+                        N/A
+                    </p>
+                </div>
+                {/* */}
+                <div className='mb-6'>
+                    <p className='text-sm font-light'>Twitter:</p>
+                    <p className='text-lg'>
+                        N/A
+                    </p>
+                </div>
+                {/* */}
+                <div className='mb-6'>
+                    <p className='text-sm font-light'>Instagram:</p>
+                    <p className='text-lg'>
+                        N/A
+                    </p>
+                </div>
+                {/* */}
+                <div className='mb-6'>
+                    <p className='text-sm font-light'>Description:</p>
+                    <p className='text-lg'>
+                        N/A
                     </p>
                 </div>
                 {/* */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Created At:</p>
                     <p className='text-lg'>
-                        13 May 2025
+                        N/A
                     </p>
                 </div>
                 {/* */}
-                <div className=''>
+                <div className='mb-4'>
                     <p className='text-sm font-light'>Updated At:</p>
                     <p className='text-lg'>
-                        13 May 2025
+                        N/A
                     </p>
                 </div>
             </section>
@@ -76,7 +106,7 @@ export default function UserView({ id }) {
     </section>
    
 
-    <UserEditModal 
+    <AppInfoEditModal 
         id={id}
         isModal={isModal} 
         setIsModal={setIsModal} />

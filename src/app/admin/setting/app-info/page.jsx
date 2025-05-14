@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
-import PasswordEdit from './_components/PasswordEdit'
+import AppInfoView from './_components/AppInfoView'
 
 
 
@@ -15,13 +15,13 @@ export default function page() {
         <li><FaAngleRight /></li>
         <Link href='/admin'> <li>Admin</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin/profile'> <li>Profile</li> </Link>
+        <Link href='/admin/setting'> <li>Settings</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin/profile/password'> <li>Password</li> </Link>
+        <Link href='/admin/setting/app-info'><li className='font-semibold'>AppInfo View</li> </Link>
       </ul>
     </section>
 
-    <PasswordEdit />
+    <AppInfoView />
     </>
   )
 }

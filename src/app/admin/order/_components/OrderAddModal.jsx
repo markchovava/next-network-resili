@@ -14,7 +14,7 @@ const variants = {
 }
 
 
-export default function CategoryAddModal({ isModal, setIsModal}) {
+export default function OrderAddModal({ isModal, setIsModal}) {
     const [data, setData] = useState({})
     const [errMsg, setErrMsg] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
@@ -43,7 +43,7 @@ export default function CategoryAddModal({ isModal, setIsModal}) {
                 </div>
                 <form onSubmit={() => setIsSubmit(true)}>
                    <h2 className='text-[2.5rem] font-light mb-6 text-center border-b border-gray-300'>
-                    Add Category
+                    Add Order
                     </h2>
                     {/*  */}
                     <div className='w-[100%] mb-6'>

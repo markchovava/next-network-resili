@@ -5,13 +5,13 @@ import { FaEye } from 'react-icons/fa'
 import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6'
 import { IoSearch } from 'react-icons/io5'
 import { MdDeleteForever } from 'react-icons/md'
-import CategoryAddModal from './CategoryAddModal'
+import MessageAddModal from './MessageAddModal'
 
 
 
 
 
-export default function CategoryList() {
+export default function MessageList() {
   const [isModal, setIsModal] = useState(false)
 
   return (
@@ -19,7 +19,7 @@ export default function CategoryList() {
     <section className='w-full pt-[4rem] pb-[5rem]'>
       
       <div className='mx-auto w-[92%]'>
-        <h3 className='text-[1.8rem] font-light mb-1'>Category List</h3>
+        <h3 className='text-[2.5rem] font-light mb-1'>Message List</h3>
         <hr className='border-b border-gray-200' />
       </div>
 
@@ -38,10 +38,14 @@ export default function CategoryList() {
             </button>
         </form>
         <div>
-            <button onClick={() => setIsModal(true)}
-                className='px-5 py-3 border border-gray-300 hover:bg-gray-900 hover:text-white transition-color ease-linear duration-200'>
-                Add
-            </button>
+          <select
+            type='text' 
+            name='status'
+            className='border border-gray-300 outline-none p-3'>
+            <option value=''>Select an option</option>
+            <option value='Read'>Read</option>
+            <option value='UnRead'>Unread</option>
+          </select>
         </div>
       </div>
 
@@ -50,19 +54,23 @@ export default function CategoryList() {
             <section className='lg:w-[100%] w-[70rem]'>
                 {/* HEADER */}
                 <div className='mx-auto w-[100%] text-lg py-2 flex items-center justify-start font-bold font-white bg-gray-200 '>
-                    <div className='w-[40%] border-r border-white px-3 py-2'>NAME</div>
-                    <div className='w-[40%] border-r border-white px-3 py-2'>AUTHOR</div>
-                    <div className='w-[20%] px-3 py-2 text-end'>ACTION</div>
+                    <div className='w-[30%] border-r border-white px-3 py-2'>NAME</div>
+                    <div className='w-[30%] border-r border-white px-3 py-2'>CONTACTS</div>
+                    <div className='w-[30%] border-r border-white px-3 py-2'>STATUS</div>
+                    <div className='w-[10%] px-3 py-2 text-end'>ACTION</div>
                 </div>
 
                 {/* COLUMN */}
                 <div className='mx-auto w-[100%] py-2 flex items-center justify-start border-b border-x border-gray-300'>
-                  <div className='w-[40%] border-r border-gray-300 px-3 py-2'>name</div>
-                  <div className='w-[40%] border-r border-gray-300 px-3 py-2'>
-                    jjj
+                  <div className='w-[30%] border-r border-gray-300 px-3 py-2'>name</div>
+                  <div className='w-[30%] border-r border-gray-300 px-3 py-2'>
+                    <p>Email: <span>m@email.com</span></p>
+                    <p>Phone: <span>mar@email.com</span></p>
                   </div>
-                  <div className='w-[20%] px-3 py-2 text-end flex items-center justify-end gap-3 text-xl'>
-                      <Link title='View' href={`/admin/category/1`}> 
+                  <div className='w-[30%] border-r border-gray-300 px-3 py-2'>
+                    Read </div>
+                  <div className='w-[10%] px-3 py-2 text-end flex items-center justify-end gap-3 text-xl'>
+                      <Link title='View' href={`/admin/message/1`}> 
                       <FaEye className='hover:text-blue-500 duration-150 hover:scale-110 transition-all ease-in'/> 
                       </Link> 
                       <button title='Delete'> 
@@ -102,7 +110,7 @@ export default function CategoryList() {
     </section>
 
 
-    <CategoryAddModal
+    <MessageAddModal
       isModal={isModal} 
       setIsModal={setIsModal} />
 

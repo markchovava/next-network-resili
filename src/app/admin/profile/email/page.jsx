@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
-import CategoryView from './_components/CategoryView'
+import EmailEdit from './_components/EmailEdit'
+
+
 
 export default function page() {
   return (
@@ -13,13 +15,13 @@ export default function page() {
         <li><FaAngleRight /></li>
         <Link href='/admin'> <li>Admin</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin/category'><li>Category</li> </Link>
+        <Link href='/admin/profile'> <li>Profile</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin/category'> <li>ViewCategory</li> </Link>
+        <Link href='/admin/profile/email'> <li>Email</li> </Link>
       </ul>
     </section>
 
-    <CategoryView />
+    <EmailEdit />
     </>
   )
 }

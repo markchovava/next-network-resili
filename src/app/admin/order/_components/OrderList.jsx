@@ -5,13 +5,13 @@ import { FaEye } from 'react-icons/fa'
 import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6'
 import { IoSearch } from 'react-icons/io5'
 import { MdDeleteForever } from 'react-icons/md'
-import CategoryAddModal from './CategoryAddModal'
+import OrderAddModal from './OrderAddModal'
 
 
 
 
 
-export default function CategoryList() {
+export default function OrderList() {
   const [isModal, setIsModal] = useState(false)
 
   return (
@@ -19,13 +19,13 @@ export default function CategoryList() {
     <section className='w-full pt-[4rem] pb-[5rem]'>
       
       <div className='mx-auto w-[92%]'>
-        <h3 className='text-[1.8rem] font-light mb-1'>Category List</h3>
+        <h3 className='text-[2.5rem] font-light mb-1'>Order List</h3>
         <hr className='border-b border-gray-200' />
       </div>
 
-      <div className='mx-auto w-[92%] flex items-center justify-between mt-2 pb-2'>
+      <div className='mx-auto w-[92%] flex lg:flex-row flex-col items-center justify-between gap-4 mt-2 lg:pb-2 pb-4'>
         <form 
-            className='border border-gray-300 lg:w-[50%] w-[80%] flex items-center justify-start'>
+            className='border border-gray-300 lg:w-[50%] w-[100%] flex items-center justify-start'>
             <input 
                 type='text'
                 placeholder='Search' 
@@ -37,11 +37,27 @@ export default function CategoryList() {
                     <IoSearch className='text-lg' />
             </button>
         </form>
-        <div>
-            <button onClick={() => setIsModal(true)}
-                className='px-5 py-3 border border-gray-300 hover:bg-gray-900 hover:text-white transition-color ease-linear duration-200'>
-                Add
-            </button>
+        <div className='w-[100%] lg:w-auto flex items-center justify-end lg:gap-2 gap-4'>
+          <select
+            type='text' 
+            name='status'
+            className='lg:w-auto w-[50%] border border-gray-300 outline-none p-3'>
+            <option value=''>Select an Option</option>
+            <option value='ASCByDate'>ASC By Date</option>
+            <option value='DESCByDate'>DESC By Date</option>
+            <option value='ASCByTotal'>ASC By Total</option>
+            <option value='DESCByTotal'>DESC By Total</option>
+          </select>
+
+          <select
+            type='text' 
+            name='status'
+            className='lg:w-auto w-[50%] border border-gray-300 outline-none p-3'>
+            <option value=''>Order By Status</option>
+            <option value='Processing'>Processing</option>
+            <option value='InTransit'>In Transit</option>
+            <option value='Completed'>Completed</option>
+          </select>
         </div>
       </div>
 
@@ -50,19 +66,24 @@ export default function CategoryList() {
             <section className='lg:w-[100%] w-[70rem]'>
                 {/* HEADER */}
                 <div className='mx-auto w-[100%] text-lg py-2 flex items-center justify-start font-bold font-white bg-gray-200 '>
-                    <div className='w-[40%] border-r border-white px-3 py-2'>NAME</div>
-                    <div className='w-[40%] border-r border-white px-3 py-2'>AUTHOR</div>
-                    <div className='w-[20%] px-3 py-2 text-end'>ACTION</div>
+                    <div className='w-[25%] border-r border-white px-3 py-2'>REF NO.</div>
+                    <div className='w-[25%] border-r border-white px-3 py-2'>TOTALS</div>
+                    <div className='w-[20%] border-r border-white px-3 py-2'>CREATED</div>
+                    <div className='w-[20%] border-r border-white px-3 py-2'>STATUS</div>
+                    <div className='w-[10%] px-3 py-2 text-end'>ACTION</div>
                 </div>
 
                 {/* COLUMN */}
                 <div className='mx-auto w-[100%] py-2 flex items-center justify-start border-b border-x border-gray-300'>
-                  <div className='w-[40%] border-r border-gray-300 px-3 py-2'>name</div>
-                  <div className='w-[40%] border-r border-gray-300 px-3 py-2'>
-                    jjj
-                  </div>
-                  <div className='w-[20%] px-3 py-2 text-end flex items-center justify-end gap-3 text-xl'>
-                      <Link title='View' href={`/admin/category/1`}> 
+                  <div className='w-[25%] border-r border-gray-300 px-3 py-2'>name</div>
+                  <div className='w-[25%] border-r border-gray-300 px-3 py-2'>
+                    jjj </div>
+                  <div className='w-[20%] border-r border-gray-300 px-3 py-2'>
+                    jjj </div>
+                  <div className='w-[20%] border-r border-gray-300 px-3 py-2'>
+                    jjj </div>
+                  <div className='w-[10%] px-3 py-2 text-end flex items-center justify-end gap-3 text-xl'>
+                      <Link title='View' href={`/admin/order/1`}> 
                       <FaEye className='hover:text-blue-500 duration-150 hover:scale-110 transition-all ease-in'/> 
                       </Link> 
                       <button title='Delete'> 
@@ -76,7 +97,7 @@ export default function CategoryList() {
                     <h3 className='text-[3rem] font-light'>No Data Available at the moment.</h3>
                     <p>Click 
                         <span className='cursor-pointer underline hover:no-underline mx-1'>
-                            Edit
+                            Add
                         </span> 
                         to add.
                     </p>
@@ -102,7 +123,7 @@ export default function CategoryList() {
     </section>
 
 
-    <CategoryAddModal
+    <OrderAddModal
       isModal={isModal} 
       setIsModal={setIsModal} />
 

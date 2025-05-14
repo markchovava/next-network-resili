@@ -14,7 +14,7 @@ const variants = {
 }
 
 
-export default function CategoryAddModal({ isModal, setIsModal}) {
+export default function MessageEditModal({id, isModal, setIsModal}) {
     const [data, setData] = useState({})
     const [errMsg, setErrMsg] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
@@ -43,20 +43,23 @@ export default function CategoryAddModal({ isModal, setIsModal}) {
                 </div>
                 <form onSubmit={() => setIsSubmit(true)}>
                    <h2 className='text-[2.5rem] font-light mb-6 text-center border-b border-gray-300'>
-                    Add Category
+                    Update Message Status
                     </h2>
-                    {/*  */}
+                    {/* STATUS */}
                     <div className='w-[100%] mb-6'>
-                        <p className='mb-2 leading-none text-sm font-semibold'>Name:</p>
-                        <input 
+                        <p className='mb-2 leading-none text-sm font-light'>Status:</p>
+                        <select
                             type='text' 
-                            name='name'
+                            name='status'
                             onChange={handleInput}
-                            value={data?.name}
-                            placeholder='Name' 
-                            className='w-[100%] rounded-xl border border-gray-300 outline-none p-3' />
-                        {errMsg?.name &&
-                        <p className='text-red-600 text-sm'>{errMsg?.name}</p>}
+                            value={data?.status}
+                            className='w-[100%] border border-gray-300 outline-none p-3'>
+                            <option value=''>Select an option</option>
+                            <option value='Read'>Read</option>
+                            <option value='UnRead'>Unread</option>
+                        </select>
+                        { errMsg?.status &&
+                        <p className='text-red-600 text-sm'>{errMsg?.status}</p> }
                     </div>
                     {/*  */}
                     <div className='w-[100%]'>

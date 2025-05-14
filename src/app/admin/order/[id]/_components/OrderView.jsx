@@ -1,9 +1,9 @@
 "use client"
 import React, { useState } from 'react'
-import CategoryEditModal from './OrderEditModal';
+import OrderEditModal from './OrderEditModal';
 
 
-export default function CategoryView({ id }) {
+export default function OrderView({ id }) {
     const [isModal, setIsModal] = useState(false);
     const [data, setData] = useState();
 
@@ -43,7 +43,7 @@ export default function CategoryView({ id }) {
     </section>
    
 
-    <CategoryEditModal 
+    <OrderEditModal 
         id={id}
         isModal={isModal} 
         setIsModal={setIsModal} />

@@ -1,8 +1,7 @@
-import Link from 'next/link'
-import React from 'react'
-import { FaAngleRight } from 'react-icons/fa'
-import UserList from './_components/UserList'
-
+import Link from 'next/link';
+import React from 'react';
+import { FaAngleRight } from 'react-icons/fa';
+import MessageList from './_components/MessageList';
 
 
 export default function page() {
@@ -15,12 +14,11 @@ export default function page() {
         <li><FaAngleRight /></li>
         <Link href='/admin'><li>Admin</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin/user'><li className='font-semibold'>User</li> </Link>
+        <Link href='/admin/message'><li className='font-semibold'>Message List</li> </Link>
       </ul>
     </section>
 
-    <UserList />
-
+    <MessageList />
     </>
   )
 }

@@ -19,7 +19,12 @@ export default function ProductView({ id }) {
                 </button>
             </div>
 
-            <section className='bg-white drop-shadow-lg p-6'>
+             <div className=''>
+                <h3 className='text-[2.5rem] font-light mb-1'>View User</h3>
+                <hr className='border-b border-gray-200' />
+            </div>
+
+            <section className='bg-white drop-shadow-lg p-6 mt-4'>
                 {/* IMAGES */}
                 <div className='mb-6'>
                     <p className='text-sm font-light mb-2'>Images:</p>
