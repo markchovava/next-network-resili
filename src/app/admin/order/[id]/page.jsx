@@ -17,7 +17,7 @@ export default function page() {
         <li><FaAngleRight /></li>
         <Link href='/admin/order'><li>Order</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin/order'> <li>ViewOrder</li> </Link>
+        <Link href='/admin/order'> <li className='font-semibold'>View Order</li> </Link>
       </ul>
     </section>
 
