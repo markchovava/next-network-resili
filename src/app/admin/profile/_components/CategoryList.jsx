@@ -5,13 +5,13 @@ import { FaEye } from 'react-icons/fa'
 import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6'
 import { IoSearch } from 'react-icons/io5'
 import { MdDeleteForever } from 'react-icons/md'
-import ProductAddModal from './ProductAddModal'
+import CategoryAddModal from './CategoryAddModal'
 
 
 
 
 
-export default function ProductList() {
+export default function CategoryList() {
   const [isModal, setIsModal] = useState(false)
 
   return (
@@ -19,7 +19,7 @@ export default function ProductList() {
     <section className='w-full pt-[4rem] pb-[5rem]'>
       
       <div className='mx-auto w-[92%]'>
-        <h3 className='text-[1.8rem] font-light mb-1'>Product List</h3>
+        <h3 className='text-[1.8rem] font-light mb-1'>Category List</h3>
         <hr className='border-b border-gray-200' />
       </div>
 
@@ -62,7 +62,7 @@ export default function ProductList() {
                     jjj
                   </div>
                   <div className='w-[20%] px-3 py-2 text-end flex items-center justify-end gap-3 text-xl'>
-                      <Link title='View' href={`/admin/product/1`}> 
+                      <Link title='View' href={`/admin/category/1`}> 
                       <FaEye className='hover:text-blue-500 duration-150 hover:scale-110 transition-all ease-in'/> 
                       </Link> 
                       <button title='Delete'> 
@@ -102,7 +102,7 @@ export default function ProductList() {
     </section>
 
 
-    <ProductAddModal
+    <CategoryAddModal
       isModal={isModal} 
       setIsModal={setIsModal} />
 

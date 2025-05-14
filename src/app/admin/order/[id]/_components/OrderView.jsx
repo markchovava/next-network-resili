@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react'
-import CategoryEditModal from './CategoryEditModal';
+import CategoryEditModal from './OrderEditModal';
 
 
 export default function CategoryView({ id }) {
@@ -14,14 +14,9 @@ export default function CategoryView({ id }) {
             <div className='flex items-center justify-end mb-4'>
                 <button 
                     onClick={() => setIsModal(!isModal)}
-                    className='bg-white drop-shadow-md duration-100 ease-linear transition-all border border-gray-800 hover:bg-gray-800 hover:text-white hover:drop-shadow-md px-4 py-3'>
+                    className='bg-white drop-shadow duration-100 ease-linear transition-all border border-gray-800 hover:bg-gray-800 hover:text-white hover:drop-shadow-md px-4 py-3'>
                     Edit
                 </button>
-            </div>
-
-            <div className='mb-4'>
-                <h3 className='text-[2.5rem] font-light mb-1'>View Category</h3>
-                <hr className='border-b border-gray-200' />
             </div>
 
             <section className='bg-white drop-shadow-lg p-6'>
@@ -36,7 +31,7 @@ export default function CategoryView({ id }) {
                     <p className='text-lg'>data?.leve</p>
                 </div>
                 {/* */}
-                <div className=''>
+                <div className='mb-6'>
                     <p className='text-sm font-semibold'>Author:</p>
                     <p className='text-lg'>
                         user?.name

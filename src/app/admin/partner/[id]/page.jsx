@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
-import BrandView from './_components/BrandView'
+import PartnerView from './_components/PartnerView'
 
 export default function page() {
   return (
@@ -13,13 +13,13 @@ export default function page() {
         <li><FaAngleRight /></li>
         <Link href='/admin'> <li>Admin</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin/brand'><li>Brand</li> </Link>
+        <Link href='/admin/partner'><li>Partner</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin/brand/1'> <li>View Brand</li> </Link>
+        <Link href='/admin/partner/1'> <li>View Partner</li> </Link>
       </ul>
     </section>
 
-    <BrandView />
+    <PartnerView />
     </>
   )
 }

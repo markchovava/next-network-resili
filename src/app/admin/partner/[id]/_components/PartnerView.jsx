@@ -1,9 +1,9 @@
 "use client"
 import React, { useState } from 'react'
-import CategoryEditModal from './CategoryEditModal';
+import PartnerEditModal from './PartnerEditModal';
 
 
-export default function CategoryView({ id }) {
+export default function PartnerView({ id }) {
     const [isModal, setIsModal] = useState(false);
     const [data, setData] = useState();
 
@@ -17,11 +17,6 @@ export default function CategoryView({ id }) {
                     className='bg-white drop-shadow-md duration-100 ease-linear transition-all border border-gray-800 hover:bg-gray-800 hover:text-white hover:drop-shadow-md px-4 py-3'>
                     Edit
                 </button>
-            </div>
-
-            <div className='mb-4'>
-                <h3 className='text-[2.5rem] font-light mb-1'>View Category</h3>
-                <hr className='border-b border-gray-200' />
             </div>
 
             <section className='bg-white drop-shadow-lg p-6'>
@@ -48,7 +43,7 @@ export default function CategoryView({ id }) {
     </section>
    
 
-    <CategoryEditModal 
+    <PartnerEditModal 
         id={id}
         isModal={isModal} 
         setIsModal={setIsModal} />

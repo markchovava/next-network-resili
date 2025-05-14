@@ -14,7 +14,7 @@ const variants = {
 }
 
 
-export default function CategoryEditModal({id, isModal, setIsModal}) {
+export default function BrandEditModal({id, isModal, setIsModal}) {
     const [data, setData] = useState({})
     const [errMsg, setErrMsg] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
@@ -43,7 +43,7 @@ export default function CategoryEditModal({id, isModal, setIsModal}) {
                 </div>
                 <form onSubmit={() => setIsSubmit(true)}>
                    <h2 className='text-[2.5rem] font-light mb-6 text-center border-b border-gray-300'>
-                    Edit Category
+                    Edit Brand
                     </h2>
                     {/*  */}
                     <div className='w-[100%] mb-6'>

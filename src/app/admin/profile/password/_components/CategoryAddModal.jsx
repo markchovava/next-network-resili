@@ -14,7 +14,7 @@ const variants = {
 }
 
 
-export default function CategoryEditModal({id, isModal, setIsModal}) {
+export default function CategoryAddModal({ isModal, setIsModal}) {
     const [data, setData] = useState({})
     const [errMsg, setErrMsg] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
@@ -43,7 +43,7 @@ export default function CategoryEditModal({id, isModal, setIsModal}) {
                 </div>
                 <form onSubmit={() => setIsSubmit(true)}>
                    <h2 className='text-[2.5rem] font-light mb-6 text-center border-b border-gray-300'>
-                    Edit Category
+                    Add Category
                     </h2>
                     {/*  */}
                     <div className='w-[100%] mb-6'>
@@ -54,7 +54,7 @@ export default function CategoryEditModal({id, isModal, setIsModal}) {
                             onChange={handleInput}
                             value={data?.name}
                             placeholder='Name' 
-                            className='w-[100%] border border-gray-300 outline-none p-3' />
+                            className='w-[100%] rounded-xl border border-gray-300 outline-none p-3' />
                         {errMsg?.name &&
                         <p className='text-red-600 text-sm'>{errMsg?.name}</p>}
                     </div>

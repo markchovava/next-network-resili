@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
-import BrandView from './_components/BrandView'
+import PartnerList from './_components/PartnerList'
+
+
 
 export default function page() {
   return (
@@ -9,17 +11,16 @@ export default function page() {
     {/* BREADCRUMBS */}
     <section className='w-full border-y border-gray-200 py-1'>
       <ul className='mx-auto w-[92%] flex items-center justify-start gap-2 text-sm'>
-        <Link href='/'> <li>Home</li> </Link>
+        <Link href='/'> <li>Home</li></Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin'> <li>Admin</li> </Link>
+        <Link href='/admin'><li>Admin</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin/brand'><li>Brand</li> </Link>
-        <li><FaAngleRight /></li>
-        <Link href='/admin/brand/1'> <li>View Brand</li> </Link>
+        <Link href='/admin/partner'><li className='font-semibold'>Partner</li> </Link>
       </ul>
     </section>
 
-    <BrandView />
+    <PartnerList />
+    
     </>
   )
 }

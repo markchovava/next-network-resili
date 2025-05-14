@@ -14,7 +14,7 @@ const variants = {
 }
 
 
-export default function CategoryEditModal({id, isModal, setIsModal}) {
+export default function UserAddModal({ isModal, setIsModal}) {
     const [data, setData] = useState({})
     const [errMsg, setErrMsg] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
@@ -43,11 +43,12 @@ export default function CategoryEditModal({id, isModal, setIsModal}) {
                 </div>
                 <form onSubmit={() => setIsSubmit(true)}>
                    <h2 className='text-[2.5rem] font-light mb-6 text-center border-b border-gray-300'>
-                    Edit Category
+                    Add User
                     </h2>
+                    
                     {/*  */}
                     <div className='w-[100%] mb-6'>
-                        <p className='mb-2 leading-none text-sm font-semibold'>Name:</p>
+                        <p className='mb-2 leading-none font-light'>Name:</p>
                         <input 
                             type='text' 
                             name='name'
@@ -58,6 +59,46 @@ export default function CategoryEditModal({id, isModal, setIsModal}) {
                         {errMsg?.name &&
                         <p className='text-red-600 text-sm'>{errMsg?.name}</p>}
                     </div>
+
+                    <div className='w-[100%] mb-6'>
+                        <p className='mb-2 leading-none font-light'>Email:</p>
+                        <input 
+                            type='text' 
+                            name='email'
+                            onChange={handleInput}
+                            value={data?.email}
+                            placeholder='Enter Name' 
+                            className='w-[100%] border border-gray-300 outline-none p-3' />
+                        {errMsg?.email &&
+                        <p className='text-red-600 text-sm'>{errMsg?.email}</p>}
+                    </div>
+
+                    <div className='w-[100%] mb-6'>
+                        <p className='mb-2 leading-none font-light'>Phone:</p>
+                        <input 
+                            type='text' 
+                            name='phone'
+                            onChange={handleInput}
+                            value={data?.phone}
+                            placeholder='Enter Phone' 
+                            className='w-[100%] border border-gray-300 outline-none p-3' />
+                        { errMsg?.phone &&
+                            <p className='text-red-600 text-sm'>{errMsg?.phone}</p> }
+                    </div>
+
+                    <div className='w-[100%] mb-6'>
+                        <p className='mb-2 leading-none font-light'>Address:</p>
+                        <input 
+                            type='text' 
+                            name='address'
+                            onChange={handleInput}
+                            value={data?.address}
+                            placeholder='Enter Address' 
+                            className='w-[100%] border border-gray-300 outline-none p-3' />
+                        { errMsg?.address &&
+                            <p className='text-red-600 text-sm'>{errMsg?.address}</p> }
+                    </div>
+
                     {/*  */}
                     <div className='w-[100%]'>
                         <button type='submit' className='w-[100%] rounded-xl bg-gray-800 hover:bg-gray-900 hover:drop-shadow-lg ease-linear transition-all duration-150 text-white py-4'>
@@ -66,6 +107,7 @@ export default function CategoryEditModal({id, isModal, setIsModal}) {
                            : 'Submit' }
                         </button>
                     </div>
+
                 </form>
 
             </section>

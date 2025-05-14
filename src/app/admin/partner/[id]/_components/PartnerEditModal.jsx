@@ -14,7 +14,7 @@ const variants = {
 }
 
 
-export default function CategoryEditModal({id, isModal, setIsModal}) {
+export default function PartnerEditModal({id, isModal, setIsModal}) {
     const [data, setData] = useState({})
     const [errMsg, setErrMsg] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
@@ -43,11 +43,35 @@ export default function CategoryEditModal({id, isModal, setIsModal}) {
                 </div>
                 <form onSubmit={() => setIsSubmit(true)}>
                    <h2 className='text-[2.5rem] font-light mb-6 text-center border-b border-gray-300'>
-                    Edit Category
+                    Edit Partner
                     </h2>
+
+                    {/*  IMAGE  */}
+                    <div className='w-[100%] mb-6'>
+                        <p className='mb-2 leading-none text-sm font-light'>Image:</p>
+                        <input 
+                            type='file' 
+                            name='image'
+                            onChange={ (e) => setData({
+                                ...data, 
+                                image: e.target.files[0], 
+                                img: URL.createObjectURL(e.target.files[0]), })
+                            }
+                            className='lg:w-[40%] w-[60%] rounded-lg p-3 border border-gray-300 mb-3' />
+                        {/*  */}
+                        <div className='lg:w-[40%] w-[60%] drop-shadow-lg relative aspect-[7/5] bg-gray-200 rounded-lg overflow-hidden'>
+                            <div className='absolute z-10 w-[100%] h-[100%] flex items-center justify-center'>No Image</div>
+                            <div className='w-[100%] h-[100%] absolute z-20 '>
+                                <img src={data?.img} alt='Image' className='w-[100%] h-[100%] object-cover' />
+                            </div>
+                        </div>
+                        {errMsg?.image &&
+                            <p className='text-red-600 text-sm'>{errMsg?.image}</p>}
+                    </div>
+
                     {/*  */}
                     <div className='w-[100%] mb-6'>
-                        <p className='mb-2 leading-none text-sm font-semibold'>Name:</p>
+                        <p className='mb-2 leading-none text-sm font-light'>Name:</p>
                         <input 
                             type='text' 
                             name='name'

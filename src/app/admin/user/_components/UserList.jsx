@@ -5,13 +5,11 @@ import { FaEye } from 'react-icons/fa'
 import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6'
 import { IoSearch } from 'react-icons/io5'
 import { MdDeleteForever } from 'react-icons/md'
-import ProductAddModal from './ProductAddModal'
+import UserAddModal from './UserAddModal'
 
 
 
-
-
-export default function ProductList() {
+export default function UserList() {
   const [isModal, setIsModal] = useState(false)
 
   return (
@@ -19,7 +17,7 @@ export default function ProductList() {
     <section className='w-full pt-[4rem] pb-[5rem]'>
       
       <div className='mx-auto w-[92%]'>
-        <h3 className='text-[1.8rem] font-light mb-1'>Product List</h3>
+        <h3 className='text-[2.5rem] font-light mb-1'>User List</h3>
         <hr className='border-b border-gray-200' />
       </div>
 
@@ -51,18 +49,18 @@ export default function ProductList() {
                 {/* HEADER */}
                 <div className='mx-auto w-[100%] text-lg py-2 flex items-center justify-start font-bold font-white bg-gray-200 '>
                     <div className='w-[40%] border-r border-white px-3 py-2'>NAME</div>
-                    <div className='w-[40%] border-r border-white px-3 py-2'>AUTHOR</div>
-                    <div className='w-[20%] px-3 py-2 text-end'>ACTION</div>
+                    <div className='w-[30%] border-r border-white px-3 py-2'>PHONE</div>
+                    <div className='w-[20%] border-r border-white px-3 py-2'>STATUS</div>
+                    <div className='w-[10%] px-3 py-2 text-end'>ACTION</div>
                 </div>
 
                 {/* COLUMN */}
                 <div className='mx-auto w-[100%] py-2 flex items-center justify-start border-b border-x border-gray-300'>
                   <div className='w-[40%] border-r border-gray-300 px-3 py-2'>name</div>
-                  <div className='w-[40%] border-r border-gray-300 px-3 py-2'>
-                    jjj
-                  </div>
-                  <div className='w-[20%] px-3 py-2 text-end flex items-center justify-end gap-3 text-xl'>
-                      <Link title='View' href={`/admin/product/1`}> 
+                  <div className='w-[30%] border-r border-gray-300 px-3 py-2'>jjj </div>
+                  <div className='w-[20%] border-r border-gray-300 px-3 py-2'>jjj </div>
+                  <div className='w-[10%] px-3 py-2 text-end flex items-center justify-end gap-3 text-xl'>
+                      <Link title='View' href={`/admin/user/1`}> 
                       <FaEye className='hover:text-blue-500 duration-150 hover:scale-110 transition-all ease-in'/> 
                       </Link> 
                       <button title='Delete'> 
@@ -102,7 +100,7 @@ export default function ProductList() {
     </section>
 
 
-    <ProductAddModal
+    <UserAddModal
       isModal={isModal} 
       setIsModal={setIsModal} />
 

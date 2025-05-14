@@ -54,7 +54,7 @@ export default function CategoryAddModal({ isModal, setIsModal}) {
                             onChange={handleInput}
                             value={data?.name}
                             placeholder='Name' 
-                            className='w-[100%] rounded-xl border border-gray-300 outline-none p-3' />
+                            className='w-[100%] border border-gray-300 outline-none p-3' />
                         {errMsg?.name &&
                         <p className='text-red-600 text-sm'>{errMsg?.name}</p>}
                     </div>
