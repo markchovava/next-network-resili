@@ -1,11 +1,17 @@
 "use client"
 import React, { useState } from 'react'
 import UserEditModal from './UserEditModal';
+import { _userViewAction } from '@/actions/UserActions';
 
 
-export default function UserView({ id }) {
+export default function UserView({ id, dbData }) {
     const [isModal, setIsModal] = useState(false);
-    const [data, setData] = useState();
+    const [data, setData] = useState(dbData?.data);
+
+    async function getData() {
+        const res = await _userViewAction(id);
+        setData(res?.data);
+    }
 
   return (
     <>
@@ -28,32 +34,33 @@ export default function UserView({ id }) {
                 {/* NAME */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Name:</p>
-                    <p className='text-lg'>data?.name</p>
+                    <p className='text-lg'>{data?.name ?? 'Not Added'}</p>
                 </div>
-                {/* LEVEL */}
+                {/* EMAIL */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Email:</p>
-                    <p className='text-lg'>data?.leve</p>
+                    <p className='text-lg'>{data?.email ?? 'Not Added'}</p>
                 </div>
-                {/* */}
+                {/* PHONE */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Phone:</p>
                     <p className='text-lg'>
-                        000987
+                        {data?.phone ?? 'Not Added'}
                     </p>
                 </div>
-                {/* */}
+                {/* ADDRESS */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Address:</p>
                     <p className='text-lg'>
-                        000987
+                        {data?.address ?? 'Not Added'}
                     </p>
                 </div>
                 {/* */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Assign Admin:</p>
                     <p className='text-lg'>
-                        No
+                        {data?.is_admin == 'Yes' && 'Is Admin'}
+                        {data?.is_admin == 'No' && 'Not Admin'}
                     </p>
                 </div>
                 {/* */}
@@ -64,7 +71,7 @@ export default function UserView({ id }) {
                     </p>
                 </div>
                 {/* */}
-                <div className=''>
+                <div className='mb-4'>
                     <p className='text-sm font-light'>Updated At:</p>
                     <p className='text-lg'>
                         13 May 2025
@@ -78,6 +85,8 @@ export default function UserView({ id }) {
 
     <UserEditModal 
         id={id}
+        getData={getData}
+        domData={data}
         isModal={isModal} 
         setIsModal={setIsModal} />
 

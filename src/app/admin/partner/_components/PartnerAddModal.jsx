@@ -1,4 +1,6 @@
 "use client";
+import { reactToastifyDark } from '@/_utils/reactToastify';
+import { _partnerStoreAction } from '@/actions/PartnerActions';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react'
 import { IoClose } from 'react-icons/io5';
@@ -14,12 +16,51 @@ const variants = {
 }
 
 
-export default function PartnerAddModal({ isModal, setIsModal}) {
-    const [data, setData] = useState({})
+export default function PartnerAddModal({getData, isModal, setIsModal}) {
+    const [data, setData] = useState({
+        name: '', image: null, img: null
+    })
     const [errMsg, setErrMsg] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
     const handleInput = (e) => {
         setData({...data, [e.target.name]: e.target.value});
+    }
+
+    async function postData() {
+        if(!data?.name){
+            const message = "Name is required."
+            toast.warn(message, reactToastifyDark)
+            setErrMsg({name: message})
+            setIsSubmit(false)
+            return
+        }
+        const formData = new FormData()
+        formData.append('name', data?.name)
+        formData.append('image', data?.image)
+        try{
+            const res = await _partnerStoreAction(formData);
+            console.log('res', res)
+            if(res?.status == 0){
+                const message = res?.message;
+                toast.success(message, reactToastifyDark);
+                setErrMsg({email: message});
+                setIsSubmit(false);
+                return;
+            }
+            if(res?.status == 1) {
+                await getData();
+                toast.success(res?.message, reactToastifyDark);
+                setData({});
+                setErrMsg({});
+                setIsSubmit(false)
+                setIsModal(false);
+                return;
+            }
+        } catch (error) {
+            console.error(`Error: ${error}`);
+            setIsSubmit(false)
+            return;
+        }
     }
 
     
@@ -41,7 +82,7 @@ export default function PartnerAddModal({ isModal, setIsModal}) {
                     <IoClose className='text-2xl' />
                 </button>
                 </div>
-                <form onSubmit={() => setIsSubmit(true)}>
+                <form action={postData} onSubmit={() => setIsSubmit(true)}>
                    <h2 className='text-[2.5rem] font-light mb-6 text-center border-b border-gray-300'>
                     Add Partner
                     </h2>
@@ -67,7 +108,6 @@ export default function PartnerAddModal({ isModal, setIsModal}) {
                         {errMsg?.image &&
                             <p className='text-red-600 text-sm'>{errMsg?.image}</p>}
                     </div>
-
                     {/* NAME */}
                     <div className='w-[100%] mb-6'>
                         <p className='mb-2 leading-none text-sm font-light'>Name:</p>
@@ -76,7 +116,7 @@ export default function PartnerAddModal({ isModal, setIsModal}) {
                             name='name'
                             onChange={handleInput}
                             value={data?.name}
-                            placeholder='Name' 
+                            placeholder='Enter Name' 
                             className='w-[100%] border border-gray-300 outline-none p-3' />
                         {errMsg?.name &&
                         <p className='text-red-600 text-sm'>{errMsg?.name}</p>}
@@ -84,9 +124,7 @@ export default function PartnerAddModal({ isModal, setIsModal}) {
                     {/*  */}
                     <div className='w-[100%]'>
                         <button type='submit' className='w-[100%] rounded-xl bg-gray-800 hover:bg-gray-900 hover:drop-shadow-lg ease-linear transition-all duration-150 text-white py-4'>
-                           { isSubmit 
-                           ? 'Processing' 
-                           : 'Submit' }
+                        { isSubmit ? 'Processing' : 'Submit' }
                         </button>
                     </div>
                 </form>

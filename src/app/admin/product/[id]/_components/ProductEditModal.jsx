@@ -6,6 +6,10 @@ import { toast } from 'react-toastify';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import { MdDeleteForever } from 'react-icons/md';
 import generateUniqueId from '@/_utils/generateUniqueId';
+import { baseURL } from '@/api/BaseURL';
+import { _productImageDeleteAction } from '@/actions/ProductImageActions';
+import { reactToastifyDark } from '@/_utils/reactToastify';
+import { _productUpdateAction } from '@/actions/ProductActions';
 
 const variants = {
     hidden: { opacity: 0 },
@@ -15,18 +19,29 @@ const variants = {
             duration: 1, }},
 }
 
+const inputData = {
+    name: '',
+    price: '',
+    quantity: '',
+    description: '',
+    product_specs: [],
+    product_images: [],
+}
 
-export default function ProductEditModal({ isModal, setIsModal}) {
-    const [data, setData] = useState({})
+
+export default function ProductEditModal({id, isModal, setIsModal, getData, imagesData, specsData, domData, brands}) {
+    const currData = {...domData, product_images: [] }
+    const [data, setData] = useState(currData)
     const [errMsg, setErrMsg] = useState({})
     const [images, setImages] = useState({
-        img1: null,
-        img2: null,
-        img3: null,
-        img4: null,
+        img0: baseURL + imagesData[0]?.image,
+        img1: baseURL + imagesData[1]?.image,
+        img2: baseURL + imagesData[2]?.image,
+        img3: baseURL + imagesData[3]?.image,
     })
-    const [dList, setDList] = useState([]);
+    const [dList, setDList] = useState(specsData);
     const [isSubmit, setIsSubmit] = useState(false)
+    console.log('data', data)
     const handleInput = (e) => {
         setData({...data, [e.target.name]: e.target.value});
     }
@@ -47,6 +62,65 @@ export default function ProductEditModal({ isModal, setIsModal}) {
         setDList((prevItems) => prevItems.filter((item) => item.id !== itemId));
     }
 
+    async function deleteData(img_id) {
+            try{
+                const res = await _productImageDeleteAction(img_id, id);
+                console.log('res', res)
+                if(res?.status == 1) {
+                    toast.success(res?.message, reactToastifyDark);
+                    return;
+                }
+                } catch (error) {
+                    console.error(`Error: ${error}`); 
+            }
+            return
+    }
+
+    async function postData() {
+        if(!data?.name){
+            const message = "Name is required."
+            toast.warn(message, reactToastifyDark)
+            setErrMsg({name: message})
+            setIsSubmit(false)
+            return
+        }
+        const formData = new FormData()
+        formData.append('name', data?.name)
+        formData.append('price', data?.price)
+        formData.append('quantity', data?.quantity)
+        formData.append('brand_id', data?.brand_id)
+        formData.append('description', data?.description)
+        formData.append('product_specs', JSON.stringify(dList));
+        data?.product_images.forEach((file, index) => {
+            formData.append('product_images[]', file);
+        });
+        try{
+            const res = await _productUpdateAction(formData, id);
+            if(res?.status == 0){
+                const message = res?.message;
+                toast.success(message, reactToastifyDark);
+                setErrMsg({email: message});
+                setIsSubmit(false);
+                return;
+            }
+            if(res?.status == 1) {
+                await getData();
+                toast.success(res?.message, reactToastifyDark);
+                setData(inputData);
+                setDList([]);
+                setImages({img1: null, img2: null, img3: null, img4: null});
+                setErrMsg({});
+                setIsSubmit(false)
+                setIsModal(false);
+                return;
+            }
+        } catch (error) {
+            console.error(`Error: ${error}`);
+            setIsSubmit(false)
+            return;
+        }
+    }
+
 
     
   return (
@@ -61,18 +135,16 @@ export default function ProductEditModal({ isModal, setIsModal}) {
             className='w-[100vw] h-[100vh] fixed top-0 left-0 z-[200] overflow-y-auto' >
             <div className='absolute z-0 top-0 left-0 w-[100%] h-[100%] bg-black opacity-40'></div>
             <div className='w-[100%] h-[100%] absolute z-10 overflow-auto scroll__width py-[6rem]'>
-            <section className='mx-auto lg:w-[50%] w-[90%] bg-white text-black p-6 rounded-2xl'>
+            <section className='mx-auto lg:w-[60%] w-[92%] bg-white text-black p-6 rounded-2xl'>
                 <div className='flex items-center justify-end'>
                 <button onClick={() => setIsModal(false)} className='hover:text-red-600 transition-all ease-in-out duration-200'>
                     <IoClose className='text-2xl' />
                 </button>
                 </div>
-                <form onSubmit={() => setIsSubmit(true)}>
+                <form action={postData} onSubmit={() => setIsSubmit(true)}>
                    <h2 className='text-[2.5rem] font-light mb-6 text-center border-b border-gray-300'>
                     Edit Product
                     </h2>
-
-                    
 
                     {/* NAME */}
                     <div className='w-[100%] mb-6'>
@@ -87,7 +159,24 @@ export default function ProductEditModal({ isModal, setIsModal}) {
                         {errMsg?.name &&
                             <p className='text-red-600 text-sm'>{errMsg?.name}</p> }
                     </div>
-
+                    {/* BRANDS */}
+                    {brands &&
+                    <div className='w-[100%] mb-6'>
+                        <p className='mb-2 leading-none text-sm font-light'>Name:</p>
+                        <select 
+                            name='brand_id'
+                            onChange={handleInput}
+                            value={data?.brand_id} 
+                            className='w-[100%] border border-gray-300 outline-none p-3'>
+                            <option value="">Select a Brand</option>
+                            { brands.map((i, key) => (
+                                <option value={i?.brand_id}>{i?.name}</option>
+                            )) }
+                        </select>
+                        {errMsg?.brand_id &&
+                            <p className='text-red-600 text-sm'>{errMsg?.brand_id}</p> }
+                    </div>
+                    }
                     {/* PRICE & QUANTITY */}
                     <div className='w-[100%] grid grid-cols-2 gap-6 mb-6'>
                         {/* PRICE */}
@@ -117,23 +206,21 @@ export default function ProductEditModal({ isModal, setIsModal}) {
                             <p className='text-red-600 text-sm'>{errMsg?.quantity}</p>}
                         </div>
                     </div>
-
                      {/* DESCRIPTION */}
                     <div className='w-[100%] mb-6'>
                         <p className='mb-2 leading-none text-sm font-light'>Description:</p>
-                        <input 
+                        <textarea
                             type='text' 
                             name='description'
                             onChange={handleInput}
                             value={data?.description}
                             placeholder='Name' 
-                            className='w-[100%] border border-gray-300 outline-none p-3' />
+                            className='w-[100%] h-[10rem] border border-gray-300 outline-none p-3'></textarea>
                         {errMsg?.description &&
                             <p className='text-red-600 text-sm'>{errMsg?.description}</p> }
                     </div>
-
                     {/*  IMAGE  */}
-                    <div className='w-[100%] grid grid-cols-4 gap-6 mb-6'>
+                    <div className='w-[100%] grid lg:grid-cols-4 grid-cols-2 gap-6 mb-6'>
                         {/*  */}
                         <div>
                             <p className='mb-2 leading-none text-sm font-light'>Image:</p>
@@ -141,8 +228,48 @@ export default function ProductEditModal({ isModal, setIsModal}) {
                                 type='file' 
                                 name='image'
                                 onChange={ (e) => {
-                                    setData({ ...data, image1: e.target.files[0],  })
+                                    setData({ 
+                                        ...data, 
+                                        product_images: [...data.product_images, e.target.files[0]]  
+                                    })
+                                    setImages({...images, img0: URL.createObjectURL(e.target.files[0])})
+                                    if(imagesData[0]?.id) {
+                                        const confirm = typeof window !== 'undefined' && window.confirm('Do you want to delete the previous image?')
+                                        if(confirm) {
+                                            imagesData[0]?.id && deleteData(imagesData[0]?.id)
+                                        }
+                                    }
+                                }}
+                                className=' w-[100%] rounded-lg p-3 border border-gray-300 mb-3' />
+                            {/*  */}
+                            <div className='w-[100%] drop-shadow-lg relative aspect-[7/5] bg-gray-200 rounded-lg overflow-hidden'>
+                                <div className='absolute z-10 w-[100%] h-[100%] flex items-center justify-center'>No Image</div>
+                                <div className='w-[100%] h-[100%] absolute z-20 '>
+                                    { images?.img0 &&
+                                    <img 
+                                        src={images?.img0} 
+                                        alt='Image' 
+                                        className='w-[100%] h-[100%] object-cover' />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        {/*  */}
+                        <div>
+                            <p className='mb-2 leading-none text-sm font-light'>Image:</p>
+                            <input 
+                                type='file' 
+                                name='image'
+                                onChange={ (e) => {
+                                    
+                                    setData({ ...data, product_images: [...data.product_images, e.target.files[0]] })
                                     setImages({...images, img1: URL.createObjectURL(e.target.files[0])})
+                                    if(imagesData[1]?.id) {
+                                        const confirm = typeof window !== 'undefined' && window.confirm('Do you want to delete the previous image?')
+                                        if(confirm) {    
+                                            imagesData[1]?.id && deleteData(imagesData[1]?.id)
+                                        }
+                                    }
                                 }}
                                 className=' w-[100%] rounded-lg p-3 border border-gray-300 mb-3' />
                             {/*  */}
@@ -165,15 +292,23 @@ export default function ProductEditModal({ isModal, setIsModal}) {
                                 type='file' 
                                 name='image'
                                 onChange={ (e) => {
-                                    setData({ ...data, image2: e.target.files[0],  })
+                                    
+                                    setData({ ...data, product_images: [...data.product_images, e.target.files[0]] })
                                     setImages({...images, img2: URL.createObjectURL(e.target.files[0])})
+                                    if(imagesData[2]?.id) {
+                                        const confirm = typeof window !== 'undefined' && window.confirm('Do you want to delete the previous image?')
+                                        if(confirm) {
+                                            imagesData[2]?.id && deleteData(imagesData[2]?.id)
+                                        }
+                                    }
+                                  
                                 }}
                                 className=' w-[100%] rounded-lg p-3 border border-gray-300 mb-3' />
                             {/*  */}
                             <div className='w-[100%] drop-shadow-lg relative aspect-[7/5] bg-gray-200 rounded-lg overflow-hidden'>
                                 <div className='absolute z-10 w-[100%] h-[100%] flex items-center justify-center'>No Image</div>
                                 <div className='w-[100%] h-[100%] absolute z-20 '>
-                                    { images?.img2 &&
+                                    {images?.img2 && 
                                     <img 
                                         src={images?.img2} 
                                         alt='Image' 
@@ -189,41 +324,24 @@ export default function ProductEditModal({ isModal, setIsModal}) {
                                 type='file' 
                                 name='image'
                                 onChange={ (e) => {
-                                    setData({ ...data, image3: e.target.files[0],  })
+                                    setData({ ...data, product_images: [...data.product_images, e.target.files[0]] })
                                     setImages({...images, img3: URL.createObjectURL(e.target.files[0])})
+                                    if(imagesData[3]?.id) {
+                                        const confirm = typeof window !== 'undefined' && window.confirm('Do you want to delete the previous image?')
+                                        if(confirm) {
+                                            imagesData[3]?.id && deleteData(imagesData[3]?.id)
+                                        }
+                                    }
+                                  
                                 }}
                                 className=' w-[100%] rounded-lg p-3 border border-gray-300 mb-3' />
                             {/*  */}
                             <div className='w-[100%] drop-shadow-lg relative aspect-[7/5] bg-gray-200 rounded-lg overflow-hidden'>
                                 <div className='absolute z-10 w-[100%] h-[100%] flex items-center justify-center'>No Image</div>
                                 <div className='w-[100%] h-[100%] absolute z-20 '>
-                                    {images?.img3 && 
+                                    {images?.img3 &&
                                     <img 
                                         src={images?.img3} 
-                                        alt='Image' 
-                                        className='w-[100%] h-[100%] object-cover' />
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        {/*  */}
-                        <div>
-                            <p className='mb-2 leading-none text-sm font-light'>Image:</p>
-                            <input 
-                                type='file' 
-                                name='image'
-                                onChange={ (e) => {
-                                    setData({ ...data, image4: e.target.files[0],  })
-                                    setImages({...images, img4: URL.createObjectURL(e.target.files[0])})
-                                }}
-                                className=' w-[100%] rounded-lg p-3 border border-gray-300 mb-3' />
-                            {/*  */}
-                            <div className='w-[100%] drop-shadow-lg relative aspect-[7/5] bg-gray-200 rounded-lg overflow-hidden'>
-                                <div className='absolute z-10 w-[100%] h-[100%] flex items-center justify-center'>No Image</div>
-                                <div className='w-[100%] h-[100%] absolute z-20 '>
-                                    {images?.img4 &&
-                                    <img 
-                                        src={images?.img4} 
                                         alt='Image' 
                                         className='w-[100%] h-[100%] object-cover' />
                                     }

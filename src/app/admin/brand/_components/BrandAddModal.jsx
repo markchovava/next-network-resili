@@ -1,4 +1,6 @@
 "use client";
+import { reactToastifyDark } from '@/_utils/reactToastify';
+import { _brandStoreAction } from '@/actions/BrandActions';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react'
 import { IoClose } from 'react-icons/io5';
@@ -14,12 +16,49 @@ const variants = {
 }
 
 
-export default function BrandAddModal({ isModal, setIsModal}) {
+export default function BrandAddModal({getData, isModal, setIsModal}) {
     const [data, setData] = useState({})
     const [errMsg, setErrMsg] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
     const handleInput = (e) => {
         setData({...data, [e.target.name]: e.target.value});
+    }
+
+    async function postData() {
+            if(!data?.name){
+                const message = "Name is required."
+                toast.warn(message, reactToastifyDark)
+                setErrMsg({name: message})
+                setIsSubmit(false)
+                return
+            }
+            const formData = {
+                name: data?.name,
+            }
+            try{
+                const res = await _brandStoreAction(formData);
+                console.log('res', res)
+                if(res?.status == 0){
+                    const message = res?.message;
+                    toast.success(message, reactToastifyDark);
+                    setErrMsg({email: message});
+                    setIsSubmit(false);
+                    return;
+                }
+                if(res?.status == 1) {
+                    await getData();
+                    toast.success(res?.message, reactToastifyDark);
+                    setData({});
+                    setErrMsg({});
+                    setIsSubmit(false)
+                    setIsModal(false);
+                    return;
+                }
+            } catch (error) {
+                console.error(`Error: ${error}`);
+                setIsSubmit(false)
+                return;
+            }
     }
 
     
@@ -41,7 +80,7 @@ export default function BrandAddModal({ isModal, setIsModal}) {
                     <IoClose className='text-2xl' />
                 </button>
                 </div>
-                <form onSubmit={() => setIsSubmit(true)}>
+                <form action={postData} onSubmit={() => setIsSubmit(true)}>
                    <h2 className='text-[2.5rem] font-light mb-6 text-center border-b border-gray-300'>
                     Add Brand
                     </h2>
@@ -61,9 +100,7 @@ export default function BrandAddModal({ isModal, setIsModal}) {
                     {/*  */}
                     <div className='w-[100%]'>
                         <button type='submit' className='w-[100%] rounded-xl bg-gray-800 hover:bg-gray-900 hover:drop-shadow-lg ease-linear transition-all duration-150 text-white py-4'>
-                           { isSubmit 
-                           ? 'Processing' 
-                           : 'Submit' }
+                           { isSubmit ? 'Processing' : 'Submit' }
                         </button>
                     </div>
                 </form>

@@ -2,9 +2,20 @@ import Link from 'next/link';
 import React from 'react';
 import { FaAngleRight } from 'react-icons/fa';
 import BrandList from './_components/BrandList';
+import { _brandListAction } from '@/actions/BrandActions';
+import ClientRedirect from '@/app/_components/ClientRedirect';
+import { cookies } from 'next/headers';
 
 
-export default function page() {
+export default async function page() {
+  const [brandData, ] = await Promise.all([_brandListAction()])
+  
+  const cookieStore = await cookies();
+  const adminToken = await cookieStore.get('NETWORK_RESILIENCE_ADMIN_COOKIE'); 
+  if(adminToken?.value != "Yes") {
+    return( <ClientRedirect /> )
+  }
+
   return (
     <>
     {/* BREADCRUMBS */}
@@ -18,7 +29,7 @@ export default function page() {
       </ul>
     </section>
 
-    <BrandList />
+    <BrandList dbData={brandData} />
     </>
   )
 }

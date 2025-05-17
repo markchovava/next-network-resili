@@ -10,10 +10,19 @@ import { MdOutlineEmail } from "react-icons/md";
 import { FaAngleRight } from "react-icons/fa";
 import { MdGroups } from "react-icons/md";
 import Link from 'next/link';
+import ClientRedirect from '../_components/ClientRedirect';
+import { cookies } from 'next/headers';
 
 
 
-export default function page() {
+export default async function page() {
+  const cookieStore = await cookies();
+  const adminToken = await cookieStore.get('NETWORK_RESILIENCE_ADMIN_COOKIE');
+  
+  if(adminToken?.value != "Yes") {
+    return( <ClientRedirect /> )
+  }
+
   return (
     <>
     {/* BREADCRUMBS */}

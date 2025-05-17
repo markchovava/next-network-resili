@@ -1,5 +1,8 @@
 "use client";
+import { reactToastifyDark } from '@/_utils/reactToastify';
+import { _profileStoreAction } from '@/actions/AuthActions';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { IoClose } from 'react-icons/io5';
 import { toast } from 'react-toastify';
@@ -14,12 +17,51 @@ const variants = {
 }
 
 
-export default function ProfileEditModal({id, isModal, setIsModal}) {
-    const [data, setData] = useState({})
-    const [errMsg, setErrMsg] = useState({})
-    const [isSubmit, setIsSubmit] = useState(false)
+export default function ProfileEditModal({domData, isModal, setIsModal}) {
+    const router = useRouter();
+    const [data, setData] = useState(domData);
+    const [errMsg, setErrMsg] = useState({});
+    const [isSubmit, setIsSubmit] = useState(false);
     const handleInput = (e) => {
-        setData({...data, [e.target.name]: e.target.value});
+        setData({...data, [e.target.name]: e.target.value })
+    }
+
+    async function postData(){
+        if(!data?.name){
+            const message = "Name is required"
+            setErrMsg({name: message})
+            toast.warn(message, reactToastifyDark)
+            return
+        }
+        if(!data?.email){
+            const message = "Email is required"
+            setErrMsg({email: message})
+            toast.warn(message, reactToastifyDark)
+            return
+        }
+        const formData = new FormData()
+        formData.append('name', data?.name)
+        formData.append('email', data?.email)
+        formData.append('phone', data?.phone)
+        formData.append('address', data?.address)
+        try{
+            const res = await _profileStoreAction(formData)
+            console.log(res)
+            if(res?.status == 1) {
+                toast.success(res?.message, reactToastifyDark);
+                setErrMsg({});
+                setIsModal(false)
+                setIsSubmit(false);
+            }
+            if(res?.status == 0) {
+                toast.warn(res?.message, reactToastifyDark);
+                setErrMsg({});
+                setIsSubmit(false);
+            }
+        } catch (error) {
+            console.error(`Error: ${error}`);
+            setIsSubmit(false); 
+        }
     }
 
     
@@ -41,12 +83,12 @@ export default function ProfileEditModal({id, isModal, setIsModal}) {
                     <IoClose className='text-2xl' />
                 </button>
                 </div>
-                <form onSubmit={() => setIsSubmit(true)}>
+                
+                <form action={postData} onSubmit={() => setIsSubmit(true)}>
                    <h2 className='text-[2.5rem] font-light mb-6 text-center border-b border-gray-300'>
                     Edit Profile
                     </h2>
-                    
-                     {/*  */}
+                     {/* NAME */}
                     <div className='w-[100%] mb-6'>
                         <p className='mb-2 leading-none font-light'>Name:</p>
                         <input 
@@ -59,7 +101,7 @@ export default function ProfileEditModal({id, isModal, setIsModal}) {
                         {errMsg?.name &&
                         <p className='text-red-600 text-sm'>{errMsg?.name}</p>}
                     </div>
-
+                    {/* EMAIL */}
                     <div className='w-[100%] mb-6'>
                         <p className='mb-2 leading-none font-light'>Email:</p>
                         <input 
@@ -72,7 +114,7 @@ export default function ProfileEditModal({id, isModal, setIsModal}) {
                         {errMsg?.email &&
                         <p className='text-red-600 text-sm'>{errMsg?.email}</p>}
                     </div>
-
+                    {/* PHONE */}
                     <div className='w-[100%] mb-6'>
                         <p className='mb-2 leading-none font-light'>Phone:</p>
                         <input 
@@ -85,7 +127,7 @@ export default function ProfileEditModal({id, isModal, setIsModal}) {
                         { errMsg?.phone &&
                             <p className='text-red-600 text-sm'>{errMsg?.phone}</p> }
                     </div>
-
+                    {/* ADDRESS */}
                     <div className='w-[100%] mb-6'>
                         <p className='mb-2 leading-none font-light'>Address:</p>
                         <input 
@@ -98,13 +140,10 @@ export default function ProfileEditModal({id, isModal, setIsModal}) {
                         { errMsg?.address &&
                             <p className='text-red-600 text-sm'>{errMsg?.address}</p> }
                     </div>
-
-                    {/*  */}
+                    {/* BUTTON */}
                     <div className='w-[100%]'>
                         <button type='submit' className='w-[100%] rounded-xl bg-gray-800 hover:bg-gray-900 hover:drop-shadow-lg ease-linear transition-all duration-150 text-white py-4'>
-                           { isSubmit 
-                           ? 'Processing' 
-                           : 'Submit' }
+                           { isSubmit ? 'Processing' : 'Submit' }
                         </button>
                     </div>
 

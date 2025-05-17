@@ -1,17 +1,52 @@
-import React from 'react'
+"use client";
+import React, { useEffect, useState } from 'react'
 import { FaMapLocationDot, FaXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import Link from 'next/link';
 import NavArea from './NavArea';
-import NavAreaResponsive from './NavAreaResponsive';
 import Image from 'next/image';
 import { IoCall } from "react-icons/io5";
+import { _logoutAction } from '@/actions/AuthActions';
+import { toast } from 'react-toastify';
+import { reactToastifyDark } from '@/_utils/reactToastify';
+import { useRouter } from 'next/navigation';
+import { removeAdminCookie } from '@/cookies/CookieAdminClient';
+import { cookieAuthName, removeAuthCookie } from '@/cookies/CookieAuthClient';
+import { getCookie } from 'cookies-next';
 
 
 
-export default function Header() {
-  return (
+export default function Header({ authToken }) {
+    const router = useRouter()
+    const [isLogout, setIsLogout] = useState(false)
+
+    async function logoutData(){
+        try{
+            const res = await _logoutAction()
+            if(res?.status == 1) {
+                toast.success(res?.message, reactToastifyDark);
+                removeAdminCookie();
+                removeAuthCookie();
+                router.push('/login')
+                setIsLogout(false);
+            }
+            if(res?.status == 0) {
+                toast.warn(res?.message, reactToastifyDark);
+                setIsLogout(false);
+            }
+        } catch (error) {
+            console.error(`Error: ${error}`);
+            setIsLogout(false); 
+        }
+    }
+
+    useEffect(() => {
+        isLogout && logoutData();
+    }, [isLogout])
+  
+  
+return (
     <>
     {/* TOP AREA */}
     <section className='w-full bg-gray-50 drop-shadow md:py-3 py-4'>
@@ -39,11 +74,20 @@ export default function Header() {
                     <FaInstagram className='text-white text-sm' />
                 </Link>
                 <span>|</span>
+                {authToken ? 
+                <button 
+                    onClick={() => setIsLogout(true)} 
+                    className='text-sm text-blue-900 underline hover:no-underline'>
+                    Logout
+                </button>
+                :
                 <Link 
                     href='/login' 
                     className='text-sm text-blue-900 underline hover:no-underline'>
                     Login / Register
                 </Link>
+                }
+            
             </div>
         </div>
     </section>

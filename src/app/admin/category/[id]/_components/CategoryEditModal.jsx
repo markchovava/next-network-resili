@@ -1,4 +1,6 @@
 "use client";
+import { reactToastifyDark } from '@/_utils/reactToastify';
+import { _categoryUpdateAction } from '@/actions/CategoryActions';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react'
 import { IoClose } from 'react-icons/io5';
@@ -14,13 +16,45 @@ const variants = {
 }
 
 
-export default function CategoryEditModal({id, isModal, setIsModal}) {
-    const [data, setData] = useState({})
+export default function CategoryEditModal({id, getData, domData, isModal, setIsModal}) {
+    const [data, setData] = useState(domData)
     const [errMsg, setErrMsg] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
     const handleInput = (e) => {
         setData({...data, [e.target.name]: e.target.value});
     }
+
+    async function postData() {
+        if(!data?.name){
+            const message = "Name is required"
+            setErrMsg({name: message})
+            toast.warn(message, reactToastifyDark)
+            return
+        } 
+        const formData = {
+            name: data?.name,
+        } 
+        try{
+            const res = await _categoryUpdateAction(formData, id)
+            console.log('res', res)
+            if(res?.status == 1) {
+                await getData();
+                toast.success(res?.message, reactToastifyDark);
+                setErrMsg({});
+                setIsModal(false)
+                setIsSubmit(false);
+            }
+            if(res?.status == 0) {
+                toast.warn(res?.message, reactToastifyDark);
+                setErrMsg({name: res?.message});
+                setIsSubmit(false);
+            }
+        } catch (error) {
+            console.error(`Error: ${error}`);
+            setIsSubmit(false); 
+        }
+    }
+        
 
     
   return (
@@ -41,7 +75,7 @@ export default function CategoryEditModal({id, isModal, setIsModal}) {
                     <IoClose className='text-2xl' />
                 </button>
                 </div>
-                <form onSubmit={() => setIsSubmit(true)}>
+                <form action={postData} onSubmit={() => setIsSubmit(true)}>
                    <h2 className='text-[2.5rem] font-light mb-6 text-center border-b border-gray-300'>
                     Edit Category
                     </h2>
@@ -55,15 +89,13 @@ export default function CategoryEditModal({id, isModal, setIsModal}) {
                             value={data?.name}
                             placeholder='Name' 
                             className='w-[100%] border border-gray-300 outline-none p-3' />
-                        {errMsg?.name &&
-                        <p className='text-red-600 text-sm'>{errMsg?.name}</p>}
+                        { errMsg?.name &&
+                            <p className='text-red-600 text-sm'>{errMsg?.name}</p> }
                     </div>
                     {/*  */}
                     <div className='w-[100%]'>
                         <button type='submit' className='w-[100%] rounded-xl bg-gray-800 hover:bg-gray-900 hover:drop-shadow-lg ease-linear transition-all duration-150 text-white py-4'>
-                           { isSubmit 
-                           ? 'Processing' 
-                           : 'Submit' }
+                           { isSubmit ? 'Processing' : 'Submit' }
                         </button>
                     </div>
                 </form>

@@ -2,10 +2,13 @@ import Link from 'next/link'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
 import AppInfoView from './_components/AppInfoView'
+import { _appInfoViewAction } from '@/actions/AppInfoActions'
 
 
 
-export default function page() {
+export default async function page() {
+  const [appInfoData, ] = await Promise.all([_appInfoViewAction(), ])
+
   return (
     <>
     {/* BREADCRUMBS */}
@@ -17,11 +20,11 @@ export default function page() {
         <li><FaAngleRight /></li>
         <Link href='/admin/setting'> <li>Settings</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin/setting/app-info'><li className='font-semibold'>AppInfo View</li> </Link>
+        <Link href='/admin/setting/app-info'><li className='font-semibold'>View AppInfo</li> </Link>
       </ul>
     </section>
 
-    <AppInfoView />
+    <AppInfoView dbData={appInfoData} />
     </>
   )
 }

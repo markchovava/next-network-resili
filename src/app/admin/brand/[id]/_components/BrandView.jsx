@@ -1,11 +1,18 @@
 "use client"
 import React, { useState } from 'react'
-import CategoryEditModal from './BrandEditModal';
+import BrandEditModal from './BrandEditModal';
+import { formatDate } from '@/_utils/formatDate';
+import { _brandViewAction } from '@/actions/BrandActions';
 
 
-export default function BrandView({ id }) {
+export default function BrandView({ id, dbData }) {
     const [isModal, setIsModal] = useState(false);
-    const [data, setData] = useState();
+    const [data, setData] = useState(dbData?.data);
+
+    async function getData() {
+        const res = await _brandViewAction(id);
+        setData(res?.data);
+    }
 
   return (
     <>
@@ -24,23 +31,24 @@ export default function BrandView({ id }) {
                 <hr className='border-b border-gray-200' />
             </div>
 
-
-            <section className='bg-white drop-shadow-lg p-6'>
+            <section className='bg-white drop-shadow-lg px-6 py-8'>
                 {/* NAME */}
                 <div className='mb-6'>
-                    <p className='text-sm font-semibold'>Name:</p>
-                    <p className='text-lg'>data?.name</p>
+                    <p className='text-sm font-light'>Name:</p>
+                    <p className='text-lg'>{data?.name ?? 'Not Added'}</p>
                 </div>
-                {/* LEVEL */}
+                {/* CREATED */}
                 <div className='mb-6'>
-                    <p className='text-sm font-semibold'>Created at:</p>
-                    <p className='text-lg'>data?.leve</p>
-                </div>
-                {/* */}
-                <div className=''>
-                    <p className='text-sm font-semibold'>Author:</p>
+                    <p className='text-sm font-light'>Created at:</p>
                     <p className='text-lg'>
-                        user?.name
+                        {data?.created_at ? formatDate(data?.created_at) : 'Not Added'}
+                    </p>
+                </div>
+                {/* USER */}
+                <div className='mb-4'>
+                    <p className='text-sm font-light'>Author:</p>
+                    <p className='text-lg'>
+                        { data?.user?.email ?? "Not Added" }
                     </p>
                 </div>
             </section>
@@ -49,8 +57,10 @@ export default function BrandView({ id }) {
     </section>
    
 
-    <CategoryEditModal 
+    <BrandEditModal 
         id={id}
+        getData={getData}
+        domData={data}
         isModal={isModal} 
         setIsModal={setIsModal} />
 

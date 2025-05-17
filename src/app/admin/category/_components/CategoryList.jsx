@@ -1,41 +1,121 @@
 "use client"
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaEye } from 'react-icons/fa'
 import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6'
 import { IoSearch } from 'react-icons/io5'
 import { MdDeleteForever } from 'react-icons/md'
 import CategoryAddModal from './CategoryAddModal'
+import { MainContextState } from '@/contexts/MainContext'
+import { _categoryDeleteAction, _categoryListAction, _categoryPaginateAction, _categorySearchAction } from '@/actions/CategoryActions'
+import { toast } from 'react-toastify'
+import { reactToastifyDark } from '@/_utils/reactToastify'
 
 
 
 
 
-export default function CategoryList() {
-  const [isModal, setIsModal] = useState(false)
+export default function CategoryList({ dbData }) {
+    const {categoryState, categoryDispatch } = MainContextState()
+    const [isModal, setIsModal] = useState(false)
+    const [search, setSearch] = useState('');
+    const [isSearch, setIsSearch] = useState(false);
+    console.log('dbData', dbData)
+    useEffect(() => {
+        categoryDispatch({type: 'ADD_DATA', payload: {
+            items: dbData?.data,
+            prevURL: dbData?.links?.prev,
+            nextURL: dbData?.links?.next,
+        }});
+    }, []);
+
+    async function paginateHandler(url) {
+        try{
+            const res = await _categoryPaginateAction(url)
+            categoryDispatch({type: 'ADD_DATA', payload: {
+                items: res?.data,
+                prevURL: res?.links?.prev,
+                nextURL: res?.links?.next,
+            }});
+        } catch (error) {
+            console.error(`Error: ${error}`)
+        } 
+    }
+
+    async function getSearchData() {
+      if(!search) {
+          await getData();
+          setIsSearch(false)
+          return;
+      }
+      try{
+      const res = await _categorySearchAction(search);
+      categoryDispatch({type: 'ADD_DATA', payload: {
+          items: res?.data,
+          prevURL: res?.links?.prev,
+          nextURL: res?.links?.next,
+      }});
+      setIsSearch(false);
+      } catch (error) {
+          console.error(`Error: ${error}`); 
+          setIsSearch(false)
+      }
+    }
+    
+    async function getData() {
+        try{
+            const res = await _categoryListAction();
+                categoryDispatch({type: 'ADD_DATA', payload: {
+                    items: res?.data,
+                    prevURL: res?.links?.prev,
+                    nextURL: res?.links?.next,
+                }});
+            } catch (error) {
+                console.error(`Error: ${error}`); 
+            }
+    }
+    
+    async function deleteData(id) {
+        try{
+            const res = await _categoryDeleteAction(id);
+            if(res.status == 1) {
+                await getData();
+                toast.success(res?.message, reactToastifyDark);
+                return;
+            }
+            } catch (error) {
+                console.error(`Error: ${error}`); 
+        }
+    }
 
   return (
     <>
     <section className='w-full pt-[4rem] pb-[5rem]'>
       
       <div className='mx-auto w-[92%]'>
-        <h3 className='text-[1.8rem] font-light mb-1'>Category List</h3>
+        <h3 className='text-[2.5rem] font-light mb-1'>Category List</h3>
         <hr className='border-b border-gray-200' />
       </div>
 
       <div className='mx-auto w-[92%] flex items-center justify-between mt-2 pb-2'>
         <form 
-            className='border border-gray-300 lg:w-[50%] w-[80%] flex items-center justify-start'>
-            <input 
-                type='text'
-                placeholder='Search' 
-                className='outline-none border-r border-gray-300 p-3 w-[85%]' />
-            <button 
-                type='submit' 
-                className='cursor-pointer hover:scale-110 ease-linear transition-all h-[100%] lg:w-[15%] px-4 py-3 text-center flex items-center justify-center'>
-                    <span className='animate-pulse w-[15px] h-[15px] rounded-full bg-slate-900'></span>
-                    <IoSearch className='text-lg' />
-            </button>
+          action={getSearchData} 
+          onSubmit={() => setIsSearch(true)} 
+          className='border border-gray-300 lg:w-[50%] w-[80%] flex items-center justify-start'>
+          <input 
+              type='text'
+              placeholder='Search'
+              value={search} 
+              onChange={(e) => setSearch(e.target.value)} 
+              className='outline-none border-r border-gray-300 p-3 w-[85%]' />
+          <button 
+              type='submit' 
+              className='cursor-pointer hover:scale-110 ease-linear transition-all h-[100%] lg:w-[15%] px-4 py-3 text-center flex items-center justify-center'>
+              { isSearch
+                  ? <span className='animate-pulse w-[15px] h-[15px] rounded-full bg-slate-900'></span>
+                  : <IoSearch className='text-lg' />
+              }
+          </button>
         </form>
         <div>
             <button onClick={() => setIsModal(true)}
@@ -45,64 +125,74 @@ export default function CategoryList() {
         </div>
       </div>
 
-       {/* TABLE */}
+        {/* TABLE */}
         <section className="mx-auto w-[92%] lg:overflow-hidden overflow-scroll pb-[2rem]">
             <section className='lg:w-[100%] w-[70rem]'>
-                {/* HEADER */}
-                <div className='mx-auto w-[100%] text-lg py-2 flex items-center justify-start font-bold font-white bg-gray-200 '>
-                    <div className='w-[40%] border-r border-white px-3 py-2'>NAME</div>
-                    <div className='w-[40%] border-r border-white px-3 py-2'>AUTHOR</div>
-                    <div className='w-[20%] px-3 py-2 text-end'>ACTION</div>
-                </div>
+              {/* HEADER */}
+              <div className='mx-auto w-[100%] text-lg py-2 flex items-center justify-start font-bold font-white bg-gray-200 '>
+                  <div className='w-[40%] border-r border-white px-3 py-2'>NAME</div>
+                  <div className='w-[40%] border-r border-white px-3 py-2'>AUTHOR</div>
+                  <div className='w-[20%] px-3 py-2 text-end'>ACTION</div>
+              </div>
 
-                {/* COLUMN */}
-                <div className='mx-auto w-[100%] py-2 flex items-center justify-start border-b border-x border-gray-300'>
-                  <div className='w-[40%] border-r border-gray-300 px-3 py-2'>name</div>
+              {/* COLUMN */}
+              { categoryState?.items?.length > 0 ?
+                categoryState?.items?.map((i, key) => (
+                <div key={key} className='mx-auto w-[100%] py-2 flex items-center justify-start border-b border-x border-gray-300'>
+                  <div className='w-[40%] border-r border-gray-300 px-3 py-2'>{i?.name ?? 'Not Added.'}</div>
                   <div className='w-[40%] border-r border-gray-300 px-3 py-2'>
-                    jjj
+                    { i?.user?.email ? i?.user?.email : 'Not Added' }
                   </div>
                   <div className='w-[20%] px-3 py-2 text-end flex items-center justify-end gap-3 text-xl'>
-                      <Link title='View' href={`/admin/category/1`}> 
+                      <Link title='View' href={`/admin/category/${i?.id}`}> 
                       <FaEye className='hover:text-blue-500 duration-150 hover:scale-110 transition-all ease-in'/> 
                       </Link> 
-                      <button title='Delete'> 
+                      <button title='Delete' onClick={() => deleteData(i?.id)}> 
                           <MdDeleteForever
                           className='hover:text-red-500 duration-150 hover:scale-110 transition-all ease-in' /> 
                       </button> 
                   </div>
                 </div>
-             
+                  )) 
+                : 
                 <section className='w-[100%] py-6'>
                     <h3 className='text-[3rem] font-light'>No Data Available at the moment.</h3>
                     <p>Click 
-                        <span className='cursor-pointer underline hover:no-underline mx-1'>
-                            Edit
-                        </span> 
+                        <span 
+                          onClick={() => setIsModal(true)} 
+                          className='cursor-pointer underline hover:no-underline mx-1'>
+                          Add </span> 
                         to add.
                     </p>
                 </section>
-
+              }
             </section>
         </section>
         {/* PAGINATION */}
         <section className='w-[90%] mx-auto pb-[4rem] flex items-center justify-end gap-3'>
           {/* PREVIOUS */}
-          <button
-              className='group px-4 py-2 flex items-center justify-center gap-2 border border-gray-700 text-gray-700'>
-              <FaArrowLeftLong className='transition-all ease-in-out duration-200 group-hover:-translate-x-1' />
-              Prev
-          </button>
+          {categoryState.prevURL &&
+            <button
+                onClick={() => paginateHandler(categoryState?.prevURL)}
+                className='group px-4 py-2 flex items-center justify-center gap-2 border border-gray-700 text-gray-700'>
+                <FaArrowLeftLong className='transition-all ease-in-out duration-200 group-hover:-translate-x-1' />
+                Prev
+            </button>
+          }
           {/* NEXT */}
-          <button 
-              className='group px-4 py-2 flex items-center justify-center gap-2 border border-gray-700 text-gray-700'>
-              <span>Next</span>
-              <FaArrowRightLong className='transition-all ease-in-out duration-200 group-hover:translate-x-1' />
-          </button>
+          {categoryState.nextURL &&
+            <button 
+                onClick={() => paginateHandler(categoryState?.nextURL)}
+                className='group px-4 py-2 flex items-center justify-center gap-2 border border-gray-700 text-gray-700'>
+                <span>Next</span>
+                <FaArrowRightLong className='transition-all ease-in-out duration-200 group-hover:translate-x-1' />
+            </button>
+          }
         </section>
     </section>
 
-
     <CategoryAddModal
+      getData={getData}
       isModal={isModal} 
       setIsModal={setIsModal} />
 

@@ -2,8 +2,13 @@ import Link from 'next/link'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
 import UserView from './_components/UserView'
+import { _userViewAction } from '@/actions/UserActions'
 
-export default function page() {
+
+
+export default async function page({params: {id} }) {
+  const [userData, ] = await Promise.all([ _userViewAction(id), ])
+
   return (
     <>
     {/* BREADCRUMBS */}
@@ -15,11 +20,11 @@ export default function page() {
         <li><FaAngleRight /></li>
         <Link href='/admin/user'><li>User</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin/user'> <li>View User</li> </Link>
+        <Link href={`/admin/user/${id}`}> <li className='font-semibold'>View User</li> </Link>
       </ul>
     </section>
 
-    <UserView />
+    <UserView id={id} dbData={userData} />
     </>
   )
 }

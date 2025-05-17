@@ -1,11 +1,20 @@
 "use client"
 import React, { useState } from 'react'
 import CategoryEditModal from './CategoryEditModal';
+import { formatDate } from '@/_utils/formatDate';
+import { _categoryViewAction } from '@/actions/CategoryActions';
 
 
-export default function CategoryView({ id }) {
+export default function CategoryView({ id, dbData }) {
     const [isModal, setIsModal] = useState(false);
-    const [data, setData] = useState();
+    const [data, setData] = useState(dbData?.data);
+
+
+    async function getData() {
+        const res = await _categoryViewAction(id);
+        setData(res?.data);
+    }
+
 
   return (
     <>
@@ -27,19 +36,19 @@ export default function CategoryView({ id }) {
             <section className='bg-white drop-shadow-lg p-6'>
                 {/* NAME */}
                 <div className='mb-6'>
-                    <p className='text-sm font-semibold'>Name:</p>
-                    <p className='text-lg'>data?.name</p>
+                    <p className='text-sm font-light'>Name:</p>
+                    <p className='text-lg'>{data?.name ?? 'Not Added' }</p>
                 </div>
-                {/* LEVEL */}
+                {/* */}
                 <div className='mb-6'>
-                    <p className='text-sm font-semibold'>Level:</p>
-                    <p className='text-lg'>data?.leve</p>
+                    <p className='text-sm font-light'>Created:</p>
+                    <p className='text-lg'>{ data?.created_at ? formatDate(data?.created_at) : 'Not Added' }</p>
                 </div>
                 {/* */}
                 <div className=''>
-                    <p className='text-sm font-semibold'>Author:</p>
+                    <p className='text-sm font-light'>Author:</p>
                     <p className='text-lg'>
-                        user?.name
+                        { data.user?.email ? data.user?.email : 'Not Added' }
                     </p>
                 </div>
             </section>
@@ -47,12 +56,12 @@ export default function CategoryView({ id }) {
         </div>
     </section>
    
-
     <CategoryEditModal 
         id={id}
+        getData={getData}
+        domData={data}
         isModal={isModal} 
         setIsModal={setIsModal} />
-
     </>
   )
 }

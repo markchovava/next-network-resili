@@ -1,4 +1,6 @@
 "use client";
+import { reactToastifyDark } from '@/_utils/reactToastify';
+import { _appInfoStoreAction } from '@/actions/AppInfoActions';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react'
 import { IoClose } from 'react-icons/io5';
@@ -14,12 +16,53 @@ const variants = {
 }
 
 
-export default function AppInfoEditModal({id, isModal, setIsModal}) {
-    const [data, setData] = useState({})
+export default function AppInfoEditModal({domData, getData, isModal, setIsModal}) {
+    const [data, setData] = useState(domData)
     const [errMsg, setErrMsg] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
     const handleInput = (e) => {
         setData({...data, [e.target.name]: e.target.value});
+    }
+
+    async function postData() {
+        if(!data?.name){
+            const message = "Name is required"
+            setErrMsg({name: message})
+            toast.warn(message, reactToastifyDark)
+            return
+        } 
+        const formData = {
+            name: data?.name,
+            description: data?.description,
+            email: data?.email,
+            phone: data?.phone,
+            address: data?.address,
+            website: data?.website,
+            whatsapp: data?.whatsapp,
+            instagram: data?.instagram,
+            twitter: data?.twitter,
+            linkedin: data?.linkedin,
+            facebook: data?.facebook,
+        } 
+        try{
+            const res = await _appInfoStoreAction(formData)
+            console.log('res', res)
+            if(res?.status == 1) {
+                await getData();
+                toast.success(res?.message, reactToastifyDark);
+                setErrMsg({});
+                setIsModal(false)
+                setIsSubmit(false);
+            }
+            if(res?.status == 0) {
+                toast.warn(res?.message, reactToastifyDark);
+                setErrMsg({name: res?.message});
+                setIsSubmit(false);
+            }
+        } catch (error) {
+            console.error(`Error: ${error}`);
+            setIsSubmit(false); 
+        }
     }
 
     
@@ -41,12 +84,12 @@ export default function AppInfoEditModal({id, isModal, setIsModal}) {
                     <IoClose className='text-2xl' />
                 </button>
                 </div>
-                <form onSubmit={() => setIsSubmit(true)}>
+                <form action={postData} onSubmit={() => setIsSubmit(true)}>
                    <h2 className='text-[2.5rem] font-light mb-6 text-center border-b border-gray-300'>
                     Edit AppInfo
                     </h2>
                     
-                     {/*  */}
+                     {/* NAME */}
                     <div className='w-[100%] mb-6'>
                         <p className='mb-2 leading-none font-light'>Name:</p>
                         <input 
@@ -59,7 +102,7 @@ export default function AppInfoEditModal({id, isModal, setIsModal}) {
                         {errMsg?.name &&
                         <p className='text-red-600 text-sm'>{errMsg?.name}</p>}
                     </div>
-
+                    {/* EMAIL */}
                     <div className='w-[100%] mb-6'>
                         <p className='mb-2 leading-none font-light'>Email:</p>
                         <input 
@@ -72,7 +115,7 @@ export default function AppInfoEditModal({id, isModal, setIsModal}) {
                         {errMsg?.email &&
                         <p className='text-red-600 text-sm'>{errMsg?.email}</p>}
                     </div>
-
+                    {/* PHONE */}
                     <div className='w-[100%] mb-6'>
                         <p className='mb-2 leading-none font-light'>Phone:</p>
                         <input 
@@ -85,7 +128,7 @@ export default function AppInfoEditModal({id, isModal, setIsModal}) {
                         { errMsg?.phone &&
                             <p className='text-red-600 text-sm'>{errMsg?.phone}</p> }
                     </div>
-
+                    {/* ADDRESS */}
                     <div className='w-[100%] mb-6'>
                         <p className='mb-2 leading-none font-light'>Address:</p>
                         <input 
@@ -98,7 +141,33 @@ export default function AppInfoEditModal({id, isModal, setIsModal}) {
                         { errMsg?.address &&
                             <p className='text-red-600 text-sm'>{errMsg?.address}</p> }
                     </div>
-
+                    {/* DESCRIPTION */}
+                    <div className='w-[100%] mb-6'>
+                        <p className='mb-2 leading-none font-light'>Description:</p>
+                        <textarea
+                            type='text' 
+                            name='description'
+                            onChange={handleInput}
+                            value={data?.description}
+                            placeholder='Enter Description' 
+                            className='w-[100%] h-[8rem] border border-gray-300 outline-none p-3'></textarea>
+                        { errMsg?.description &&
+                            <p className='text-red-600 text-sm'>{errMsg?.description}</p> }
+                    </div>
+                    {/* WEBSITE */}
+                    <div className='w-[100%] mb-6'>
+                        <p className='mb-2 leading-none font-light'>Website:</p>
+                        <input 
+                            type='text' 
+                            name='website'
+                            onChange={handleInput}
+                            value={data?.website}
+                            placeholder='Enter Website' 
+                            className='w-[100%] border border-gray-300 outline-none p-3' />
+                        { errMsg?.website &&
+                            <p className='text-red-600 text-sm'>{errMsg?.website}</p> }
+                    </div>
+                    {/* WHATSAPP */}
                     <div className='w-[100%] mb-6'>
                         <p className='mb-2 leading-none font-light'>WhatsApp:</p>
                         <input 
@@ -111,8 +180,21 @@ export default function AppInfoEditModal({id, isModal, setIsModal}) {
                         { errMsg?.whatsapp &&
                             <p className='text-red-600 text-sm'>{errMsg?.whatsapp}</p> }
                     </div>
-
-                     <div className='w-[100%] mb-6'>
+                    {/* FACEBOOK */}
+                    <div className='w-[100%] mb-6'>
+                        <p className='mb-2 leading-none font-light'>Facebook:</p>
+                        <input 
+                            type='text' 
+                            name='facebook'
+                            onChange={handleInput}
+                            value={data?.facebook}
+                            placeholder='Enter Facebook' 
+                            className='w-[100%] border border-gray-300 outline-none p-3' />
+                        { errMsg?.facebook &&
+                            <p className='text-red-600 text-sm'>{errMsg?.facebook}</p> }
+                    </div>
+                    {/* INSTAGRAM */}
+                    <div className='w-[100%] mb-6'>
                         <p className='mb-2 leading-none font-light'>Instagram:</p>
                         <input 
                             type='text' 
@@ -124,8 +206,8 @@ export default function AppInfoEditModal({id, isModal, setIsModal}) {
                         { errMsg?.instagram &&
                             <p className='text-red-600 text-sm'>{errMsg?.instagram}</p> }
                     </div>
-
-                     <div className='w-[100%] mb-6'>
+                    {/* LINKEDIN */}
+                    <div className='w-[100%] mb-6'>
                         <p className='mb-2 leading-none font-light'>LinkedIn:</p>
                         <input 
                             type='text' 
@@ -137,8 +219,8 @@ export default function AppInfoEditModal({id, isModal, setIsModal}) {
                         { errMsg?.linkedin &&
                             <p className='text-red-600 text-sm'>{errMsg?.linkedin}</p> }
                     </div>
-
-                     <div className='w-[100%] mb-6'>
+                    {/* TWITTER */}
+                    <div className='w-[100%] mb-6'>
                         <p className='mb-2 leading-none font-light'>Twitter:</p>
                         <input 
                             type='text' 
@@ -150,13 +232,10 @@ export default function AppInfoEditModal({id, isModal, setIsModal}) {
                         { errMsg?.twitter &&
                             <p className='text-red-600 text-sm'>{errMsg?.twitter}</p> }
                     </div>
-
-                    {/*  */}
+                    {/* BUTTON */}
                     <div className='w-[100%]'>
                         <button type='submit' className='w-[100%] rounded-xl bg-gray-800 hover:bg-gray-900 hover:drop-shadow-lg ease-linear transition-all duration-150 text-white py-4'>
-                           { isSubmit 
-                           ? 'Processing' 
-                           : 'Submit' }
+                           { isSubmit ? 'Processing' : 'Submit' }
                         </button>
                     </div>
 

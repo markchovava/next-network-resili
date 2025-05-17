@@ -2,10 +2,15 @@ import Link from 'next/link'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
 import ProductList from './_components/ProductList'
+import { _productListAction } from '@/actions/ProductActions';
+import { _brandListAllAction } from '@/actions/BrandActions';
 
 
 
-export default function page() {
+export default async function page() {
+  const [productData, brandData, ] = await Promise.all([
+    _productListAction(), _brandListAllAction()]);
+
   return (
     <>
     {/* BREADCRUMBS */}
@@ -19,7 +24,11 @@ export default function page() {
       </ul>
     </section>
 
-    <ProductList />
+    <ProductList 
+      dbData={productData} 
+      brandData={brandData} />
+
+
     </>
   )
 }

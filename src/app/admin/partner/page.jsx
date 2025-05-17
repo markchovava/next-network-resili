@@ -2,10 +2,21 @@ import Link from 'next/link'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
 import PartnerList from './_components/PartnerList'
+import { _partnerListAction } from '@/actions/PartnerActions'
+import { cookies } from 'next/headers'
+import ClientRedirect from '@/app/_components/ClientRedirect'
 
 
 
-export default function page() {
+export default async function page() {
+  const [partnerData, ] = await Promise.all([_partnerListAction(), ]);
+
+  const cookieStore = await cookies();
+  const adminToken = await cookieStore.get('NETWORK_RESILIENCE_ADMIN_COOKIE'); 
+  if(adminToken?.value != "Yes") {
+    return( <ClientRedirect /> )
+  }
+
   return (
     <>
     {/* BREADCRUMBS */}
@@ -19,7 +30,7 @@ export default function page() {
       </ul>
     </section>
 
-    <PartnerList />
+    <PartnerList dbData={partnerData} />
     
     </>
   )

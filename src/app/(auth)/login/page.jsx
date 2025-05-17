@@ -1,11 +1,11 @@
 import React from 'react'
-import Login from './_components/Login'
+import LoginEdit from './_components/LoginEdit'
 
 
 export default function page() {
   return (
     <>
-    <Login />
+    <LoginEdit />
     </>
   )
 }

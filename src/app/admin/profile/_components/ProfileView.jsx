@@ -2,11 +2,12 @@
 import React, { useState } from 'react'
 import ProfileEditModal from './ProfileEditModal';
 import Link from 'next/link';
+import { formatDate } from '@/_utils/formatDate';
 
 
-export default function ProfileView({ id }) {
+export default function ProfileView({ dbData }) {
     const [isModal, setIsModal] = useState(false);
-    const [data, setData] = useState();
+    const [data, setData] = useState(dbData?.data);
 
   return (
     <>
@@ -33,50 +34,57 @@ export default function ProfileView({ id }) {
                 <hr className='border-b border-gray-200' />
             </div>
 
-            <section className='p-6 bg-white drop-shadow-lg mt-4'>
+             <section className='p-6 bg-white drop-shadow-lg mt-4'>
                 {/* NAME */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Name:</p>
-                    <p className='text-lg'>data?.name</p>
+                    <p className='text-lg'>{ data?.name ?? 'Not Added' }</p>
                 </div>
                 {/* LEVEL */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Email:</p>
-                    <p className='text-lg'>data?.leve</p>
+                    <p className='text-lg'>{ data?.email ?? 'Not Added' }</p>
                 </div>
                 {/* */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Phone:</p>
                     <p className='text-lg'>
-                        000987
+                        { data?.phone ?? 'Not Added' }
                     </p>
                 </div>
                 {/* */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Address:</p>
                     <p className='text-lg'>
-                        000987
+                        { data?.address ?? 'Not Added' }
                     </p>
                 </div>
                 {/* */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Assign Admin:</p>
                     <p className='text-lg'>
-                        No
+                        { data?.is_admin ?? 'Not Added' }
+                    </p>
+                </div>
+                {/* */}
+                <div className='mb-6'>
+                    <p className='text-sm font-light'>Code:</p>
+                    <p className='text-lg'>
+                        { data?.code ?? 'Not Added' }
                     </p>
                 </div>
                 {/* */}
                 <div className='mb-6'>
                     <p className='text-sm font-light'>Created At:</p>
                     <p className='text-lg'>
-                        13 May 2025
+                        { data?.created_at ? formatDate(data?.created_at) : 'Not Added' }
                     </p>
                 </div>
                 {/* */}
                 <div className='mb-4'>
                     <p className='text-sm font-light'>Updated At:</p>
                     <p className='text-lg'>
-                        13 May 2025
+                        { data?.updated_at ? formatDate(data?.updated_at) : 'Not Added' }
                     </p>
                 </div>
             </section>
@@ -86,7 +94,7 @@ export default function ProfileView({ id }) {
    
 
     <ProfileEditModal 
-        id={id}
+        domData={data}
         isModal={isModal} 
         setIsModal={setIsModal} />
 

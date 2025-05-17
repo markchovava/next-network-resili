@@ -2,8 +2,13 @@ import Link from 'next/link'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
 import CategoryView from './_components/CategoryView'
+import { _categoryViewAction } from '@/actions/CategoryActions'
 
-export default function page() {
+
+
+export default async function page({ params: {id} }) {
+  const [brandData, ] = await Promise.all([ _categoryViewAction(id), ])
+
   return (
     <>
     {/* BREADCRUMBS */}
@@ -15,11 +20,11 @@ export default function page() {
         <li><FaAngleRight /></li>
         <Link href='/admin/category'><li>Category</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin/category'> <li>ViewCategory</li> </Link>
+        <Link href={`/admin/category/${id}`}> <li>View Category</li> </Link>
       </ul>
     </section>
 
-    <CategoryView />
+    <CategoryView id={id} dbData={brandData} />
     </>
   )
 }

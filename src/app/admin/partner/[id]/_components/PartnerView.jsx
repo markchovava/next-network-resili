@@ -1,11 +1,21 @@
 "use client"
 import React, { useState } from 'react'
 import PartnerEditModal from './PartnerEditModal';
+import { formatDate } from '@/_utils/formatDate';
+import Image from 'next/image';
+import { baseURL } from '@/api/BaseURL';
+import { _partnerViewAction } from '@/actions/PartnerActions';
 
 
-export default function PartnerView({ id }) {
+
+export default function PartnerView({ id, dbData }) {
     const [isModal, setIsModal] = useState(false);
-    const [data, setData] = useState();
+    const [data, setData] = useState(dbData?.data);
+
+    async function getData() {
+        const res = await _partnerViewAction(id);
+        setData(res?.data);
+    }
 
   return (
     <>
@@ -19,22 +29,36 @@ export default function PartnerView({ id }) {
                 </button>
             </div>
 
-            <section className='bg-white drop-shadow-lg p-6'>
+            <section className='bg-white drop-shadow-lg py-8 px-8 '>
+                {/* IMAGE */}
+                {data?.image &&
+                <div className='mb-6'>
+                    <p className='text-sm font-light mb-2'>Image:</p>
+                    <div className='overflow-hidden lg:w-[25%] w-[50%] aspect-[7/5] bg-gray-100 rounded-xl'>
+                    <Image 
+                        className='w-[100%] h-[100%]' 
+                        src={baseURL + data?.image} 
+                        height={500} 
+                        width={700} 
+                        alt='Image' />
+                    </div>
+                </div>
+                }
                 {/* NAME */}
                 <div className='mb-6'>
-                    <p className='text-sm font-semibold'>Name:</p>
-                    <p className='text-lg'>data?.name</p>
+                    <p className='text-sm font-light'>Name:</p>
+                    <p className='text-lg'>{data?.name ?? 'Not Added'}</p>
                 </div>
-                {/* LEVEL */}
+                {/* Created */}
                 <div className='mb-6'>
-                    <p className='text-sm font-semibold'>Level:</p>
-                    <p className='text-lg'>data?.leve</p>
+                    <p className='text-sm font-light'>Created:</p>
+                    <p className='text-lg'>{data?.created_at ? formatDate(data?.created_at) : 'Not Added'}</p>
                 </div>
                 {/* */}
-                <div className=''>
-                    <p className='text-sm font-semibold'>Author:</p>
+                <div className='mb-4'>
+                    <p className='text-sm font-light'>Author:</p>
                     <p className='text-lg'>
-                        user?.name
+                        {data?.user.email ? data?.user?.email : 'Not Added'}
                     </p>
                 </div>
             </section>
@@ -45,6 +69,8 @@ export default function PartnerView({ id }) {
 
     <PartnerEditModal 
         id={id}
+        domData={data}
+        getData={getData}
         isModal={isModal} 
         setIsModal={setIsModal} />
 

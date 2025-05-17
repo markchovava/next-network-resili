@@ -2,8 +2,11 @@ import Link from 'next/link'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
 import ProfileView from './_components/ProfileView'
+import { _profileViewAction } from '@/actions/AuthActions';
 
-export default function page() {
+export default async function page() {
+  const [authData] = await Promise.all([_profileViewAction()]);
+
   return (
     <>
     {/* BREADCRUMBS */}
@@ -17,7 +20,7 @@ export default function page() {
       </ul>
     </section>
 
-    <ProfileView />
+    <ProfileView dbData={authData} />
     </>
   )
 }

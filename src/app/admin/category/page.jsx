@@ -2,10 +2,21 @@ import Link from 'next/link'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
 import CategoryList from './_components/CategoryList'
+import { _categoryListAction } from '@/actions/CategoryActions'
+import { cookies } from 'next/headers'
+import ClientRedirect from '@/app/_components/ClientRedirect'
 
 
 
-export default function page() {
+export default async function page() {
+    const [categoryData, ] = await Promise.all([_categoryListAction()])
+    
+    const cookieStore = await cookies();
+    const adminToken = await cookieStore.get('NETWORK_RESILIENCE_ADMIN_COOKIE'); 
+    if(adminToken?.value != "Yes") {
+      return( <ClientRedirect /> )
+    }
+
   return (
     <>
     {/* BREADCRUMBS */}
@@ -19,7 +30,7 @@ export default function page() {
       </ul>
     </section>
 
-    <CategoryList />
+    <CategoryList dbData={categoryData} />
     </>
   )
 }

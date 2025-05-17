@@ -1,11 +1,11 @@
 import React from 'react'
-import Register from './_components/Register'
+import RegisterEdit from './_components/RegisterEdit'
 
 
 export default function page() {
   return (
     <>
-    <Register />
+    <RegisterEdit />
     </>
   )
 }

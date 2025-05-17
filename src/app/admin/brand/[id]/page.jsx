@@ -2,8 +2,13 @@ import Link from 'next/link'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
 import BrandView from './_components/BrandView'
+import { _brandViewAction } from '@/actions/BrandActions'
 
-export default function page() {
+
+
+export default async function page({ params: {id} }) {
+  const [brandData, ] = await Promise.all([ _brandViewAction(id), ])
+
   return (
     <>
     {/* BREADCRUMBS */}
@@ -15,11 +20,11 @@ export default function page() {
         <li><FaAngleRight /></li>
         <Link href='/admin/brand'><li>Brand</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin/brand/1'> <li>View Brand</li> </Link>
+        <Link href={`/admin/brand/${id}`}> <li>View Brand</li> </Link>
       </ul>
     </section>
 
-    <BrandView />
+    <BrandView id={id} dbData={brandData} />
     </>
   )
 }

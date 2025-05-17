@@ -1,18 +1,91 @@
 "use client"
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaEye } from 'react-icons/fa'
 import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6'
 import { IoSearch } from 'react-icons/io5'
 import { MdDeleteForever } from 'react-icons/md'
 import PartnerAddModal from './PartnerAddModal'
+import { MainContextState } from '@/contexts/MainContext'
+import { _partnerDeleteAction, _partnerListAction, _partnerPaginateAction, _partnerSearchAction } from '@/actions/PartnerActions'
+import { reactToastifyDark } from '@/_utils/reactToastify'
+import { toast } from 'react-toastify'
 
 
 
 
+export default function PartnerList({ dbData }) {
+    const {partnerState, partnerDispatch } = MainContextState()
+    const [isModal, setIsModal] = useState(false)
+    const [search, setSearch] = useState('');
+    const [isSearch, setIsSearch] = useState(false);
 
-export default function PartnerList() {
-  const [isModal, setIsModal] = useState(false)
+    useEffect(() => {
+        partnerDispatch({type: 'ADD_DATA', payload: {
+            items: dbData?.data,
+            prevURL: dbData?.links?.prev,
+            nextURL: dbData?.links?.next,
+        }});
+    }, []);
+
+    async function paginateHandler(url) {
+        try{
+            const res = await _partnerPaginateAction(url)
+            partnerDispatch({type: 'ADD_DATA', payload: {
+                items: res?.data,
+                prevURL: res?.links?.prev,
+                nextURL: res?.links?.next,
+            }});
+        } catch (error) {
+            console.error(`Error: ${error}`)
+        } 
+    }
+
+    async function getSearchData() {
+      if(!search) {
+          await getData();
+          setIsSearch(false)
+          return;
+      }
+      try{
+      const res = await _partnerSearchAction(search);
+      partnerDispatch({type: 'ADD_DATA', payload: {
+          items: res?.data,
+          prevURL: res?.links?.prev,
+          nextURL: res?.links?.next,
+      }});
+      setIsSearch(false);
+      } catch (error) {
+          console.error(`Error: ${error}`); 
+          setIsSearch(false)
+      }
+    }
+    
+    async function getData() {
+        try{
+            const res = await _partnerListAction();
+                partnerDispatch({type: 'ADD_DATA', payload: {
+                    items: res?.data,
+                    prevURL: res?.links?.prev,
+                    nextURL: res?.links?.next,
+                }});
+            } catch (error) {
+                console.error(`Error: ${error}`); 
+            }
+    }
+    
+    async function deleteData(id) {
+        try{
+            const res = await _partnerDeleteAction(id);
+            if(res.status == 1) {
+                await getData();
+                toast.success(res?.message, reactToastifyDark);
+                return;
+            }
+            } catch (error) {
+                console.error(`Error: ${error}`); 
+        }
+    }
 
   return (
     <>
@@ -25,16 +98,22 @@ export default function PartnerList() {
 
       <div className='mx-auto w-[92%] flex items-center justify-between mt-2 pb-2'>
         <form 
+            action={getSearchData} 
+            onSubmit={() => setIsSearch(true)} 
             className='border border-gray-300 lg:w-[50%] w-[80%] flex items-center justify-start'>
             <input 
                 type='text'
                 placeholder='Search' 
+                value={search} 
+                onChange={(e) => setSearch(e.target.value)} 
                 className='outline-none border-r border-gray-300 p-3 w-[85%]' />
             <button 
                 type='submit' 
                 className='cursor-pointer hover:scale-110 ease-linear transition-all h-[100%] lg:w-[15%] px-4 py-3 text-center flex items-center justify-center'>
-                    <span className='animate-pulse w-[15px] h-[15px] rounded-full bg-slate-900'></span>
-                    <IoSearch className='text-lg' />
+                { isSearch
+                    ? <span className='animate-pulse w-[15px] h-[15px] rounded-full bg-slate-900'></span>
+                    : <IoSearch className='text-lg' />
+                }
             </button>
         </form>
         <div>
@@ -56,53 +135,66 @@ export default function PartnerList() {
                 </div>
 
                 {/* COLUMN */}
-                <div className='mx-auto w-[100%] py-2 flex items-center justify-start border-b border-x border-gray-300'>
-                  <div className='w-[40%] border-r border-gray-300 px-3 py-2'>name</div>
-                  <div className='w-[40%] border-r border-gray-300 px-3 py-2'>
-                    jjj
+                { partnerState?.items?.length > 0 ?
+                  partnerState?.items?.map((i, key) => (
+                  <div key={key} className='mx-auto w-[100%] py-2 flex items-center justify-start border-b border-x border-gray-300'>
+                    <div className='w-[40%] border-r border-gray-300 px-3 py-2'>{i?.name ?? 'Not Added'}</div>
+                    <div className='w-[40%] border-r border-gray-300 px-3 py-2'>
+                      { i?.user?.email ? i?.user?.email : 'Not Added' }
+                    </div>
+                    <div className='w-[20%] px-3 py-2 text-end flex items-center justify-end gap-3 text-xl'>
+                        <Link title='View' href={`/admin/partner/${i?.id}`}> 
+                        <FaEye className='hover:text-blue-500 duration-150 hover:scale-110 transition-all ease-in'/> 
+                        </Link> 
+                        <button title='Delete' onClick={() => deleteData(i?.id) }> 
+                            <MdDeleteForever
+                            className='hover:text-red-500 duration-150 hover:scale-110 transition-all ease-in' /> 
+                        </button> 
+                    </div>
                   </div>
-                  <div className='w-[20%] px-3 py-2 text-end flex items-center justify-end gap-3 text-xl'>
-                      <Link title='View' href={`/admin/partner/1`}> 
-                      <FaEye className='hover:text-blue-500 duration-150 hover:scale-110 transition-all ease-in'/> 
-                      </Link> 
-                      <button title='Delete'> 
-                          <MdDeleteForever
-                          className='hover:text-red-500 duration-150 hover:scale-110 transition-all ease-in' /> 
-                      </button> 
-                  </div>
-                </div>
+                  )) 
+                  :     
+                  <section className='w-[100%] py-6'>
+                      <h3 className='text-[3rem] font-light'>No Data Available at the moment.</h3>
+                      <p>Click 
+                          <span 
+                            onClick={() => setIsModal(true)} 
+                            className='cursor-pointer underline hover:no-underline mx-1'>
+                            Add
+                          </span> to add.
+                      </p>
+                  </section>
+                }
              
-                <section className='w-[100%] py-6'>
-                    <h3 className='text-[3rem] font-light'>No Data Available at the moment.</h3>
-                    <p>Click 
-                        <span className='cursor-pointer underline hover:no-underline mx-1'>
-                            Edit
-                        </span> 
-                        to add.
-                    </p>
-                </section>
 
             </section>
         </section>
         {/* PAGINATION */}
         <section className='w-[90%] mx-auto pb-[4rem] flex items-center justify-end gap-3'>
           {/* PREVIOUS */}
+          { partnerState.prevURL &&
           <button
+              onClick={() => paginateHandler(partnerState?.prevURL)}
               className='group px-4 py-2 flex items-center justify-center gap-2 border border-gray-700 text-gray-700'>
               <FaArrowLeftLong className='transition-all ease-in-out duration-200 group-hover:-translate-x-1' />
               Prev
           </button>
+          }
           {/* NEXT */}
+          {partnerState.nextURL && 
           <button 
+              onClick={() => paginateHandler(partnerState?.nextURL)}
               className='group px-4 py-2 flex items-center justify-center gap-2 border border-gray-700 text-gray-700'>
               <span>Next</span>
               <FaArrowRightLong className='transition-all ease-in-out duration-200 group-hover:translate-x-1' />
           </button>
+          }
         </section>
     </section>
 
 
     <PartnerAddModal
+      getData={getData}
       isModal={isModal} 
       setIsModal={setIsModal} />
 
