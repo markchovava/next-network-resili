@@ -48,6 +48,40 @@ export const ProductReducer = (state, action) => {
                 ...state,
                 prevURL: action.payload.url
             }   
+        case 'ASCBYNAME':
+            return {
+                ...state,
+                items: action.payload.sort((a, b) => 
+                    a.name.localeCompare(b.name)
+                )
+            }   
+        case 'DESCBYNAME':
+            return {
+                ...state,
+                items: action.payload.sort((a, b) => 
+                    b.name.localeCompare(a.name)
+                )
+            }   
+        case 'ASCBYPRICE':
+            return {
+                ...state,
+                items: action.payload.sort((a, b) => {
+                    if (a.price === null && b.price === null) return 0;
+                    if (a.price === null) return 1;
+                    if (b.price === null) return -1;
+                    return a.price - b.price;
+                })
+            }   
+        case 'DESCBYPRICE':
+            return {
+                ...state,
+                items: action.payload.sort((a, b) => {
+                    if (a.price === null && b.price === null) return 0;
+                    if (a.price === null) return 1;       
+                    if (b.price === null) return -1;     
+                    return b.price - a.price;             
+                })
+            }   
         case 'REMOVE_ITEM':
             return {
                 ...state,

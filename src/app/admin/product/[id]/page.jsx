@@ -30,7 +30,11 @@ export default async function page({ params: {id} }) {
       </ul>
     </section>
 
-    <ProductView id={id} dbData={productData} brandData={brandData}  productCategoryData={ productCategoryData} />
+    <ProductView 
+      id={id} 
+      dbData={productData} 
+      brandData={brandData}  
+      productCategoryData={productCategoryData} />
     </>
   )
 }

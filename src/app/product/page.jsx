@@ -2,9 +2,14 @@ import React from 'react'
 import Link from 'next/link'
 import ProductList from './_components/ProductList';
 import SectionContact from '../_components/SectionContact'
+import { categoryListAllAction } from '@/actions/CategoryActions';
+import { productListAction } from '@/actions/ProductActions';
 
 
-export default function page() {
+
+export default async function page() {
+  const [productData, categoryData] = await Promise.all([productListAction(), categoryListAllAction()]);
+
   return (
     <>
      {/* TITLE */}
@@ -18,7 +23,7 @@ export default function page() {
       </div>
     </section>
 
-    <ProductList />
+    <ProductList dbData={productData} categoryData={categoryData} />
 
     <SectionContact />
 
