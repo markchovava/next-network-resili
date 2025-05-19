@@ -1,8 +1,10 @@
 "use client"
+import { reactToastifyDark } from '@/_utils/reactToastify'
 import { baseURL } from '@/api/BaseURL'
 import { noImage } from '@/data/ImagesData'
 import Image from 'next/image'
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
 
 const imagesData = [
@@ -16,9 +18,12 @@ const imagesData = [
 
 export default function ProductView({id, dbData, productCategoryData}) {
   const [data, setData] = useState(dbData?.data)
+  const [input, setInput] = useState({quantity: ''})
   const [pcData, setPcData] = useState(productCategoryData.data)
   const [images, setImages] = useState(dbData?.images);
   const [specs, setSpecs] = useState(dbData?.specs);
+  const [errMsg, setErrMsg] = useState({quantity: ''})
+  const [isSubmit, setIsSubmit] = useState(false)
   const [isActive, setIsActive] = useState(dbData?.product_images?.length > 0 
                                   ? baseURL + dbData?.product_images[0]?.image 
                                   : baseURL + noImage)
@@ -26,6 +31,26 @@ export default function ProductView({id, dbData, productCategoryData}) {
     one: true, 
     two: false
   })
+
+
+  async function postData(){
+    console.log('input', input)
+    if(!input?.quantity){
+      const message = "Quantity is requred.";
+      setErrMsg({quantity: message})
+      setIsSubmit(false)
+      toast.warn(message, reactToastifyDark);
+      return
+    }
+    const formData = {
+      product_id: data?.id,
+      price: data?.price,
+      quantity: input?.quantity,
+      total: data?.total,
+    }
+    console.log('formData', formData)
+    setIsSubmit(false)
+  }
 
 
 
@@ -93,15 +118,22 @@ export default function ProductView({id, dbData, productCategoryData}) {
             <p className='font-light leading-tight mb-1'>Quantity:</p>
             <input 
               type='number' 
-              min={1} placeholder='1' 
+              min={1} 
+              value={input?.quantity}
+              onChange={(e) => setInput({...input, quantity: Number(e.target.value)})}
+              placeholder='1' 
               className='outline-none p-3 border border-gray-300' />
+              {errMsg?.quantity &&
+              <p className='text-sm text-red-600'>{errMsg?.quantity}</p>}
           </div>
           {/*  */}
-          <div className='w-[100%] mt-4'>
-            <button className='bg__one rounded-full text-white px-12 py-4'>
+          <form action={postData} onSubmit={() => setIsSubmit(true)} className='w-[100%] mt-4'>
+            <button 
+              type='submit' 
+              className='bg__one rounded-full text-white px-12 py-4'>
               Add to Cart
             </button>
-          </div>
+          </form>
 
         </div>
       </div>

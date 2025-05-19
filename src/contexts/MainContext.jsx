@@ -1,6 +1,7 @@
 "use client"
 import { BrandInit, BrandInitialState, BrandReducer } from "@/reducers/BrandReducer";
 import { CategoryInit, CategoryInitialState, CategoryReducer } from "@/reducers/CartegoryReducer";
+import { CartInit, CartInitialState, CartReducer } from "@/reducers/CartReducer";
 import { PartnerInit, PartnerInitialState, PartnerReducer } from "@/reducers/PartnerReducer";
 import { ProductInit, ProductInitialState, ProductReducer } from "@/reducers/ProductReducer";
 import { UserInit, UserInitialState, UserReducer } from "@/reducers/UserReducer";
@@ -16,6 +17,7 @@ export default function MainContextProvider({ children }) {
     const [categoryState, categoryDispatch] = useReducer(CategoryReducer, CategoryInitialState, CategoryInit);
     const [partnerState, partnerDispatch] = useReducer(PartnerReducer, PartnerInitialState, PartnerInit);
     const [productState, productDispatch] = useReducer(ProductReducer, ProductInitialState, ProductInit);
+    const [cartState, cartDispatch] = useReducer(CartReducer, CartInitialState, CartInit);
    
    
     return (
@@ -24,7 +26,8 @@ export default function MainContextProvider({ children }) {
             brandState, brandDispatch,
             categoryState, categoryDispatch,
             partnerState, partnerDispatch,
-            productState, productDispatch
+            productState, productDispatch,
+            cartState, cartDispatch,
         }}>
             {children}
         </MainContext.Provider>

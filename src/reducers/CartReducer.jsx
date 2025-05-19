@@ -1,8 +1,8 @@
 "use client";
 
-export const UserInit = (UserInitialState) => {
+export const CartInit = (CartInitialState) => {
     const result = {
-        ...UserInitialState, 
+        ...CartInitialState, 
         items: null,
         prevURL: '',
         nextURL: '',
@@ -11,14 +11,14 @@ export const UserInit = (UserInitialState) => {
 }
 
 
-export const UserInitialState = {
+export const CartInitialState = {
     items: null,
     prevURL: '',
     nextURL: '',
 };
 
 
-export const UserReducer = (state, action) => {
+export const CartReducer = (state, action) => {
     switch(action.type){
         case 'ADD_DATA':
             return {
