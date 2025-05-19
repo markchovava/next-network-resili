@@ -51,8 +51,29 @@ export async function productPaginateAction(url) {
   return await res.json();
 }
 
+export async function productListPriorityAction() {
+    const res = await fetch(`${baseURL}product-by-priority`, {
+      'method': 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    return await res.json();
+}
 export async function productListAction() {
     const res = await fetch(`${baseURL}product`, {
+      'method': 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    return await res.json();
+}
+
+export async function productViewAction(id) {
+    const res = await fetch(`${baseURL}product/${id}`, {
       'method': 'GET',
       headers: {
         'Accept': 'application/json',

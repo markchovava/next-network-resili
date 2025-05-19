@@ -1,4 +1,6 @@
 "use client"
+import { baseURL } from '@/api/BaseURL'
+import { noImage } from '@/data/ImagesData'
 import Image from 'next/image'
 import React, { useState } from 'react'
 
@@ -10,19 +12,29 @@ const imagesData = [
   {id: 4, img: '/assets/img/7by5/04solar.jpg'},
 ]
 
-export default function ProductView() {
-  const [isActive, setIsActive] = useState(imagesData[0].img)
+
+
+export default function ProductView({id, dbData, productCategoryData}) {
+  const [data, setData] = useState(dbData?.data)
+  const [pcData, setPcData] = useState(productCategoryData.data)
+  const [images, setImages] = useState(dbData?.images);
+  const [specs, setSpecs] = useState(dbData?.specs);
+  const [isActive, setIsActive] = useState(dbData?.product_images?.length > 0 
+                                  ? baseURL + dbData?.product_images[0]?.image 
+                                  : baseURL + noImage)
   const [isTab, setIsTab] = useState({
     one: true, 
     two: false
   })
 
+
+
   return (
     <>
     <section className='w-full py-[5rem]'>
-      <div className='mx-auto w-[92%] flex items-start justify-start gap-8'>
+      <div className='mx-auto w-[92%] flex lg:flex-row flex-col items-start justify-start gap-8'>
         {/*  */}
-        <div className='w-[60%]'>
+        <div className='lg:w-[60%] w-[100%]'>
           <div className='group mb-6 cursor-pointer w-[100%] aspect-[5/3] overflow-hidden rounded-xl bg-gray-100 drop-shadow-md'>
             <Image 
               src={isActive} 
@@ -31,10 +43,11 @@ export default function ProductView() {
               className="group-hover:scale-110 transition-all ease-in-out duration-200 object-cover"
               alt='Image' />
           </div>
+          {images.length > 0 &&
           <div className='w-[100%] grid grid-cols-5 gap-6'>
-            {imagesData.map(i => 
+            {images.map(i => 
               <div 
-                onClick={() => setIsActive(i.img)} 
+                onClick={() => setIsActive(baseURL + i?.image)} 
                 className='group aspect-[7/5] rounded-lg cursor-pointer bg-gray-100 drop-shadow overflow-hidden'>
                 <Image 
                   src={i.img} 
@@ -43,23 +56,37 @@ export default function ProductView() {
                   className="group-hover:scale-110 transition-all ease-in-out duration-200 object-cover"
                   alt='Image' />
               </div>
-
             )}
-           
           </div>
+          }
         </div>
         {/* Information */}
-        <div className='w-[40%] pt-[2rem]'>
-          <h2 className='text-[2.2rem] mb-5'>Product Name</h2>
-          {/*  */}
+        <div className='lg:w-[40%] w-[100%] pt-[2rem]'>
+          <h2 className='text-[2.2rem] mb-5'>{data?.name}</h2>
+          {/* STATUS */}
+          <div className='w-[100%] mb-4'>
+            <h3 className='text-2xl text-blue-800'>
+               <span className='p-2 rounded-lg bg-gradient-to-br text-white from-red-500 to-blue-800'>
+                {data?.status}
+               </span>
+              </h3>
+          </div>
+          {/* BRAND */}
+          { data?.brand?.name &&
           <div className='w-[100%] mb-4'>
             <p className='font-light leading-tight mb-1'>Brand:</p>
-            <h3 className='text-2xl'>Dell</h3>
+            <h3 className='text-2xl'>
+              {data?.brand?.name}
+            </h3>
           </div>
+          }
           {/*  */}
           <div className='w-[100%] mb-4'>
             <p className='font-light leading-tight mb-1'>Category:</p>
-            <h3 className='text-2xl'>CCTVs, Computers</h3>
+            <h3 className='text-2xl'>
+              { pcData.map((i, key) => (
+                key < pcData.length - 1 ? i?.category?.name + ', ' : i?.category?.name
+              ))}</h3>
           </div>
           {/*  */}
           <div className='w-[100%] mb-4'>
@@ -93,39 +120,53 @@ export default function ProductView() {
           </div>
         </div>
         {/* DESCRIPTION */}
-        {isTab.one &&
-        <section className='mx-auto w-[100%] py-8 px-6 bg-white drop-shadow-lg'>
-          <h2 className='mb-2 font-medium text-lg'>Description</h2>
-          <p className='font-light mb-1'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima possimus nisi at adipisci, 
-            quisquam laboriosam odit earum cum iste ipsum voluptas repellendus quaerat odio quo omnis 
-            sit aspernatur corrupti a, provident laborum qui quibusdam, deserunt tempora ab? Laudantium, 
-            placeat tempora! Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima possimus nisi 
-            at adipisci, quisquam laboriosam odit earum cum iste ipsum voluptas repellendus quaerat odio quo 
-            omnis sit aspernatur corrupti a, provident laborum qui quibusdam, deserunt tempora ab? Laudantium, 
-            placeat tempora!
-          </p>
-          <p className='font-light'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima possimus nisi at adipisci, 
-            quisquam laboriosam odit earum cum iste ipsum voluptas repellendus quaerat odio quo omnis 
-            sit aspernatur corrupti a, provident laborum qui quibusdam, deserunt tempora ab? Laudantium, 
-            placeat tempora!
-          </p>
-        </section>
-        }
+      
+          {isTab.one &&
+          <>
+          {data?.description ? 
+            <section className='mx-auto w-[100%] py-8 px-6 bg-white drop-shadow-lg'>
+              <h2 className='mb-2 font-medium text-lg'>Description</h2>
+              <p className='font-light mb-1'>
+                {data?.description}
+              </p>
+            </section>  
+          :
+            <section className='mx-auto w-[100%%] py-12 px-6 bg-white drop-shadow-lg'>
+              <h3 className='font-light text-5xl'>Description not available at the moment.</h3>
+            </section>
+          }
+          </>
+          }
+   
+
+        
         {/* SPECIFICATIONS */}
-        {isTab.two &&
-        <section className='mx-auto w-[100%%] py-8 px-6 bg-white drop-shadow-lg'>
-          <div className='w-[100%] flex items-center justify-start border border-gray-300 font-medium'>
-            <div className='w-[50%] py-3 px-4 border-r border-gray-300'>Name</div>
-            <div className='w-[50%] py-3 px-4'>Specifications</div>
-          </div>
-          <div className='w-[100%] flex items-center justify-start border border-gray-300'>
-            <div className='w-[50%] py-3 px-4 border-r border-gray-300'>Measurement</div>
-            <div className='w-[50%] py-3 px-4'>400cm by 30cm</div>
-          </div>
-        </section>
-        }
+      
+          {isTab.two &&
+          <>
+          {specs.length > 0 ? 
+            <section className='mx-auto w-[100%%] py-8 px-6 bg-white drop-shadow-lg'>
+              <div className='w-[100%] flex items-center justify-start border border-gray-300 font-medium'>
+                <div className='w-[50%] py-3 px-4 border-r border-gray-300'>Name</div>
+                <div className='w-[50%] py-3 px-4'>Specifications</div>
+              </div>
+              {specs.map((i, key) => (
+                <div className='w-[100%] flex items-center justify-start border border-gray-300'>
+                  <div className='w-[50%] py-3 px-4 border-r border-gray-300'>{i?.name}</div>
+                  <div className='w-[50%] py-3 px-4'>{i?.name}</div>
+                </div>
+              ))}
+            </section>
+            :
+            <section className='mx-auto w-[100%%] py-12 px-6 bg-white drop-shadow-lg'>
+              <h3 className='font-light text-5xl'>Specifications not available at the moment.</h3>
+            </section>
+          }
+          </>
+          }
+      
+  
+
       </section>
 
 

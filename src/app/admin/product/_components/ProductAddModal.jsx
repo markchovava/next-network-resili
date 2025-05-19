@@ -69,6 +69,8 @@ export default function ProductAddModal({getData, brands, isModal, setIsModal}) 
         }
         const formData = new FormData()
         formData.append('name', data?.name)
+        formData.append('status', data?.status)
+        formData.append('priority', data?.priority)
         formData.append('price', data?.price)
         formData.append('quantity', data?.quantity)
         formData.append('brand_id', data?.brand_id)
@@ -143,24 +145,63 @@ export default function ProductAddModal({getData, brands, isModal, setIsModal}) 
                         {errMsg?.name &&
                             <p className='text-red-600 text-sm'>{errMsg?.name}</p> }
                     </div>
-                    {/* BRANDS */}
-                    {brands &&
+                     {/* PRIORITY */}
                     <div className='w-[100%] mb-6'>
-                        <p className='mb-2 leading-none text-sm font-light'>Name:</p>
+                        <p className='mb-2 leading-none text-sm font-light'>Priority:</p>
                         <select 
                             name='brand_id'
                             onChange={handleInput}
-                            value={data?.brand_id} 
+                            value={data?.priority} 
                             className='w-[100%] border border-gray-300 outline-none p-3'>
-                            <option value="">Select a Brand</option>
-                            { brands.map((i, key) => (
-                                <option value={i?.brand_id}>{i?.name}</option>
+                            <option value="">Select a Priority</option>
+                            { [...Array(8)].map((i, key) => (
+                                <option
+                                    value={key+1} 
+                                    selected={key+1 == data?.priority && 'selected'}>
+                                    {key+1}
+                                </option>
                             )) }
                         </select>
-                        {errMsg?.brand_id &&
-                            <p className='text-red-600 text-sm'>{errMsg?.brand_id}</p> }
+                        {errMsg?.priority &&
+                            <p className='text-red-600 text-sm'>{errMsg?.priority}</p> }
                     </div>
-                    }
+                    {/* BRANDS & STATUSs */}
+                    <div className='w-[100%] grid grid-cols-2 gap-6 mb-6'>
+                        {/* BRANDS */}
+                        {brands &&
+                        <div className='w-[100%] mb-6'>
+                            <p className='mb-2 leading-none text-sm font-light'>Name:</p>
+                            <select 
+                                name='brand_id'
+                                onChange={handleInput}
+                                value={data?.brand_id} 
+                                className='w-[100%] border border-gray-300 outline-none p-3'>
+                                <option value="">Select a Brand</option>
+                                { brands.map((i, key) => (
+                                    <option value={i?.brand_id}>{i?.name}</option>
+                                )) }
+                            </select>
+                            {errMsg?.brand_id &&
+                                <p className='text-red-600 text-sm'>{errMsg?.brand_id}</p> }
+                        </div>
+                        }
+                        {/* STATUS */}
+                        <div className='w-[100%] mb-6'>
+                            <p className='mb-2 leading-none text-sm font-light'>Status:</p>
+                            <select 
+                                type='text' 
+                                name='status'
+                                onChange={handleInput}
+                                value={data?.status}
+                                className='w-[100%] border border-gray-300 outline-none p-3'>
+                                <option value=''>Select a Status</option>
+                                <option value='OUT-OF-STOCK'>OUT-OF-STOCK</option>
+                                <option value='IN-STOCK'>IN-STOCK</option>
+                            </select>
+                            {errMsg?.status &&
+                            <p className='text-red-600 text-sm'>{errMsg?.status}</p>}
+                        </div>
+                    </div>
                     {/* PRICE & QUANTITY */}
                     <div className='w-[100%] grid grid-cols-2 gap-6 mb-6'>
                         {/* PRICE */}

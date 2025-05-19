@@ -65,6 +65,15 @@ export default function ProductView({ id, dbData, brandData, productCategoryData
                 </div>
                 {/* PRICE */}
                 <div className='mb-6'>
+                    <p className='text-sm font-light mb-2'>Status:</p>
+                    <p className='text-lg font-medium'>
+                        <span className='p-2 rounded-lg bg-gradient-to-br text-white from-red-600 to-blue-800'>
+                        {data?.status}
+                        </span>
+                    </p>
+                </div>
+                {/* PRICE */}
+                <div className='mb-6'>
                     <p className='text-sm font-light'>Price:</p>
                     <p className='text-lg'>{ data?.price ? '$' + data?.price : 'Not Added' }</p>
                 </div>

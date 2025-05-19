@@ -1,8 +1,20 @@
 import React from 'react'
 import ProductView from './_components/ProductView'
 import ProductRelated from '../_components/ProductRelated'
+import { _brandListAllAction } from '@/actions/BrandActions';
+import { productListPriorityAction, productViewAction } from '@/actions/ProductActions';
+import { categoryByProductListAction } from '@/actions/ProductCategoryActions';
+import CarouselProduct from '../_components/CarouselProduct';
 
-export default function page() {
+
+
+export default async function page({ params: {id} }) {
+   const [productData, productCategoryData, productPriorityData] = await Promise.all([
+      productViewAction(id),
+      categoryByProductListAction(id),
+      productListPriorityAction() 
+    ]);
+
   return (
     <>
     {/* TITLE */}
@@ -16,10 +28,13 @@ export default function page() {
       </div>
     </section>
 
+    <ProductView 
+      id={id}
+      dbData={productData} 
+      productCategoryData={productCategoryData} />
 
-    <ProductView />
 
-    <ProductRelated />
+    <CarouselProduct dbData={productPriorityData} />
 
 
     </>
