@@ -1,8 +1,17 @@
 import Link from 'next/link'
 import React from 'react'
 import Cart from './_components/Cart'
+import { cartViewAction } from '@/actions/CartActions';
+import { cookies } from 'next/headers';
 
-export default function page() {
+
+
+export default async function page() {
+  const [cartData] = await Promise.all([cartViewAction()]);
+  const cookieStore = await cookies();
+  const authToken = await cookieStore.get('NETWORK_RESILIENCE_AUTH_COOKIE');
+
+
   return (
     <>
     {/* TITLE */}
@@ -16,7 +25,7 @@ export default function page() {
         </div>
     </section>
 
-    <Cart />
+    <Cart dbData={cartData} authToken={authToken} />
     </>
   )
 }

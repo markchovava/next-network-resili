@@ -5,6 +5,7 @@ import { _brandListAllAction } from '@/actions/BrandActions';
 import { productListPriorityAction, productViewAction } from '@/actions/ProductActions';
 import { categoryByProductListAction } from '@/actions/ProductCategoryActions';
 import CarouselProduct from '../_components/CarouselProduct';
+import { cookies } from 'next/headers';
 
 
 
@@ -14,6 +15,9 @@ export default async function page({ params: {id} }) {
       categoryByProductListAction(id),
       productListPriorityAction() 
     ]);
+
+    const cookieStore = await cookies();
+    const cartToken = await cookieStore.get('NETWORK_RESILIENCE_CART_COOKIE');
 
   return (
     <>
@@ -30,6 +34,7 @@ export default async function page({ params: {id} }) {
 
     <ProductView 
       id={id}
+      cartToken={cartToken}
       dbData={productData} 
       productCategoryData={productCategoryData} />
 

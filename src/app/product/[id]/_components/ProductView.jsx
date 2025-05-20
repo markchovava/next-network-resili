@@ -1,8 +1,11 @@
 "use client"
 import { reactToastifyDark } from '@/_utils/reactToastify'
+import { cartStoreAction } from '@/actions/CartActions'
 import { baseURL } from '@/api/BaseURL'
+import { setCartCookie } from '@/cookies/CookieCartClient'
 import { noImage } from '@/data/ImagesData'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -16,7 +19,8 @@ const imagesData = [
 
 
 
-export default function ProductView({id, dbData, productCategoryData}) {
+export default function ProductView({id, dbData, productCategoryData, cartToken}) {
+  const router = useRouter();
   const [data, setData] = useState(dbData?.data)
   const [input, setInput] = useState({quantity: ''})
   const [pcData, setPcData] = useState(productCategoryData.data)
@@ -34,7 +38,6 @@ export default function ProductView({id, dbData, productCategoryData}) {
 
 
   async function postData(){
-    console.log('input', input)
     if(!input?.quantity){
       const message = "Quantity is requred.";
       setErrMsg({quantity: message})
@@ -43,15 +46,31 @@ export default function ProductView({id, dbData, productCategoryData}) {
       return
     }
     const formData = {
+      cart_id: cartToken?.value ? Number(cartToken?.value) : '',
       product_id: data?.id,
       price: data?.price,
       quantity: input?.quantity,
-      total: data?.total,
+      total: Number(input?.quantity) * data?.price,
     }
-    console.log('formData', formData)
-    setIsSubmit(false)
+    try{
+        const res = await cartStoreAction(formData)
+        if(res?.status == 1) {
+            toast.success(res?.message, reactToastifyDark);
+            setErrMsg({});
+            setIsSubmit(false);
+            setCartCookie(res?.data?.id)
+            router.push('/cart')
+            return
+        }
+        const message = "Something went wrong, try again.";
+        toast.warn(message, reactToastifyDark);
+        setIsSubmit(false);
+  
+    } catch (error) {
+        console.error(`Error: ${error}`);
+        setIsSubmit(false); 
+    }
   }
-
 
 
   return (
@@ -89,12 +108,19 @@ export default function ProductView({id, dbData, productCategoryData}) {
         <div className='lg:w-[40%] w-[100%] pt-[2rem]'>
           <h2 className='text-[2.2rem] mb-5'>{data?.name}</h2>
           {/* STATUS */}
-          <div className='w-[100%] mb-4'>
+          <div className='w-[100%] mb-6'>
             <h3 className='text-2xl text-blue-800'>
                <span className='p-2 rounded-lg bg-gradient-to-br text-white from-red-500 to-blue-800'>
                 {data?.status}
                </span>
               </h3>
+          </div>
+           {/* BRAND */}
+          <div className='w-[100%] mb-4'>
+            <p className='font-light leading-tight mb-1'>Price:</p>
+            <h3 className='text-4xl font-bold'>
+              {data?.price ? '$' + data?.price : 'Not Added'}
+            </h3>
           </div>
           {/* BRAND */}
           { data?.brand?.name &&

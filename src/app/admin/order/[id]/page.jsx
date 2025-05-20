@@ -2,10 +2,14 @@ import Link from 'next/link'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
 import OrderView from './_components/OrderView'
+import { _orderViewAction } from '@/actions/OrderActions'
 
 
 
-export default function page() {
+export default async function page({ params: {id} }) {
+  const [orderData, ] = await Promise.all([_orderViewAction(id), ])
+
+
   return (
     <>
     {/* BREADCRUMBS */}
@@ -17,11 +21,11 @@ export default function page() {
         <li><FaAngleRight /></li>
         <Link href='/admin/order'><li>Order</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin/order'> <li className='font-semibold'>View Order</li> </Link>
+        <Link href={`/admin/order/${id}`}> <li className='font-semibold'>View Order</li> </Link>
       </ul>
     </section>
 
-    <OrderView />
+    <OrderView id={id} dbData={orderData} />
     </>
   )
 }

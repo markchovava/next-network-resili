@@ -38,18 +38,36 @@ export async function cartStoreAction(data) {
       }
     });
     revalidatePath('/cart');
+    revalidatePath(`/product/${data?.product_id}`);
     return await res.json();
 }
 
-export async function cartViewAction(id) {
-    const res = await fetch(`${baseURL}cart/${id}`, {
-      'method': 'GET',
+export async function cartStoreAllAction(data) {
+    const res = await fetch(`${baseURL}cart-all`, {
+      'method': 'POST',
+      'body': JSON.stringify(data),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
     });
+    revalidatePath('/cart');
+    revalidatePath('/checkout');
     return await res.json();
+}
+
+export async function cartViewAction() {
+  const cookieStore = await cookies();
+  const cartToken = await cookieStore.get('NETWORK_RESILIENCE_CART_COOKIE');
+  const id = cartToken?.value
+  const res = await fetch(`${baseURL}cart/${id}`, {
+    'method': 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    }
+  });
+  return await res.json();
 }
 
 export async function cartDeleteAction(id) {

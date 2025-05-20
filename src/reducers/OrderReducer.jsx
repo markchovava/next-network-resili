@@ -1,8 +1,8 @@
 "use client";
 
-export const UserInit = (UserInitialState) => {
+export const OrderInit = (OrderInitialState) => {
     const result = {
-        ...UserInitialState, 
+        ...OrderInitialState, 
         items: null,
         prevURL: '',
         nextURL: '',
@@ -11,14 +11,14 @@ export const UserInit = (UserInitialState) => {
 }
 
 
-export const UserInitialState = {
+export const OrderInitialState = {
     items: null,
     prevURL: '',
     nextURL: '',
 };
 
 
-export const UserReducer = (state, action) => {
+export const OrderReducer = (state, action) => {
     switch(action.type){
         case 'ADD_DATA':
             return {
@@ -32,21 +32,41 @@ export const UserReducer = (state, action) => {
             return {
                 ...state,
                 items: action.payload
-            }    
-        case 'ADD_ITEM':
-            return {
-                ...state,
-                items: [...state.items, action.payload ]
             } 
-        case 'ADD_NEXTURL':
+        /* --------------- */   
+        case 'ASCBYDATE':
             return {
                 ...state,
-                nextURL: action.payload.url
+                items: action.payload.sort((a, b) => 
+                    a.created_at.localeCompare(b.created_at)
+                )
             }   
-        case 'ADD_PREVURL':
+        case 'DESCBYDATE':
             return {
                 ...state,
-                prevURL: action.payload.url
+                items: action.payload.sort((a, b) => 
+                    b.created_at.localeCompare(a.created_at)
+                )
+            }   
+        case 'ASCBYTOTAL':
+            return {
+                ...state,
+                items: action.payload.sort((a, b) => {
+                    if (a.total === null && b.total === null) return 0;
+                    if (a.total === null) return 1;
+                    if (b.total === null) return -1;
+                    return a.total - b.total;
+                })
+            }   
+        case 'DESCBYTOTAL':
+            return {
+                ...state,
+                items: action.payload.sort((a, b) => {
+                    if (a.total === null && b.total === null) return 0;
+                    if (a.total === null) return 1;       
+                    if (b.total === null) return -1;     
+                    return b.total - a.total;             
+                })
             }   
         case 'REMOVE_ITEM':
             return {

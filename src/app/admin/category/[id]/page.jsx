@@ -7,7 +7,7 @@ import { _categoryViewAction } from '@/actions/CategoryActions'
 
 
 export default async function page({ params: {id} }) {
-  const [brandData, ] = await Promise.all([ _categoryViewAction(id), ])
+  const [categoryData, ] = await Promise.all([ _categoryViewAction(id), ])
 
   return (
     <>
@@ -24,7 +24,7 @@ export default async function page({ params: {id} }) {
       </ul>
     </section>
 
-    <CategoryView id={id} dbData={brandData} />
+    <CategoryView id={id} dbData={categoryData} />
     </>
   )
 }

@@ -17,7 +17,7 @@ import { getCookie } from 'cookies-next';
 
 
 
-export default function Header({ authToken }) {
+export default function Header({ authToken, adminToken }) {
     const router = useRouter()
     const [isLogout, setIsLogout] = useState(false)
 
@@ -75,11 +75,27 @@ return (
                 </Link>
                 <span>|</span>
                 {authToken ? 
+                <>
                 <button 
                     onClick={() => setIsLogout(true)} 
                     className='text-sm text-blue-900 underline hover:no-underline'>
                     Logout
                 </button>
+                {adminToken?.value && adminToken?.value == 'Yes' 
+                ?
+                <Link 
+                    href='/admin' 
+                    className='text-sm text-green-800 underline hover:no-underline'>
+                    Admin
+                </Link>
+                :
+                <Link 
+                    href='/client' 
+                    className='text-sm text-green-800 underline hover:no-underline'>
+                    Client
+                </Link>
+                }
+                </>
                 :
                 <Link 
                     href='/login' 

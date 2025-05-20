@@ -3,18 +3,16 @@
 export const CartInit = (CartInitialState) => {
     const result = {
         ...CartInitialState, 
-        items: null,
-        prevURL: '',
-        nextURL: '',
+        cartitems: [],
+        cart: null  
     }
     return result;
 }
 
 
 export const CartInitialState = {
-    items: null,
-    prevURL: '',
-    nextURL: '',
+    cartitems: [],
+    cart: null   
 };
 
 
@@ -23,36 +21,22 @@ export const CartReducer = (state, action) => {
         case 'ADD_DATA':
             return {
                 ...state,
-                items: action.payload.items,
-                nextURL: action.payload.nextURL,
-                prevURL: action.payload.prevURL,
+                cartitems: action.payload.cartitems,
+                cart: action.payload.cart,
 
             }    
-        case 'ADD_ITEMS':
+        case 'ADD_QUANTITY':
             return {
                 ...state,
-                items: action.payload
-            }    
-        case 'ADD_ITEM':
-            return {
-                ...state,
-                items: [...state.items, action.payload ]
-            } 
-        case 'ADD_NEXTURL':
-            return {
-                ...state,
-                nextURL: action.payload.url
-            }   
-        case 'ADD_PREVURL':
-            return {
-                ...state,
-                prevURL: action.payload.url
-            }   
-        case 'REMOVE_ITEM':
-            return {
-                ...state,
-                items: state.items.filter((i) => i.id !== action.payload.id),
-            }
+                cartitems: state.cartitems.map(i => 
+                    i.id === action.payload.id 
+                    ? { ...i, 
+                        quantity: action.payload.quantity, 
+                        total: parseFloat(i.price) * Number(action.payload.quantity)
+                        }
+                    : i
+                )
+            }       
         case 'EMPTY_ITEMS':
             return {
                 ...state,

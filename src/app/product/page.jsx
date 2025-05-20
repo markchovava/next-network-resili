@@ -4,11 +4,13 @@ import ProductList from './_components/ProductList';
 import SectionContact from '../_components/SectionContact'
 import { categoryListAllAction } from '@/actions/CategoryActions';
 import { productListAction } from '@/actions/ProductActions';
+import { cookies } from 'next/headers';
 
 
 
 export default async function page() {
   const [productData, categoryData] = await Promise.all([productListAction(), categoryListAllAction()]);
+
 
   return (
     <>

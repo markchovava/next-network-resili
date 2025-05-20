@@ -6,6 +6,69 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 
+/* AUTHENTICATION */
+export async function _orderStatusUpdateAction(data, id) {
+    const cookieStore = await cookies();
+    const authToken = await cookieStore.get('NETWORK_RESILIENCE_AUTH_COOKIE');
+    if(!authToken?.value){ redirect('/login'); }
+    const res = await fetch(`${baseURL}api/order-status/${id}`, {
+      'method': 'POST',
+      'body': JSON.stringify(data),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken?.value}`
+      }
+    });
+    revalidatePath(`/admin/order/${id}`);
+    return await res.json();
+}
+
+export async function _orderListByStatusAction(status) {
+    const cookieStore = await cookies();
+    const authToken = await cookieStore.get('NETWORK_RESILIENCE_AUTH_COOKIE');
+    if(!authToken?.value){ redirect('/login'); }
+    const res = await fetch(`${baseURL}api/order-status/${status}`, {
+      'method': 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken?.value}`
+      }
+    });
+    return await res.json();
+}
+
+export async function _orderPaginateAction(url) {
+  const cookieStore = await cookies();
+  const authToken = await cookieStore.get('NETWORK_RESILIENCE_AUTH_COOKIE');
+  if(!authToken?.value){ redirect('/login'); }
+  const res = await fetch(url, {
+    'method': 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${authToken?.value}`
+    }
+  });
+  return await res.json();
+}
+
+export async function _orderSearchAction(search) {
+    const cookieStore = await cookies();
+    const authToken = await cookieStore.get('NETWORK_RESILIENCE_AUTH_COOKIE');
+    if(!authToken?.value){ redirect('/login'); }
+    const res = await fetch(`${baseURL}api/order-search/${search}`, {
+      'method': 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken?.value}`
+      }
+    });
+    return await res.json();
+}
+
 export async function _orderListAllAction() {
     const cookieStore = await cookies();
     const authToken = await cookieStore.get('NETWORK_RESILIENCE_AUTH_COOKIE');

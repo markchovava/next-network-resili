@@ -17,13 +17,14 @@ export const metadata = {
 export default async function RootLayout({ children }) {
     const cookieStore = await cookies();
     const authToken = await cookieStore.get('NETWORK_RESILIENCE_AUTH_COOKIE');
+    const adminToken = await cookieStore.get('NETWORK_RESILIENCE_ADMIN_COOKIE');
 
   return (
     <html lang="en">
       <body className={`antialiased`}>
         <MainContextProvider>
 
-          <Header authToken={authToken} />
+          <Header authToken={authToken} adminToken={adminToken} />
           {children}
           <Footer />
 
