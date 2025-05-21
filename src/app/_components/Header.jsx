@@ -55,7 +55,7 @@ return (
             <div className='flex md:w-auto w-full md:flex-row flex-col items-center md:justify-start justify-center md:gap-3 gap-1 text-sm'>
                 <div className='flex items-center justify-start gap-1'>
                     <FaMapLocationDot className='text-blue-900' />
-                    <span>163 Samora Machel Avenue Cnr 7th Street Harare</span>
+                    <span>Harare</span>
                 </div>
                 <div className='flex items-center justify-start gap-1'>
                     <MdEmail className='text-blue-900' />
