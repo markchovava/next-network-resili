@@ -2,6 +2,7 @@
 import { BrandInit, BrandInitialState, BrandReducer } from "@/reducers/BrandReducer";
 import { CategoryInit, CategoryInitialState, CategoryReducer } from "@/reducers/CartegoryReducer";
 import { CartInit, CartInitialState, CartReducer } from "@/reducers/CartReducer";
+import { MessageInit, MessageInitialState, MessageReducer } from "@/reducers/MessageReducer";
 import { OrderInit, OrderInitialState, OrderReducer } from "@/reducers/OrderReducer";
 import { PartnerInit, PartnerInitialState, PartnerReducer } from "@/reducers/PartnerReducer";
 import { ProductInit, ProductInitialState, ProductReducer } from "@/reducers/ProductReducer";
@@ -20,6 +21,7 @@ export default function MainContextProvider({ children }) {
     const [productState, productDispatch] = useReducer(ProductReducer, ProductInitialState, ProductInit);
     const [cartState, cartDispatch] = useReducer(CartReducer, CartInitialState, CartInit);
     const [orderState, orderDispatch] = useReducer(OrderReducer, OrderInitialState, OrderInit);
+    const [messageState, messageDispatch] = useReducer(MessageReducer, MessageInitialState, MessageInit);
    
    
     return (
@@ -31,6 +33,7 @@ export default function MainContextProvider({ children }) {
             productState, productDispatch,
             cartState, cartDispatch,
             orderState, orderDispatch,
+            messageState, messageDispatch
         }}>
             {children}
         </MainContext.Provider>

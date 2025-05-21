@@ -88,13 +88,19 @@ export default function NavArea() {
                     </AnimatePresence>
                 </motion.li>
                 <motion.li className='relative'>
-                    <button 
+                    <Link href='/cart'>
+                    <button
+                        className='px-3 cursor-pointer'>
+                        <FaCartArrowDown className='text-[1.2rem] text-blue-700' />
+                    </button>
+                    </Link>
+                   {/*  <button 
                         className='px-3 cursor-pointer' 
                         onClick={() => setIsActive({two: !isActive?.two})} >
                         <FaCartArrowDown className='text-[1.2rem] text-blue-700' />
-                    </button>
+                    </button> */}
                     {/*  */}
-                    <AnimatePresence>
+                    {/* <AnimatePresence>
                         { isActive?.two && 
                         <motion.ul 
                             variants={variants} 
@@ -132,7 +138,7 @@ export default function NavArea() {
                             </li>
                         </motion.ul>
                         }
-                    </AnimatePresence>
+                    </AnimatePresence> */}
                 </motion.li>
             </ul>
         </div>

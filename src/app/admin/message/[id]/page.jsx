@@ -2,8 +2,13 @@ import Link from 'next/link'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
 import MessageView from './_components/MessageView'
+import { _messageViewAction } from '@/actions/MessageActions'
 
-export default function page() {
+
+
+
+export default async function page({ params: {id} }) {
+  const [messageData, ] = await Promise.all([_messageViewAction(id), ])
   return (
     <>
     {/* BREADCRUMBS */}
@@ -15,11 +20,11 @@ export default function page() {
         <li><FaAngleRight /></li>
         <Link href='/admin/message'><li>Message</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin/message/1'> <li>View Message</li> </Link>
+        <Link href={`/admin/message/${id}`}> <li className='font-semibold'>View Message</li> </Link>
       </ul>
     </section>
 
-    <MessageView />
+    <MessageView id={id} dbData={messageData} />
     </>
   )
 }

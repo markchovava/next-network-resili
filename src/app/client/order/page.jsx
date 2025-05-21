@@ -2,10 +2,12 @@ import Link from 'next/link'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
 import OrderList from './_components/OrderList'
+import { _orderListByUserAction } from '@/actions/OrderActions'
 
 
 
-export default function page() {
+export default async function page() {
+  const [orderData, ] = await Promise.all([_orderListByUserAction(), ])
   return (
     <>
     {/* BREADCRUMBS */}
@@ -13,13 +15,13 @@ export default function page() {
       <ul className='mx-auto w-[92%] flex items-center justify-start gap-2 text-sm'>
         <Link href='/'><li>Home</li></Link>
         <li><FaAngleRight /></li>
-        <Link href='/admin'><li>Admin</li></Link>
+        <Link href='/client'><li>Client</li></Link>
         <li><FaAngleRight /></li>
-        <Link href='/order'><li>Orders</li></Link>
+        <Link href='/admin/order'><li>Orders</li></Link>
       </ul>
     </section>
 
-    <OrderList />
+    <OrderList dbData={orderData} />
     </>
   )
 }

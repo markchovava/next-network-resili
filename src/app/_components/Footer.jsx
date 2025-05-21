@@ -23,36 +23,32 @@ export default function Footer() {
 
             <section className='w-[100%]'>
                 <ul>
-                    <Link href='#'>
+                    <Link href='/about'>
                         <li className='ease-linear transition-all duration-200 uppercase font-semibold hover:underline mb-3'>
                             About Us
                         </li>
                     </Link>
-                    <Link href='#'>
+                    <Link href='/service'>
                         <li className='hover:underline mb-2 ease-linear transition-all duration-200'>
-                            What To Do?
+                            Our Services
                         </li>
                     </Link>
-                    <Link href='#'>
+                    <Link href='/product'>
+                        <li className='hover:underline mb-2 ease-linear transition-all duration-200'>
+                            Our Products
+                        </li>
+                    </Link>
+                    <Link href='/partner'>
                         <li className='hover:underline mb-2 ease-linear transition-all duration-200'>
                             Our Partners
                         </li>
                     </Link>
-                    <Link href='#'>
+                    <Link href='/contact'>
                         <li className='hover:underline mb-2 ease-linear transition-all duration-200'>
-                            Our Contacts
-                        </li>
-                    </Link>
-                    <Link href='#'>
-                        <li className='hover:underline mb-2 ease-linear transition-all duration-200'>
-                        Our Profile
+                        Contact Us
                         </li>
                     </Link>                   
-                    <Link href='#'>
-                        <li className='hover:underline mb-2 ease-linear transition-all duration-200'>
-                        Our Catalog
-                        </li>
-                    </Link>
+                   
                 </ul>
             </section>
     
@@ -61,26 +57,20 @@ export default function Footer() {
                     Social Media Links
                 </div>
                 <div className='w-[100%] flex items-center justify-start gap-3 text-gray-100'>
-                    <a href="https://www.facebook.com/381482548389147" target="_blank" className="hover:scale-110 transition-all ease-linear">
+                    <a href="#" target="_blank" className="hover:scale-110 transition-all ease-linear">
                         <FaFacebook className="text-[1.5rem]" />
                     </a>
-                    <a href="https://wa.me/27683776585" target="_blank" className="hover:scale-110 transition-all ease-linear">
+                    <a href="#" target="_blank" className="hover:scale-110 transition-all ease-linear">
                         <FaWhatsapp className="text-[1.5rem]" />
                     </a>
-                    <a href="mailto:info@investmentbankofafrica.coma" target="_blank" className="hover:scale-110 transition-all ease-linear">
+                    <a href="#" target="_blank" className="hover:scale-110 transition-all ease-linear">
                         <FaEnvelope className="text-[1.5rem]" />
                     </a>
-                    <a href="https://www.linkedin.com/company/investment-bank-ofafrica/" target="_blank" className="hover:scale-110 transition-all ease-linear">
+                    <a href="#" target="_blank" className="hover:scale-110 transition-all ease-linear">
                         <FaLinkedin className="text-[1.5rem]" />
                     </a>
-                    <a href="https://www.instagram.com/investment_bankof_africa?igsh=OXY4NWd5OTNpbnAz&utm_source=qr" target="_blank" className="hover:scale-110 transition-all ease-linear">
+                    <a href="#" target="_blank" className="hover:scale-110 transition-all ease-linear">
                         <FaInstagram className="text-[1.5rem]" />
-                    </a>
-                    <a href="http://www.x.com/IBA_Africa" target="_blank" className="hover:scale-110 transition-all ease-linear">
-                        <FaXTwitter className="text-[1.5rem]" />
-                    </a>
-                    <a href="http://www.tiktok.com/@investmentbankofafrica" target="_blank" className="hover:scale-110 transition-all ease-linear">
-                        <FaTiktok className="text-[1.5rem]" />
                     </a>
                 </div>
             </section>

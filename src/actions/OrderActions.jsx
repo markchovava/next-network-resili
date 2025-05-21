@@ -7,6 +7,22 @@ import { redirect } from "next/navigation";
 
 
 /* AUTHENTICATION */
+export async function _orderListByUserAction() {
+    const cookieStore = await cookies();
+    const authToken = await cookieStore.get('NETWORK_RESILIENCE_AUTH_COOKIE');
+    if(!authToken?.value){ redirect('/login'); }
+    const res = await fetch(`${baseURL}api/order-by-user`, {
+      'method': 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken?.value}`
+      }
+    });
+    return await res.json();
+}
+
+
 export async function _orderStatusUpdateAction(data, id) {
     const cookieStore = await cookies();
     const authToken = await cookieStore.get('NETWORK_RESILIENCE_AUTH_COOKIE');
@@ -24,6 +40,20 @@ export async function _orderStatusUpdateAction(data, id) {
     return await res.json();
 }
 
+export async function _orderListByUserStatusAction(status) {
+    const cookieStore = await cookies();
+    const authToken = await cookieStore.get('NETWORK_RESILIENCE_AUTH_COOKIE');
+    if(!authToken?.value){ redirect('/login'); }
+    const res = await fetch(`${baseURL}api/order-by-user-status/${status}`, {
+      'method': 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken?.value}`
+      }
+    });
+    return await res.json();
+}
 export async function _orderListByStatusAction(status) {
     const cookieStore = await cookies();
     const authToken = await cookieStore.get('NETWORK_RESILIENCE_AUTH_COOKIE');
@@ -52,6 +82,21 @@ export async function _orderPaginateAction(url) {
     }
   });
   return await res.json();
+}
+
+export async function _orderSearchByUserAction(search) {
+    const cookieStore = await cookies();
+    const authToken = await cookieStore.get('NETWORK_RESILIENCE_AUTH_COOKIE');
+    if(!authToken?.value){ redirect('/login'); }
+    const res = await fetch(`${baseURL}api/order-by-user-search/${search}`, {
+      'method': 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken?.value}`
+      }
+    });
+    return await res.json();
 }
 
 export async function _orderSearchAction(search) {

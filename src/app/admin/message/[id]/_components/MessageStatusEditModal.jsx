@@ -1,4 +1,6 @@
 "use client";
+import { reactToastifyDark } from '@/_utils/reactToastify';
+import { _messageStatusUpdateAction } from '@/actions/MessageActions';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react'
 import { IoClose } from 'react-icons/io5';
@@ -14,12 +16,49 @@ const variants = {
 }
 
 
-export default function MessageEditModal({id, isModal, setIsModal}) {
-    const [data, setData] = useState({})
+export default function MessageStatusEditModal({
+    id, 
+    domData, 
+    getData, 
+    isModal, 
+    setIsModal }) {
+        
+    const [data, setData] = useState(domData)
     const [errMsg, setErrMsg] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
     const handleInput = (e) => {
         setData({...data, [e.target.name]: e.target.value});
+    }
+
+    async function postData() { 
+        if(!data?.status) {
+            const message = "Status is required."
+            setErrMsg({status: message})
+            setIsSubmit(false)
+            return
+        }
+        const formData = {
+            status: data?.status,
+        } 
+        try{
+            const res = await _messageStatusUpdateAction(formData, id)
+            //console.log('res', res)
+            if(res?.status == 1) {
+                await getData();
+                toast.success(res?.message, reactToastifyDark);
+                setErrMsg({});
+                setIsModal(false)
+                setIsSubmit(false);
+                return
+            }
+            toast.warn('Somthing went wrong, please try again.', reactToastifyDark);
+            setIsSubmit(false);
+            return
+        
+        } catch (error) {
+            console.error(`Error: ${error}`);
+            setIsSubmit(false); 
+        }
     }
 
     
@@ -41,7 +80,7 @@ export default function MessageEditModal({id, isModal, setIsModal}) {
                     <IoClose className='text-2xl' />
                 </button>
                 </div>
-                <form onSubmit={() => setIsSubmit(true)}>
+                <form action={postData} onSubmit={() => setIsSubmit(true)}>
                    <h2 className='text-[2.5rem] font-light mb-6 text-center border-b border-gray-300'>
                     Update Message Status
                     </h2>
@@ -55,8 +94,8 @@ export default function MessageEditModal({id, isModal, setIsModal}) {
                             value={data?.status}
                             className='w-[100%] border border-gray-300 outline-none p-3'>
                             <option value=''>Select an option</option>
-                            <option value='Read'>Read</option>
-                            <option value='UnRead'>Unread</option>
+                            <option value='Read' selected={data?.status == 'Read' && 'selected'}>Read</option>
+                            <option value='Unread' selected={data?.status == 'Unread' && 'selected'}>Unread</option>
                         </select>
                         { errMsg?.status &&
                         <p className='text-red-600 text-sm'>{errMsg?.status}</p> }

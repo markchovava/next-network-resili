@@ -130,7 +130,7 @@ return (
                         +263 868 800 8486
                     </span>
                 </h2>
-                <Link href="#" className='py-4 lg:px-5 px-4 text-gray-50 duration-300 ease-in-out transition-all hover:bg-gradient-to-br hover:from-green-500 hover:to-green-900 hover:drop-shadow-lg bg-gradient-to-br from-blue-600 to-blue-900 rounded-lg'>
+                <Link href="/contact" className='py-4 lg:px-5 px-4 text-gray-50 duration-300 ease-in-out transition-all hover:bg-gradient-to-br hover:from-green-500 hover:to-green-900 hover:drop-shadow-lg bg-gradient-to-br from-blue-600 to-blue-900 rounded-lg'>
                     REQUEST A QUOTE
                 </Link>
             </div> 

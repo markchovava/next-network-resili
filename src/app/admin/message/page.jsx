@@ -2,9 +2,12 @@ import Link from 'next/link';
 import React from 'react';
 import { FaAngleRight } from 'react-icons/fa';
 import MessageList from './_components/MessageList';
+import { _messageListAction } from '@/actions/MessageActions';
 
 
-export default function page() {
+export default async function page() {
+  const [messageData, ] = await Promise.all([_messageListAction(), ])
+
   return (
     <>
     {/* BREADCRUMBS */}
@@ -18,7 +21,7 @@ export default function page() {
       </ul>
     </section>
 
-    <MessageList />
+    <MessageList dbData={messageData} />
     </>
   )
 }
