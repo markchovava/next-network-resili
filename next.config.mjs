@@ -28,10 +28,16 @@ const nextConfig = {
           hostname: '143.110.255.30',
           pathname: '/**',
         },
+        {
+          protocol: 'https',
+          hostname: 'admin.networkresilience.co.zw',
+          pathname: '/**',
+        },
       ],
       domains: [
         '127.0.0.1', 
-        'localhost', 
+        'localhost',
+        'admin.networkresilience.co.zw',
       ], // Add your domains here
     },
 };
