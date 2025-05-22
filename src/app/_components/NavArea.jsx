@@ -60,6 +60,13 @@ export default function NavArea() {
                         Our Partners
                     </Link>
                 </li>
+                <li>
+                    <Link 
+                    href="/contact" 
+                    className='hover:text-green-800 ease-in-out duration-200 transition-all'>
+                        Contact Us
+                    </Link>
+                </li>
             </ul>
            
             <ul className='flex items-center justify-start gap-5 font-semibold'>

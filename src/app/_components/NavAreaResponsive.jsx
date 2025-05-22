@@ -78,6 +78,13 @@ export default function NavAreaResponsive() {
                             Our Partners
                         </Link>
                     </li>
+                    <li>
+                        <Link 
+                        href="/contact" 
+                        className='hover:text-green-800 ease-in-out duration-200 transition-all'>
+                            Contact Us
+                        </Link>
+                    </li>
                    
                 </ul>
             
@@ -90,11 +97,12 @@ export default function NavAreaResponsive() {
                         </button>
                     </motion.li>
                     <motion.li className='relative'>
+                        <Link href='/cart'>
                         <button 
-                            className='px-3 cursor-pointer' 
-                            onClick={() => setIsActive({two: !isActive?.two})} >
+                            className='px-3 cursor-pointer'>
                             <FaCartArrowDown className='text-[1.2rem] text-blue-700' />
                         </button>
+                        </Link>
                        
                     </motion.li>
                 </ul>

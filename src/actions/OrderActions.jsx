@@ -6,6 +6,28 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 
+export async function orderTrackSearchAction(search) {
+    const res = await fetch(`${baseURL}order-track-search/${search}`, {
+      'method': 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    return await res.json();
+}
+
+export async function orderViewAction(id) {
+    const res = await fetch(`${baseURL}order/${id}`, {
+      'method': 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    return await res.json();
+}
+
 /* AUTHENTICATION */
 export async function _orderListByUserAction() {
     const cookieStore = await cookies();

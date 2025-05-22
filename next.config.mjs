@@ -16,8 +16,6 @@ const nextConfig = {
     onError: (error) => {
       console.error('NextJS Error:', error);
     },
-    // For server components errors specifically
-    serverComponentsExternalPackages: [],
     // Log more details in production
     productionBrowserSourceMaps: true,
     // Expose server-side error details in production
