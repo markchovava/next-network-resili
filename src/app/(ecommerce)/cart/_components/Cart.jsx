@@ -22,45 +22,40 @@ export default function Cart({ dbData, authToken }) {
   }, []);
 
   // Calculate total price
-  const totalPrice = cartState.cartitems.reduce(
-    (total, item) => total + item.price * item.quantity, 
-    0
-  );
+  const totalPrice = cartState.cartitems ? cartState.cartitems.reduce(
+    (total, item) => total + item.price * item.quantity, 0) : 0;
   // Calculate total price
-  const totalQuantity = cartState.cartitems.reduce(
-    (total, item) => Number(total) + Number(item.quantity), 
-    0
-  );
+  const totalQuantity = cartState.cartitems ? cartState.cartitems.reduce(
+    (total, item) => Number(total) + Number(item.quantity), 0) : 0;
 
- async function postData(){
-  const formData = {
-    cart_id: cartState.cart?.id,
-    total: totalPrice,
-    quantity: totalQuantity,
-    cartitems: cartState.cartitems,
+  async function postData(){
+    const formData = {
+      cart_id: cartState.cart?.id,
+      total: totalPrice,
+      quantity: totalQuantity,
+      cartitems: cartState.cartitems,
+    }
+    //console.log('formData', formData)
+
+    try{
+        const res = await cartStoreAllAction(formData)
+        if(res?.status == 1) {
+            toast.success(res?.message, reactToastifyDark);
+            setIsSubmit(false);
+            setCartCookie(res?.data?.id)
+            router.push('/checkout')
+            return
+        }
+        const message = "Something went wrong, try again.";
+        toast.warn(message, reactToastifyDark);
+        setIsSubmit(false);
+
+    } catch (error) {
+        console.error(`Error: ${error}`);
+        setIsSubmit(false); 
+    }
+
   }
-  //console.log('formData', formData)
-
-  try{
-      const res = await cartStoreAllAction(formData)
-      if(res?.status == 1) {
-          toast.success(res?.message, reactToastifyDark);
-          setIsSubmit(false);
-          setCartCookie(res?.data?.id)
-          router.push('/checkout')
-          return
-      }
-      const message = "Something went wrong, try again.";
-      toast.warn(message, reactToastifyDark);
-      setIsSubmit(false);
-
-  } catch (error) {
-      console.error(`Error: ${error}`);
-      setIsSubmit(false); 
-  }
-
- }
-
 
 
   return (
@@ -83,7 +78,7 @@ export default function Cart({ dbData, authToken }) {
           <div className='w-[30%] py-2 px-3'>Total</div>
         </div>
         {/*  */}
-        { cartState?.cartitems.length > 0 &&
+        { cartState?.cartitems && cartState?.cartitems.length > 0 &&
         <>
           {cartState?.cartitems?.map((i, key) => (
             <div key={key} className='w-[100%] border border-gray-300 flex items-center justify-start'>
@@ -114,18 +109,22 @@ export default function Cart({ dbData, authToken }) {
         </>
         }
         
-        {authToken?.value ? 
-          <form action={postData} onSubmit={() =>setIsSubmit(true)} className='flex items-center justify-end mt-[2rem]'>
-            <button type='submit' className='cursor-pointer flex justify-center items-center w-[30%] rounded-full px-12 py-3 text-white bg-gradient-to-br from-green-500 to-blue-900 hover:drop-shadow-lg hover:bg-gradient-to-br hover:from-green-500 hover:to-green-900'>
-              Proceed to Checkout
-            </button>
-          </form>
-          :
-          <section className='flex items-center justify-end mt-[2rem]'>
-            <Link href='/login' className='cursor-pointer flex justify-center items-center w-[30%] rounded-full px-12 py-3 text-white bg-gradient-to-br from-green-500 to-blue-900 hover:drop-shadow-lg hover:bg-gradient-to-br hover:from-green-500 hover:to-green-900'>
-              Login to Proceed
-            </Link>
-          </section>
+        {cartState?.cartitems?.length > 0 &&
+        <>
+          { authToken?.value ? 
+            <form action={postData} onSubmit={() =>setIsSubmit(true)} className='flex items-center justify-end mt-[2rem]'>
+              <button type='submit' className='cursor-pointer flex justify-center items-center w-[30%] rounded-full px-12 py-3 text-white bg-gradient-to-br from-green-500 to-blue-900 hover:drop-shadow-lg hover:bg-gradient-to-br hover:from-green-500 hover:to-green-900'>
+                Proceed to Checkout
+              </button>
+            </form>
+            :
+            <section className='flex items-center justify-end mt-[2rem]'>
+              <Link href='/login' className='cursor-pointer flex justify-center items-center w-[30%] rounded-full px-12 py-3 text-white bg-gradient-to-br from-green-500 to-blue-900 hover:drop-shadow-lg hover:bg-gradient-to-br hover:from-green-500 hover:to-green-900'>
+                Login to Proceed
+              </Link>
+            </section>
+          }
+        </>
         }
 
 

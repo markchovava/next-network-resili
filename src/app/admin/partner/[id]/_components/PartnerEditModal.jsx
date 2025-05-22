@@ -93,9 +93,9 @@ export default function PartnerEditModal({id, domData, getData, isModal, setIsMo
                                 image: e.target.files[0], 
                                 img: URL.createObjectURL(e.target.files[0]), })
                             }
-                            className='lg:w-[40%] w-[60%] rounded-lg p-3 border border-gray-300 mb-3' />
+                            className='w-[60%] rounded-lg p-3 border border-gray-300 mb-3' />
                         {/*  */}
-                        <div className='lg:w-[40%] w-[60%] drop-shadow-lg relative aspect-[7/5] bg-gray-200 rounded-lg overflow-hidden'>
+                        <div className='w-[60%] drop-shadow-lg relative aspect-[8/3] bg-gray-200 rounded-lg overflow-hidden'>
                             <div className='absolute z-10 w-[100%] h-[100%] flex items-center justify-center'>No Image</div>
                             <div className='w-[100%] h-[100%] absolute z-20 '>
                             {data?.img &&

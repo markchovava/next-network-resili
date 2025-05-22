@@ -28,7 +28,7 @@ export default async function page({ params: {id} }) {
         <li><FaAngleRight /></li>
         <Link href='/admin/partner'><li>Partner</li> </Link>
         <li><FaAngleRight /></li>
-        <Link href={`/admin/partner/${id}`}> <li>View Partner</li> </Link>
+        <Link href={`/admin/partner/${id}`}> <li className='font-semibold'>View Partner</li> </Link>
       </ul>
     </section>
 

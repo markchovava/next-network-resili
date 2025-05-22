@@ -9,11 +9,15 @@ import { FaDotCircle } from "react-icons/fa";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import Image from 'next/image';
+import { baseURL } from '@/api/BaseURL';
+import { noImage } from '@/data/ImagesData';
 
 
 
-export default function CarouselPartner() {
-  
+export default function CarouselPartner({ dbData }) {
+  console.log('dbData', dbData)
+  const [data, setData] = useState(dbData?.data)
   const swiperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const totalSlides = 8; // Update this based on your actual slide count
@@ -61,10 +65,12 @@ export default function CarouselPartner() {
         className="mb-6"
       >
         {/* Sample slides */}
-        {Array.from({ length: totalSlides }).map((_, index) => (
-          <SwiperSlide key={index} className='py-4'>
-            <div className="bg-gray-200 rounded-lg p-6 h-48 flex items-center justify-center">
-              <h3 className="text-xl font-medium">Partner {index + 1}</h3>
+        {data?.map((i, key) => (
+          <SwiperSlide key={key} className='py-4'>
+            <div title={i?.name} className="bg-gray-200 drop-shadow-lg rounded-2xl overflow-hidden aspect-[8/3] flex items-center justify-center">
+              <img 
+                src={i?.image ? baseURL + i?.image : baseURL + noImage}  
+                className='w-[100%] h-[100%] object-fit hover:scale-110 ease-in-out duration-200' />
             </div>
           </SwiperSlide>
         ))}
@@ -94,18 +100,19 @@ export default function CarouselPartner() {
         <div className="navigation-buttons mt-[-1rem] flex items-center justify-start gap-4">
           <button 
             onClick={() => swiperRef.current?.swiper?.slidePrev()} 
-            className="carousel-button-prev p-2 rounded-full bg__one drop-shadow-lg text-white hover:scale-110 duration-300 transition-all ease-in-out" >
+            className="cursor-pointer carousel-button-prev p-2 rounded-full drop-shadow-lg text-white hover:scale-110 duration-300 transition-all ease-in-out bg-gradient-to-br from-green-500 to-blue-900" >
             <FaAngleLeft className="text-[1rem]" />
           </button>
 
           <button 
             onClick={() => swiperRef.current?.swiper?.slideNext()} 
-            className="carousel-button-next p-2 rounded-full bg__one drop-shadow-lg text-white hover:scale-110 duration-300 transition-all ease-in-out" >
+            className="cursor-pointer carousel-button-next p-2 rounded-full drop-shadow-lg text-white hover:scale-110 duration-300 transition-all ease-in-out bg-gradient-to-br from-green-500 to-blue-900">
             <FaAngleRight className="text-[1rem]" />
           </button>
         </div>
 
       </div>
+      
     </div>
   );
 };

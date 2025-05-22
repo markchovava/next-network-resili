@@ -181,7 +181,7 @@ export default function ContactEdit() {
                             <FaMapLocationDot className='text-[1.2rem] text-gray-800' />
                         </div>
                         <p className='text-[1.2rem] font-light'>
-                            163 Samora Machel Avenue, Cnr. 7th Street, Harare
+                            Harare
                         </p>
                     </div>
                     {/*  */}

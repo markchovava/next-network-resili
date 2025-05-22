@@ -3,8 +3,10 @@ import MainSlider from "./_components/MainSlider";
 import CarouselService from "./_components/CarouselService";
 import CarouselPartner from "./_components/CarouselPartner";
 import SectionContact from "./_components/SectionContact";
+import { partnerListAllAction } from "@/actions/PartnerActions";
 
-export default function Home() {
+export default async function Home() {
+  const [partnerData, ] = await Promise.all([partnerListAllAction()])
   return (
     <>
     <MainSlider />
@@ -22,7 +24,7 @@ export default function Home() {
           with robust, reliable, and secure connectivity that
           drives efficiency, productivity, and growth.
         </p>
-        <Link href="#">
+        <Link href="/about">
           <button className="px-12 py-4 text-lg rounded-2xl bg-gradient-to-br from-green-500 to-blue-900 text-white ease-in-out duration-300 transition-all hover:drop-shadow-lg hover:scale-110 hover:bg-gradient-to-br hover:from-blue-500 hover:to-blue-950">
             View More
           </button>
@@ -50,7 +52,7 @@ export default function Home() {
           <hr className="w-[10rem] border-blue-900 border-b border-[0.4rem]" />
       </div>
       <div className="w-[92%] mx-auto mt-8">
-        <CarouselPartner />
+        <CarouselPartner dbData={partnerData} />
       </div>
     </section>
 

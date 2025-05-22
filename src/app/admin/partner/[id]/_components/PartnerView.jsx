@@ -34,12 +34,12 @@ export default function PartnerView({ id, dbData }) {
                 {data?.image &&
                 <div className='mb-6'>
                     <p className='text-sm font-light mb-2'>Image:</p>
-                    <div className='overflow-hidden lg:w-[25%] w-[50%] aspect-[7/5] bg-gray-100 rounded-xl'>
+                    <div className='overflow-hidden lg:w-[30%] w-[50%] aspect-[8/3] drop-shadow-lg bg-gray-100 rounded-xl'>
                     <Image 
                         className='w-[100%] h-[100%]' 
                         src={baseURL + data?.image} 
-                        height={500} 
-                        width={700} 
+                        height={300} 
+                        width={800} 
                         alt='Image' />
                     </div>
                 </div>

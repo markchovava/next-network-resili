@@ -6,6 +6,18 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 
+export async function partnerListAllAction() {
+    const res = await fetch(`${baseURL}partner-all`, {
+      'method': 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    return await res.json();
+}
+
+/* AUTHENTICATION */
 export async function _partnerSearchAction(search) {
     const cookieStore = await cookies();
     const authToken = await cookieStore.get('NETWORK_RESILIENCE_AUTH_COOKIE');
