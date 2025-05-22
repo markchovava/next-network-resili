@@ -16,7 +16,7 @@ import { noImage } from '@/data/ImagesData';
 
 
 export default function CarouselPartner({ dbData }) {
-  console.log('dbData', dbData)
+  console.log('Partner Data', dbData)
   const [data, setData] = useState(dbData?.data)
   const swiperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
