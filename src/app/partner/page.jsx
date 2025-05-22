@@ -3,6 +3,7 @@ import SectionContact from '../_components/SectionContact'
 import Image from 'next/image'
 import { baseURL } from '@/api/BaseURL'
 import { partnerListAllAction } from '@/actions/PartnerActions'
+import { noImage } from '@/data/ImagesData'
 
 
 
@@ -30,7 +31,7 @@ export default async function page() {
       {partnerData.data.map((i, key) => (
         <div key={key} className='cursor-pointer bg-white drop-shadow-lg rounded-2xl overflow-hidden'>
           <Image 
-            src={baseURL + i?.image} 
+            src={i?.image ? baseURL + i?.image : baseURL + noImage} 
             alt={i?.name} 
             width={800} 
             height={300} 
