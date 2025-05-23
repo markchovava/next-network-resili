@@ -16,8 +16,18 @@ import 'swiper/css/pagination';
 import Link from 'next/link';
 
 
+const services = [
+  {id:1, name: 'Network design, installation, and configuration', icon: <GiNetworkBars className="text-[5rem]"/>},
+  {id:2, name: 'Business Communications', icon: <AiOutlineAudit className="text-[5rem]"/> },
+  {id:3, name: 'Networking', icon: <GrHostMaintenance className="text-[5rem]"/>},
+  {id:4, name: 'Web Design', icon: <FaTools className="text-[5rem]"/> },
+  {id:5, name: 'Solar Energy & Back Up Power Solutions', icon: <AiOutlineAudit className="text-[5rem]"/>},
+  {id:6, name: 'Business Security', icon: <FaTools className="text-[5rem]"/>},
+]
+
 
 export default function CarouselService() {
+  const [data, setData] = useState(services)
   const swiperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const totalSlides = 8; // Update this based on your actual slide count
@@ -65,70 +75,25 @@ export default function CarouselService() {
         pagination={false} // Disable default pagination
         className="mb-6" >
 
+        {data?.map((i, key) => (
+          <SwiperSlide key={key} className='py-4'>
+              <div className="w-[100%] h-[10rem] flex items-center justify-between gap-2 bg-gradient-to-br from-blue-700 to-blue-900 rounded-xl drop-shadow-lg p-6">
+                  <div className="w-[30%] flex items-center justify-center">
+                      {i?.icon}
+                  </div>
+                  <div className="w-[70%]">
+                      <p className="text-[1.1rem] leading-tight mb-3">{i?.name}</p>
+                      <Link href="/service">
+                      <button className="mt-2 cursor-pointer px-5 py-2 rounded-xl drop-shadow-md bg__one">
+                          View More
+                      </button>
+                      </Link>
+                  </div>
+              </div>
+          </SwiperSlide>
+        ))}
        
-        <SwiperSlide className='py-4'>
-            <div className="w-[100%] h-[10rem] flex items-center justify-between gap-2 bg-gradient-to-br from-blue-700 to-blue-900 rounded-xl drop-shadow-lg p-6">
-                <div className="w-[30%] flex items-center justify-center">
-                    <GiNetworkBars className="text-[5rem]"/>
-                </div>
-                <div className="w-[70%]">
-                    <p className="text-[1.1rem] leading-tight mb-3">Network design, installation, and configuration</p>
-                    <Link href="#">
-                    <button className="mt-2 cursor-pointer px-5 py-2 rounded-xl drop-shadow-md bg__one">
-                        View More
-                    </button>
-                    </Link>
-                </div>
-            </div>
-        </SwiperSlide>
 
-         <SwiperSlide className='py-4'>
-            <div className="w-[100%] h-[10rem] flex items-center justify-between gap-2 bg-gradient-to-br from-blue-700 to-blue-900 rounded-xl drop-shadow-lg p-6">
-                <div className="w-[30%] flex items-center justify-center">
-                <AiOutlineAudit className="text-[5rem]"/>
-                </div>
-                <div className="w-[70%]">
-                <p className="text-[1.1rem] leading-tight mb-3">Network audits and optimization</p>
-                <Link href="#">
-                    <button className="mt-2 cursor-pointer px-5 py-2 rounded-xl drop-shadow-md bg__one">
-                    View More
-                    </button>
-                </Link>
-                </div>
-            </div>
-         </SwiperSlide>
-
-        <SwiperSlide className='py-4'>
-            <div className="w-[100%] h-[10rem] flex items-center justify-between gap-2 bg-gradient-to-br from-blue-700 to-blue-900 rounded-xl drop-shadow-lg p-6">
-                <div className="w-[30%] flex items-center justify-center">
-                <GrHostMaintenance className="text-[5rem]"/>
-                </div>
-                <div className="w-[70%]">
-                <p className="text-[1.1rem] leading-tight mb-3">Ongoing maintenance and support</p>
-                <Link href="#">
-                    <button className="mt-2 cursor-pointer px-5 py-2 rounded-xl drop-shadow-md bg__one">
-                    View More
-                    </button>
-                </Link>
-                </div>
-            </div>
-        </SwiperSlide>
-
-        <SwiperSlide className='py-4'>
-            <div className="w-[100%] h-[10rem] flex items-center justify-between gap-2 bg-gradient-to-br from-blue-700 to-blue-900 rounded-xl drop-shadow-lg p-6">
-                <div className="w-[30%] flex items-center justify-center">
-                <FaTools className="text-[5rem]"/>
-                </div>
-                <div className="w-[70%]">
-                <p className="text-[1.1rem] leading-tight mb-3">Networking equipment</p>
-                <Link href="#">
-                    <button className="mt-2 cursor-pointer px-5 py-2 rounded-xl drop-shadow-md bg__one">
-                    View More
-                    </button>
-                </Link>
-                </div>
-            </div>
-        </SwiperSlide>
     
       </Swiper>
 
