@@ -68,9 +68,12 @@ export default function CarouselPartner({ dbData }) {
         {data?.map((i, key) => (
           <SwiperSlide key={key} className='py-4'>
             <div title={i?.name} className="bg-gray-200 drop-shadow-lg rounded-2xl overflow-hidden aspect-[8/3] flex items-center justify-center">
-              <img 
-                src={i?.image ? baseURL + i?.image : baseURL + noImage}  
-                className='w-[100%] h-[100%] object-fit hover:scale-110 ease-in-out duration-200' />
+              <Image 
+                src={i?.image ? baseURL + i?.image : baseURL + noImage} 
+                alt={i?.name} 
+                width={800} 
+                height={300} 
+                className='hover:scale-110 transition-all duration-300 ease-in-out' />
             </div>
           </SwiperSlide>
         ))}
