@@ -15,20 +15,10 @@ export default function Test() {
     // WARNING: In production, this token should be handled server-side
     const accessToken = 'EAAKK7apmEAYBOZBOk6Czg2l3Rpn1hxXfVdhZBrQgd2zFXDp19XnIY5fHwfq25md1hlf31mMT6NxOYIYlMvfaFs7rQtuf7zWZBiDRlBm66lQ3YeexWtIrr8qugPUJwbsotkqLs3MoQhTvZCOk9sIuRZAbc8GseHQs042TzLT3ElGWZBAZBwumMKrLx2ooxZC9bFXsAsOZCp9bblTcIi94cpsKYAx67UZBjHyLVWUza3DmJ3jGdsJhA9tUbf';
 
-    // Enhanced phone number validation and formatting
-    const cleanPhoneNumber = to.replace(/[\s\-\+\(\)]/g, '');
-    console.log('🔍 Original phone number:', to);
-    console.log('🔍 Cleaned phone number:', cleanPhoneNumber);
-    
-    // Validate phone number format
-    if (!/^\d{10,15}$/.test(cleanPhoneNumber)) {
-      throw new Error('Invalid phone number format. Must be 10-15 digits.');
-    }
-
     const requestBody = {
       messaging_product: "whatsapp",
       recipient_type: "individual",
-      to: cleanPhoneNumber, // Use cleaned phone number
+      to: to.replace('+', ''), // Remove '+' if present
       type: "text",
       text: {
         preview_url: false,
@@ -36,12 +26,8 @@ export default function Test() {
       }
     };
 
-    console.log('📤 Sending request to:', apiUrl);
-    console.log('📤 Request headers:', {
-      'Authorization': `Bearer ${accessToken.substring(0, 20)}...`,
-      'Content-Type': 'application/json'
-    });
-    console.log('📤 Request body:', JSON.stringify(requestBody, null, 2));
+    console.log('Sending request to:', apiUrl);
+    console.log('Request body:', JSON.stringify(requestBody, null, 2));
 
     try {
       const response = await fetch(apiUrl, {
@@ -53,109 +39,33 @@ export default function Test() {
         body: JSON.stringify(requestBody)
       });
 
-      console.log('📥 Response status:', response.status);
-      console.log('📥 Response headers:', Object.fromEntries([...response.headers.entries()]));
+      console.log('Response status:', response.status);
       const responseData = await response.json();
-      console.log('📥 Full response data:', JSON.stringify(responseData, null, 2));
+      console.log('Full response data:', JSON.stringify(responseData, null, 2));
 
       if (response.ok) {
         // Check if we got a message ID in the response
         if (responseData.messages && responseData.messages[0] && responseData.messages[0].id) {
-          const messageId = responseData.messages[0].id;
-          console.log('✅ Message ID:', messageId);
-          
-          // Additional success indicators
-          const contacts = responseData.contacts;
-          if (contacts && contacts[0]) {
-            console.log('📱 Contact info:', {
-              whatsappId: contacts[0].wa_id,
-              inputPhone: contacts[0].input
-            });
-          }
-          
+          console.log('✅ Message ID:', responseData.messages[0].id);
           return { 
             success: true, 
-            messageId: messageId,
-            contactInfo: contacts ? contacts[0] : null,
-            data: responseData,
-            troubleshooting: {
-              phoneNumberUsed: cleanPhoneNumber,
-              messageLength: messageText.length,
-              timestamp: new Date().toISOString()
-            }
+            messageId: responseData.messages[0].id, 
+            data: responseData 
           };
         } else {
           console.log('⚠️ Success response but no message ID found');
-          console.log('⚠️ This usually indicates the message was not actually sent');
           return { 
-            success: false, 
+            success: true, 
             data: responseData, 
-            error: 'No message ID returned - message likely not sent',
-            troubleshooting: {
-              issue: 'API returned success but no message ID',
-              possibleCauses: [
-                'Phone number not registered with WhatsApp',
-                'Invalid phone number format',
-                'WhatsApp Business account issues',
-                'API token permissions'
-              ]
-            }
+            warning: 'No message ID returned' 
           };
         }
       } else {
-        console.error('❌ API Error Response:', responseData);
-        
-        // Enhanced error analysis
-        let errorMessage = 'Unknown error';
-        let troubleshooting = [];
-        
-        if (responseData.error) {
-          errorMessage = responseData.error.message || responseData.error.error_user_msg || 'API Error';
-          
-          // Common error codes and solutions
-          switch(responseData.error.code) {
-            case 131026:
-              troubleshooting = [
-                'Message template not approved or invalid',
-                'Check if you need to use a template for this type of message'
-              ];
-              break;
-            case 131047:
-              troubleshooting = [
-                'Re-engagement message required',
-                'User needs to message you first or you need a template'
-              ];
-              break;
-            case 131051:
-              troubleshooting = [
-                'User phone number not found on WhatsApp',
-                'Verify the phone number is correct and has WhatsApp installed'
-              ];
-              break;
-            case 100:
-              troubleshooting = [
-                'Invalid parameter',
-                'Check phone number format and message content'
-              ];
-              break;
-            default:
-              troubleshooting = [
-                'Check WhatsApp Business API documentation',
-                'Verify account permissions and setup'
-              ];
-          }
-        }
-        
+        console.error('❌ Failed to send message:', responseData);
         return { 
           success: false, 
-          error: errorMessage,
-          errorCode: responseData.error?.code,
-          status: response.status,
-          data: responseData,
-          troubleshooting: {
-            possibleCauses: troubleshooting,
-            phoneNumberUsed: cleanPhoneNumber
-          }
+          error: responseData, 
+          status: response.status 
         };
       }
     } catch (error) {
@@ -311,22 +221,14 @@ export default function Test() {
                     <p className="font-semibold">Message sent successfully!</p>
                   </div>
                   {result.messageId && (
-                    <div className="mt-3">
-                      <p className="text-sm font-mono bg-green-100 p-2 rounded mb-2">
-                        Message ID: {result.messageId}
-                      </p>
-                      {result.contactInfo && (
-                        <p className="text-sm">
-                          WhatsApp ID: {result.contactInfo.wa_id}
-                        </p>
-                      )}
-                    </div>
+                    <p className="text-sm mt-2 font-mono bg-green-100 p-2 rounded">
+                      Message ID: {result.messageId}
+                    </p>
                   )}
                   {result.warning && (
-                    <div className="mt-3 p-3 bg-yellow-100 border border-yellow-300 rounded">
-                      <p className="text-yellow-800 font-semibold">⚠️ Warning</p>
-                      <p className="text-yellow-700 text-sm">{result.warning}</p>
-                    </div>
+                    <p className="text-yellow-700 text-sm mt-2">
+                      ⚠️ {result.warning}
+                    </p>
                   )}
                 </div>
               ) : (
@@ -337,59 +239,28 @@ export default function Test() {
                     </svg>
                     <p className="font-semibold">Failed to send message</p>
                   </div>
-                  <div className="mt-2 space-y-2">
-                    <p className="text-sm">
-                      {typeof result.error === 'string' 
-                        ? result.error 
-                        : result.error?.error?.message || 'Unknown error occurred'
-                      }
-                    </p>
-                    {result.errorCode && (
-                      <p className="text-sm font-mono bg-red-100 p-2 rounded">
-                        Error Code: {result.errorCode}
-                      </p>
-                    )}
-                    {result.troubleshooting && result.troubleshooting.possibleCauses && (
-                      <div className="mt-3 p-3 bg-red-100 border border-red-300 rounded">
-                        <p className="font-semibold mb-2">Possible Solutions:</p>
-                        <ul className="text-sm space-y-1">
-                          {result.troubleshooting.possibleCauses.map((cause, index) => (
-                            <li key={index} className="flex items-start">
-                              <span className="mr-2">•</span>
-                              <span>{cause}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
+                  <p className="text-sm mt-2">
+                    {typeof result.error === 'string' 
+                      ? result.error 
+                      : result.error?.error?.message || 'Unknown error occurred'
+                    }
+                  </p>
                 </div>
               )}
             </div>
           )}
 
-          <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
             <div className="flex items-start">
-              <svg className="w-5 h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
+              <svg className="w-5 h-5 text-yellow-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
               </svg>
               <div>
-                <h3 className="font-semibold text-blue-800 mb-2">Common Issues & Solutions</h3>
-                <div className="text-sm text-blue-700 space-y-2">
-                  <div>
-                    <p className="font-medium">Message shows "sent" but user doesn't receive it:</p>
-                    <ul className="ml-4 mt-1 space-y-1">
-                      <li>• Phone number isn't registered with WhatsApp</li>
-                      <li>• User needs to message your business first (24-hour window rule)</li>
-                      <li>• Phone number format is incorrect</li>
-                      <li>• WhatsApp Business account not properly verified</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium">Test with your own WhatsApp number first!</p>
-                    <p>Make sure you can receive messages before testing with others.</p>
-                  </div>
-                </div>
+                <h3 className="font-semibold text-yellow-800 mb-1">Security Notice</h3>
+                <p className="text-sm text-yellow-700">
+                  This example includes the access token in client-side code for demonstration. 
+                  In production, always handle sensitive tokens server-side to keep them secure.
+                </p>
               </div>
             </div>
           </div>
