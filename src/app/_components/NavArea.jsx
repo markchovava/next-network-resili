@@ -43,21 +43,21 @@ export default function NavArea() {
                     <Link 
                     href="/service" 
                     className='hover:text-green-800 ease-in-out duration-200 transition-all'>
-                        Our Services
+                         Services
                     </Link>
                 </li>
                  <li>
                     <Link 
                     href="/product" 
                     className='hover:text-green-800 ease-in-out duration-200 transition-all'>
-                        Our Products
+                         Products
                     </Link>
                 </li>
                 <li>
                     <Link 
                     href="/partner" 
                     className='hover:text-green-800 ease-in-out duration-200 transition-all'>
-                        Our Partners
+                         Partners
                     </Link>
                 </li>
                 <li>

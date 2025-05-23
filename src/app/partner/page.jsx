@@ -27,7 +27,7 @@ export default async function page() {
    {/* <ComingSoon /> */}
 
    <section className='w-full pt-[4rem] pb-[5rem]'>
-    <div className='mx-auto w-[92%] grid grid-cols-3 gap-8'>
+    <div className='mx-auto w-[92%] grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8'>
       {partnerData.data.map((i, key) => (
         <div key={key} className='cursor-pointer bg-white drop-shadow-lg rounded-2xl overflow-hidden'>
           <Image 
