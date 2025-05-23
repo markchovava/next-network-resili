@@ -21,7 +21,7 @@ export default function SectionContact() {
               Our business is to accelerate yours by equiping you with all you need to run smarter.
             </p>
 
-            <Link href="#">
+            <Link href="tel:+2638688008486">
               <button className="uppercase px-12 py-4 text-lg rounded-2xl bg-gradient-to-br from-green-500 to-blue-900 text-white ease-in-out duration-300 transition-all hover:drop-shadow-lg hover:scale-110 hover:bg-gradient-to-br hover:from-blue-500 hover:to-blue-950">
                 Call Us Now
               </button>
