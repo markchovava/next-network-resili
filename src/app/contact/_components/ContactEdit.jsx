@@ -200,7 +200,7 @@ export default function ContactEdit() {
                         <div className='p-2 border border-gray-800 rounded-full'>
                             <FaFacebookF className='text-[1.2rem] text-gray-800' />
                         </div>
-                        <Link href='#'>
+                        <Link href='https://www.facebook.com/networkresilience' target="_blank">
                             <p className='text-[1.2rem] font-light'>
                                 Facebook
                             </p>
@@ -211,7 +211,7 @@ export default function ContactEdit() {
                         <div className='p-2 border border-gray-800 rounded-full'>
                             <FaInstagram className='text-[1.2rem] text-gray-800' />
                         </div>
-                        <Link href='#'>
+                        <Link href='https://www.instagram.com/networkresilience' target="_blank">
                             <p className='text-[1.2rem] font-light'>
                                 Instagram
                             </p>
@@ -222,7 +222,7 @@ export default function ContactEdit() {
                         <div className='p-2 border border-gray-800 rounded-full'>
                             <FaLinkedinIn className='text-[1.2rem] text-gray-800' />
                         </div>
-                        <Link href='#'>
+                        <Link href='https://www.linkedin.com/company/networkresilience' target="_blank">
                             <p className='text-[1.2rem] font-light'>
                                 LinkedIn
                             </p>

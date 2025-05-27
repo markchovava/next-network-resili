@@ -64,13 +64,13 @@ return (
             </div>
             {/*  */}
             <div className='flex items-center md:justify-between gap-2'>
-                <Link href="#" className='bg-blue-900 p-1 rounded-full hover:scale-110 transition-all ease-in-out duration-200'>
+                <Link href="https://www.facebook.com/networkresilience" className='bg-blue-900 p-1 rounded-full hover:scale-110 transition-all ease-in-out duration-200'>
                     <FaFacebookF className='text-white text-sm' />
                 </Link>
-                <Link href="#" className='bg-black p-1 rounded-full hover:scale-110 transition-all ease-in-out duration-200'>
+                <Link href="https://x.com/NetwkResilience" className='bg-black p-1 rounded-full hover:scale-110 transition-all ease-in-out duration-200'>
                     <FaXTwitter className='text-white text-sm' />
                 </Link>
-                <Link href="#" className='bg-pink-500 p-1 rounded-full hover:scale-110 transition-all ease-in-out duration-200'>
+                <Link href="https://www.instagram.com/networkresilience" className='bg-pink-500 p-1 rounded-full hover:scale-110 transition-all ease-in-out duration-200'>
                     <FaInstagram className='text-white text-sm' />
                 </Link>
                 <span>|</span>

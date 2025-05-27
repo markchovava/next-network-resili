@@ -51,29 +51,30 @@ export default function Footer() {
                    
                 </ul>
             </section>
-    
+
+ 
             <section className=''>
                 <div className='uppercase font-semibold mb-3'>
                     Social Media Links
                 </div>
                 <div className='w-[100%] flex items-center justify-start gap-3 text-gray-100'>
-                    <a href="#" target="_blank" className="hover:scale-110 transition-all ease-linear">
+                    <a href="https://www.facebook.com/networkresilience" target="_blank" className="hover:scale-110 transition-all ease-linear">
                         <FaFacebook className="text-[1.5rem]" />
                     </a>
-                    <a href="#" target="_blank" className="hover:scale-110 transition-all ease-linear">
-                        <FaWhatsapp className="text-[1.5rem]" />
+                    <a href="https://x.com/NetwkResilience" target="_blank" className="hover:scale-110 transition-all ease-linear">
+                        <FaXTwitter className="text-[1.5rem]" />
                     </a>
-                    <a href="#" target="_blank" className="hover:scale-110 transition-all ease-linear">
-                        <FaEnvelope className="text-[1.5rem]" />
-                    </a>
-                    <a href="#" target="_blank" className="hover:scale-110 transition-all ease-linear">
+                    <a href="https://www.linkedin.com/company/networkresilience" target="_blank" className="hover:scale-110 transition-all ease-linear">
                         <FaLinkedin className="text-[1.5rem]" />
                     </a>
-                    <a href="#" target="_blank" className="hover:scale-110 transition-all ease-linear">
+                    <a href="https://www.instagram.com/networkresilience/" target="_blank" className="hover:scale-110 transition-all ease-linear">
                         <FaInstagram className="text-[1.5rem]" />
                     </a>
                 </div>
             </section>
+
+
+            
 
              <section className=''>
                 <div className='mb-4'>
