@@ -189,7 +189,7 @@ export default function ContactEdit() {
                         <div className='p-2 border border-gray-800 rounded-full'>
                             <FaWhatsapp className='text-[1.2rem] text-gray-800' />
                         </div>
-                        <Link href='#'>
+                        <Link href='https://wa.me/263787852826'>
                             <p className='text-[1.2rem] font-light'>
                                 WhatsApp
                             </p>

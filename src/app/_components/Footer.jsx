@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { FaEnvelope, FaFacebook, FaInstagram, FaLinkedin, FaTiktok, FaWhatsapp, FaXTwitter } from 'react-icons/fa6'
-
+import { FaWhatsapp } from "react-icons/fa";
 
 
 export default function Footer() {
@@ -60,6 +60,9 @@ export default function Footer() {
                 <div className='w-[100%] flex items-center justify-start gap-3 text-gray-100'>
                     <a href="https://www.facebook.com/networkresilience" target="_blank" className="hover:scale-110 transition-all ease-linear">
                         <FaFacebook className="text-[1.5rem]" />
+                    </a>
+                    <a href="https://wa.me/263787852826" target="_blank" className="hover:scale-110 transition-all ease-linear">
+                        <FaWhatsapp className="text-[1.5rem]" />
                     </a>
                     <a href="https://x.com/NetwkResilience" target="_blank" className="hover:scale-110 transition-all ease-linear">
                         <FaXTwitter className="text-[1.5rem]" />
