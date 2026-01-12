@@ -181,7 +181,7 @@ export default function ContactEdit() {
                             <FaMapLocationDot className='text-[1.2rem] text-gray-800' />
                         </div>
                         <p className='text-[1.2rem] font-light'>
-                            Harare
+                            Office 604 6th Floor, Regal Star House, 25 G. Silundika Ave., CBD, Harare
                         </p>
                     </div>
                     {/*  */}
