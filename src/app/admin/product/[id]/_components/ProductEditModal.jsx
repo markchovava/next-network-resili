@@ -11,7 +11,6 @@ import { _productImageDeleteAction } from '@/actions/ProductImageActions';
 import { reactToastifyDark } from '@/_utils/reactToastify';
 import { _productUpdateAction } from '@/actions/ProductActions';
 import { generateNumbers } from '@/_utils/formatNumber';
-import Image from 'next/image';
 
 const variants = {
     hidden: { opacity: 0 },
@@ -147,6 +146,14 @@ export default function ProductEditModal({id, isModal, setIsModal, getData, imag
             }
         }
     }
+
+
+    console.log('Image URLs:', {
+        img0: imagesData[0]?.image ? baseURL + imagesData[0].image : null,
+        img1: imagesData[1]?.image ? baseURL + imagesData[1].image : null,
+        img2: imagesData[2]?.image ? baseURL + imagesData[2].image : null,
+        img3: imagesData[3]?.image ? baseURL + imagesData[3].image : null,
+    });
 
   return (
     <AnimatePresence>
@@ -324,9 +331,7 @@ export default function ProductEditModal({id, isModal, setIsModal, getData, imag
                                 <div className='absolute z-10 w-[100%] h-[100%] flex items-center justify-center'>No Image</div>
                                 <div className='w-[100%] h-[100%] absolute z-20 '>
                                     {images?.img1 &&
-                                    <Image
-                                        width={350}
-                                        height={250}
+                                    <img 
                                         src={images?.img1} 
                                         alt='Image' 
                                         className='w-[100%] h-[100%] object-cover' />
