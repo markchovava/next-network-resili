@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
-import { FaEnvelope, FaFacebook, FaInstagram, FaLinkedin, FaTiktok, FaWhatsapp, FaXTwitter } from 'react-icons/fa6'
-import { FaWhatsapp } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaLinkedin, FaTiktok, FaWhatsapp, FaXTwitter } from 'react-icons/fa6'
+
 
 
 export default function Footer() {
